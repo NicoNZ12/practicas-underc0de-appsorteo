@@ -1,4 +1,4 @@
-Brief para Aplicación de Sorteos
+#Brief para Aplicación de Sorteos
 
 Nombre del Proyecto:
 SorteApp - Plataforma de Sorteos Online
