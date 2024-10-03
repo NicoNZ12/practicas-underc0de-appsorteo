@@ -22,7 +22,7 @@ public class Participante {
     @Column(unique = true, nullable = false)
     private int credencial;
 
-    private int cantidad_ganados = 0;
+    private int cantidad_ganados;
 
     @ManyToOne
     @JoinColumn(name = "id_evento", nullable = false)

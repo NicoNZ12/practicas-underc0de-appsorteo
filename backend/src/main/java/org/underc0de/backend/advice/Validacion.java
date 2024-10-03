@@ -9,6 +9,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class Validacion {
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleInvalidArguments(MethodArgumentNotValidException ex){
         Map<String, String> errores = new HashMap<>();
