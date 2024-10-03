@@ -23,7 +23,7 @@ public class Evento {
     @Column(nullable = false)
     private String nombre;
 
-    @Column(columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate fecha;
 
 
