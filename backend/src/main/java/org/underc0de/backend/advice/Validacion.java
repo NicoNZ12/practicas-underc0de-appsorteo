@@ -1,5 +1,6 @@
 package org.underc0de.backend.advice;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,6 +20,11 @@ public class Validacion {
         });
 
         return errores;
+    }
+
+    @ExceptionHandler(CredencialExistenteException.class)
+    public ResponseEntity<String> handleCredencialYaExistente(CredencialExistenteException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
 

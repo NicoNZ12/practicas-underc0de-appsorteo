@@ -1,6 +1,7 @@
 package org.underc0de.backend.service;
 
 import org.springframework.stereotype.Service;
+import org.underc0de.backend.advice.CredencialExistenteException;
 import org.underc0de.backend.dto.ParticipanteDTO;
 import org.underc0de.backend.dto.ParticipanteEventoDTO;
 import org.underc0de.backend.entity.Evento;
@@ -28,12 +29,12 @@ public class ParticipanteService {
         Participante nuevoParticipante;
 
         if(participante.isPresent()){
-            nuevoParticipante = participante.get();
+            throw new CredencialExistenteException("Ya existe un usuario con esa credencial");
         }else{
             nuevoParticipante = new Participante();
             nuevoParticipante.setNombre(participanteEventoDTO.nombreParticipante());
             nuevoParticipante.setCredencial(participanteEventoDTO.credencial());
-            nuevoParticipante.setCantidad_ganados(0);
+            nuevoParticipante.setSorteos_ganados(0);
         }
 
         //Buscamos el evento o creamos uno para asociarlo al participante
