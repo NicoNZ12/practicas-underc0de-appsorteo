@@ -1,8 +1,9 @@
 body {
+    font-family: "Noto Serif", serif;
+    text-align: center;
+    padding: 0;
     margin: 0;
-    position: relative;
-    overflow: hidden;
-    overflow-y: auto;
+    
 }
 body::before{
     content: '';
@@ -14,7 +15,7 @@ body::before{
     background-image: url(https://img.freepik.com/vector-gratis/fondo-confeti-realista_23-2148473498.jpg);
     background-position: center;
     background-size: cover;
-    opacity: 0.;
+    opacity: 0.3;
     z-index: -3;
 }
 header h1{
@@ -32,31 +33,70 @@ header img{
     height: 200px;
 }
 
-.titulo {
-    text-align: center;
-    margin-bottom: 30px;
-    font-family: "Noto Serif", serif;
+.titulo, .paricipantes {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
-form.participantes {
+
+input {
+    width: 70%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.nombre-envento {
     margin: 10px;
     padding: 20px;
     border-radius: 8px;
-    width: 500px;
-    display: inline-block;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
-form.participantes label {
-    display: block;
-    margin-bottom: 15px;
+#btn-ingresar{
+    padding: 10px 20px;
+    font-family:"Noto Serif", serif;
+    background-color: #2e07bbb2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
-
-
-input {
-    width: 250px;
+#btn-ingresar:hover{
+    background-color: #4d9ceb;
+}
+.participantes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px auto;
     padding: 10px;
-    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 400px;
+    
+}
+
+.participantes h3 {
+    margin: 10px;
+    text-align: center;
+}
+.participantes input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    
 }
 
 button.btn-part{
@@ -109,7 +149,7 @@ div.lista {
 input.lista{
     width: 400px;
     padding: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
@@ -164,6 +204,7 @@ input.cant-ganad{
     margin: 20px auto;
     display: block;
     text-align: center;
+    width: fit-content;
 }
 
 .btn-sort:hover {
