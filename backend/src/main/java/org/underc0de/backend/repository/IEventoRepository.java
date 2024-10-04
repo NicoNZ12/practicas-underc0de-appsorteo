@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface IEventoRepository extends JpaRepository<Evento, Long> {
     Optional<Evento> findEventoByNombre(String nombre);
+
+    Optional<Evento> findEventoById(Long id);
 }

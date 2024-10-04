@@ -1,7 +1,8 @@
 package org.underc0de.backend.service;
 
 import org.springframework.stereotype.Service;
-import org.underc0de.backend.advice.CredencialExistenteException;
+import org.underc0de.backend.advice.DniExistenteException;
+import org.underc0de.backend.dto.EventoDTO;
 import org.underc0de.backend.dto.ParticipanteDTO;
 import org.underc0de.backend.dto.ParticipanteEventoDTO;
 import org.underc0de.backend.entity.Evento;
@@ -22,29 +23,37 @@ public class ParticipanteService {
         this.eventoService = eventoService;
     }
 
+
     public ParticipanteDTO cargarParticipante(ParticipanteEventoDTO participanteEventoDTO){
-        Optional<Participante> participante = participanteRepository.findParticipanteByCredencial(participanteEventoDTO.credencial());
+        Optional<Participante> participante = participanteRepository.findParticipanteByDni(participanteEventoDTO.participante().dni());
 
-        //Si el participante no existe en la bd, se carga uno nuevo
-        Participante nuevoParticipante;
+        Evento evento = eventoService.buscarEvento(participanteEventoDTO.idEvento());
 
-        if(participante.isPresent()){
-            throw new CredencialExistenteException("Ya existe un usuario con esa credencial");
-        }else{
-            nuevoParticipante = new Participante();
-            nuevoParticipante.setNombre(participanteEventoDTO.nombreParticipante());
-            nuevoParticipante.setCredencial(participanteEventoDTO.credencial());
-            nuevoParticipante.setSorteos_ganados(0);
+        Participante participanteExistente;
+
+        if (participante.isPresent()) {
+            //Si el participante ya se encuentra asociado al evento
+            participanteExistente = participante.get();
+
+            if (participanteExistente.getEvento().getId().equals(evento.getId())) {
+                throw new DniExistenteException("El participante con DNI " + participanteEventoDTO.participante().dni() + " ya está registrado en este sorteo.");
+            } else {
+                //Actualiza el evento si es un sorteo nuevo
+                participanteExistente.setEvento(evento);
+                participanteRepository.save(participanteExistente);
+                return new ParticipanteDTO(participanteExistente.getNombre(), participanteExistente.getDni());
+            }
         }
 
-        //Buscamos el evento o creamos uno para asociarlo al participante
-        Evento evento = eventoService.buscarOCrearEvento(participanteEventoDTO.nombreEvento());
-
-        //Asociamos el evento al participante
+        // Si el participante no existe, creamos uno nuevo
+        Participante nuevoParticipante = new Participante();
+        nuevoParticipante.setNombre(participanteEventoDTO.participante().nombre());
+        nuevoParticipante.setDni(participanteEventoDTO.participante().dni());
+        nuevoParticipante.setSorteos_ganados(0);
         nuevoParticipante.setEvento(evento);
 
         participanteRepository.save(nuevoParticipante);
 
-        return new ParticipanteDTO(nuevoParticipante.getNombre(), nuevoParticipante.getCredencial());
+        return new ParticipanteDTO(nuevoParticipante.getNombre(), nuevoParticipante.getDni());
     }
 }

@@ -15,7 +15,7 @@ public class EventoService {
         this.eventoRepository = eventoRepository;
     }
 
-    public Evento buscarOCrearEvento(String nombreEvento) {
+    public Evento crearEvento(String nombreEvento) {
         // Buscar el evento por su nombre
         Optional<Evento> eventoOptional = eventoRepository.findEventoByNombre(nombreEvento);
 
@@ -30,5 +30,15 @@ public class EventoService {
         nuevoEvento.setFecha(LocalDate.now());
 
         return eventoRepository.save(nuevoEvento);
+    }
+
+    public Evento buscarEvento(Long id){
+        Optional<Evento> evento = eventoRepository.findEventoById(id);
+
+        if(!evento.isPresent()){
+            throw new RuntimeException("El evento con ID " + id + " no existe.");
+        }
+
+        return evento.get();
     }
 }

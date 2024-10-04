@@ -22,8 +22,8 @@ public class Validacion {
         return errores;
     }
 
-    @ExceptionHandler(CredencialExistenteException.class)
-    public ResponseEntity<String> handleCredencialYaExistente(CredencialExistenteException ex) {
+    @ExceptionHandler(DniExistenteException.class)
+    public ResponseEntity<String> handleCredencialYaExistente(DniExistenteException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }

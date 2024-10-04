@@ -6,5 +6,5 @@ import org.underc0de.backend.entity.Participante;
 import java.util.Optional;
 
 public interface IParticipanteRepository extends JpaRepository<Participante, Long> {
-    Optional<Participante> findParticipanteByCredencial(int credencial);
+    Optional<Participante> findParticipanteByDni(String dni);
 }

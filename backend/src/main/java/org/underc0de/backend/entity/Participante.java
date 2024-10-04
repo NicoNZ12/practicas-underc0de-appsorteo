@@ -19,8 +19,8 @@ public class Participante {
     @Column(name = "nombre_completo", nullable = false)
     private String nombre;
 
-    @Column(unique = true, nullable = false)
-    private int credencial;
+    @Column(unique = true, nullable = false, length = 8)
+    private String dni;
 
     private int sorteos_ganados;
 
