@@ -6,9 +6,10 @@ import org.underc0de.backend.repository.IEventoRepository;
 
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.List;
 
 @Service
-public class EventoService {
+public class  EventoService {
     private final IEventoRepository eventoRepository;
 
     public EventoService(IEventoRepository eventoRepository) {
@@ -41,4 +42,23 @@ public class EventoService {
 
         return evento.get();
     }
+
+    public void realizarSorteo() {
+        Evento evento = eventoRepository.findEventoEnCurso()
+                .orElseThrow(() -> new IllegalStateException("Evento no encontrado"));
+
+        evento.realizarSorteo();
+
+        eventoRepository.save(evento);
+    }
+
+    public List<Evento> obtenerTodosLosEventos() {
+        return eventoRepository.findAll();
+    }
+
+    public Evento obtenerUltimoEvento() {
+        return eventoRepository.findEventoEnCurso()
+                .orElseThrow(() -> new IllegalStateException("No hay eventos disponibles."));
+    }
+
 }
