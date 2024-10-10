@@ -10,6 +10,8 @@ import org.underc0de.backend.dto.ParticipanteDTO;
 import org.underc0de.backend.dto.ParticipanteEventoDTO;
 import org.underc0de.backend.service.ParticipanteService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/participante")
 public class ParticipanteController {
@@ -22,8 +24,8 @@ public class ParticipanteController {
     }
 
     @PostMapping("/guardar")
-    public ResponseEntity<ParticipanteDTO> guardarParticipanteConEvento(@RequestBody @Valid ParticipanteEventoDTO participanteEventoDTO) {
-        ParticipanteDTO participante = participanteService.cargarParticipante(participanteEventoDTO);
-        return ResponseEntity.ok(participante);
+    public ResponseEntity<List<ParticipanteDTO>> guardarParticipanteConEvento(@RequestBody @Valid List<ParticipanteEventoDTO> participanteEventoDTO) {
+        List<ParticipanteDTO> participantes = participanteService.cargarParticipantes(participanteEventoDTO);
+        return ResponseEntity.ok(participantes);
     }
 }

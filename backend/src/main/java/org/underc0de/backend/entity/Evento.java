@@ -2,11 +2,11 @@ package org.underc0de.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +25,7 @@ public class Evento {
     private String nombre;
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
 
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -34,8 +34,12 @@ public class Evento {
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Premio> premios;
 
+    @PrePersist
+    public void setFechaActual() {
+        this.fecha = LocalDateTime.now();
+    }
 
-    public void realizarSorteo() {
+    public void hacerSorteo() {
 
         if (premios.isEmpty() || participantes.isEmpty()) {
 
@@ -43,6 +47,7 @@ public class Evento {
         }
 
         Random random = new Random();
+        List<Participante> participantesDisponibles = new ArrayList<>(participantes);
 
         for (Premio premio : premios) {
 
@@ -52,13 +57,21 @@ public class Evento {
 
             }
 
-            int ganadorIndex = random.nextInt(participantes.size());
+            if (participantesDisponibles.isEmpty()) {
+                // Si no hay más participantes disponibles, lanzar una excepción
+                throw new IllegalStateException("No hay suficientes participantes para asignar a todos los premios.");
+            }
 
-            Participante ganador = participantes.get(ganadorIndex);
+            int ganadorIndex = random.nextInt(participantesDisponibles.size());
+
+            Participante ganador = participantesDisponibles.get(ganadorIndex);
 
             premio.setGanador(ganador);
 
             ganador.setSorteos_ganados(ganador.getSorteos_ganados() + 1);
+
+            participantesDisponibles.remove(ganador);
+
         }
     }
 }

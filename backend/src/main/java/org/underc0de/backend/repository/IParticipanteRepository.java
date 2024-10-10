@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface IParticipanteRepository extends JpaRepository<Participante, Long> {
     Optional<Participante> findParticipanteByDni(String dni);
+
+    Optional<Participante> findAllByDni(String dni);
+
 }

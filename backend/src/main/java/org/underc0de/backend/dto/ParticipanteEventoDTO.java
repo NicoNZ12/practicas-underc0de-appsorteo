@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 
 public record ParticipanteEventoDTO(
         @Valid
-        ParticipanteDTO participante,
-        Long idEvento
+        ParticipanteDTO participante
+//        Long idEvento
 ) {
 }

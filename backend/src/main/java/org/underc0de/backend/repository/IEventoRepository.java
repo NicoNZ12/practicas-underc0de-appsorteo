@@ -11,6 +11,6 @@ public interface IEventoRepository extends JpaRepository<Evento, Long> {
 
     Optional<Evento> findEventoById(Long id);
 
-    @Query("SELECT e FROM Evento e ORDER BY e.fecha DESC")
+    @Query("SELECT e FROM Evento e ORDER BY e.id DESC, e.fecha DESC")
     Optional<Evento> findEventoEnCurso();
 }
