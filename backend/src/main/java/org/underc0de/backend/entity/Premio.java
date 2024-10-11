@@ -20,6 +20,9 @@ public class Premio {
     @Column(nullable = false)
     private String descripcion;
 
+    @Column(nullable = false)
+    private String sponsor;
+
     @ManyToOne
     @JoinColumn(name = "id_evento", nullable = false)
     @JsonIgnore

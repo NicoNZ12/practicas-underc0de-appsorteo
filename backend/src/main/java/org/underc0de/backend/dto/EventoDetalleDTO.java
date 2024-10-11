@@ -2,7 +2,6 @@ package org.underc0de.backend.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,6 +18,6 @@ public record EventoDetalleDTO(
         LocalDateTime fecha,
 
         @Schema(description = "Lista de premios con sus ganadores")
-        List<PremioDTO> premios
+        List<PremioDetalleDTO> premios
 ) {
 }

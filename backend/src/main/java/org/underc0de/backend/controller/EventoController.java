@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.underc0de.backend.dto.EventoDTO;
 import org.underc0de.backend.dto.EventoDetalleDTO;
-import org.underc0de.backend.dto.PremioDTO;
 import org.underc0de.backend.entity.Evento;
 import org.underc0de.backend.service.EventoService;
 

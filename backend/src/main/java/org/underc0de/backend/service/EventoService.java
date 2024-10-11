@@ -2,7 +2,7 @@ package org.underc0de.backend.service;
 
 import org.springframework.stereotype.Service;
 import org.underc0de.backend.dto.EventoDetalleDTO;
-import org.underc0de.backend.dto.PremioDTO;
+import org.underc0de.backend.dto.PremioDetalleDTO;
 import org.underc0de.backend.entity.Evento;
 import org.underc0de.backend.repository.IEventoRepository;
 
@@ -77,12 +77,12 @@ public class  EventoService {
     }
 
     private EventoDetalleDTO mapearEventoADetalleDTO(Evento evento) {
-        List<PremioDTO> premiosDTO = evento.getPremios()
+        List<PremioDetalleDTO> premiosDTO = evento.getPremios()
                 .stream()
-                .map(premio -> new PremioDTO(
+                .map(premio -> new PremioDetalleDTO(
                         premio.getId(),
                         premio.getDescripcion(),
-                        //                        premio.getSponsor(),
+                        premio.getSponsor(),
                         premio.getGanador() != null ? premio.getGanador().getNombre() : "No asignado",
                         premio.getGanador() != null ? premio.getGanador().getDni() : "No asignado"
                 ))

@@ -1,10 +1,11 @@
 package org.underc0de.backend.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record PremioDTO(
-        Long id,
+        @NotBlank(message = "Debes ingresar el premio")
         String descripcion,
-//        String sponsor,
-        String nombreGanador,
-        String dniGanador
+        @NotBlank(message = "Debes ingresar el sponsor del premio")
+        String sponsor
 ) {
 }
