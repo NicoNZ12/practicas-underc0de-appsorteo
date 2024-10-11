@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.underc0de.backend.dto.EventoDTO;
@@ -26,10 +27,25 @@ public class EventoController {
         this.eventoService = eventoService;
     }
 
+    @Operation(summary = "Crear un nuevo evento", description = "Este endpoint permite crear un evento, verificando si hay uno activo.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Evento creado o actualizado correctamente"),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos proporcionados"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @PostMapping
     public ResponseEntity crearEvento(@RequestBody @Valid EventoDTO evento){
-        Evento nuevoEvento = eventoService.crearEvento(evento.nombre());
-        return ResponseEntity.ok(nuevoEvento);
+
+        try {
+
+
+            Evento nuevoEvento = eventoService.crearEvento(evento.nombre());
+            return ResponseEntity.ok(nuevoEvento);
+
+        }catch (Exception e) {
+            // Enviar una respuesta de error en caso de alguna excepción
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);  // En caso de error interno
+        }
 
     }
 
