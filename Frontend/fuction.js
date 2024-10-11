@@ -29,12 +29,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const nombreEventoInput = document.getElementById('nombre-evento');
     const eventoDisplay = document.querySelector('#lista p');
 
-    btnIngresar.addEventListener('click', () => {
+    btnIngresar.addEventListener('click', async() => {
         const nombreEvento = nombreEventoInput.value.trim();
         if (nombreEvento) {
             eventoDisplay.textContent = `EVENTO: " ${nombreEvento} "`;
+            const eventoData = {
+                nombre: nombreEvento
+            };
+    
+            try {
+                const response = await fetch("http://localhost:8080/evento", { 
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(eventoData) 
+                });
+    
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('Evento creado exitosamente');
+                } else {
+                    console.log("error: " + response.statusText)
+                    alert('Error al crear el evento');
+                }
+
+            } catch (error) {
+                console.error("Error de conexión con la api:", error);
+            } 
         } else {
-            alert('Por favor, ingresa un nombre para el evento.');
+            alert("Por favor, ingresa un nombre para el evento.");
         }
     });
 
@@ -74,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const documentosAgregados = [];
 
     // AGREGAR PARTICIPANTE MANUAL
-    function agregarParticipanteManual() {
+    async function agregarParticipanteManual() {
         const nombre = document.getElementById('nombre-participante').value.trim();
         const dni = document.getElementById('dni').value.trim();
         
@@ -89,28 +114,55 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const lista = document.getElementById('lista-participantes');
-        
-        // Crear un nuevo elemento de lista
-        const li = document.createElement('li');
-        li.textContent = `${nombre} - ${dni}`;
-        
-        // Crear botón de eliminar
-        const btnEliminar = document.createElement('button');
-        btnEliminar.textContent = '❌';
-        btnEliminar.onclick = function() {
-            eliminarParticipante(li, dni);
+        const participanteData = {
+            nombre: nombre,
+            dni: dni
         };
+
+        try{
+            const response = await fetch("http://localhost:8080/participante/agregar-participante", {
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(participanteData)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert('Participante agregado exitosamente');
+
+                const lista = document.getElementById('lista-participantes');
         
-        li.appendChild(btnEliminar);
-        lista.appendChild(li);
-        
-        // Agregar el documento al array
-        documentosAgregados.push(dni);
-        
-        // Limpiar los campos de entrada
-        document.getElementById('nombre-participante').value = '';
-        document.getElementById('dni').value = '';
+                // Crear un nuevo elemento de lista
+                const li = document.createElement('li');
+                li.textContent = `${nombre} - ${dni}`;
+                
+                // Crear botón de eliminar
+                const btnEliminar = document.createElement('button');
+                btnEliminar.textContent = '❌';
+                btnEliminar.onclick = function() {
+                    eliminarParticipante(li, dni);
+                };
+                
+                li.appendChild(btnEliminar);
+                lista.appendChild(li);
+                
+                // Agregar el documento al array
+                documentosAgregados.push(dni);
+                
+                // Limpiar los campos de entrada
+                document.getElementById('nombre-participante').value = '';
+                document.getElementById('dni').value = '';
+
+            }else{
+                console.error("Error al agregar el participante:" + response.statusText);
+                alert("Error al agregar el participante");
+            }    
+        }catch(error){
+            console.error("Error de conexión con la api:", error);
+        }
     }
 
     function eliminarParticipante(participante, dni) {
