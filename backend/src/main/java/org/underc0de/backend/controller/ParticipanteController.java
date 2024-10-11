@@ -11,7 +11,9 @@ import org.underc0de.backend.dto.ParticipanteEventoDTO;
 import org.underc0de.backend.entity.Participante;
 import org.underc0de.backend.service.ParticipanteService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/participante")
@@ -37,17 +39,20 @@ public class ParticipanteController {
 
     @PostMapping("/agregar-participante")
     @Operation(summary = "Registrar un participante en un evento")
-    public ResponseEntity<String> agregarParticipante(@Valid @RequestBody ParticipanteDTO participanteDTO) {
+    public ResponseEntity<Map<String,String>> agregarParticipante(@Valid @RequestBody ParticipanteDTO participanteDTO) {
 
         String resultado = participanteService.agregarParticipante(participanteDTO);
 
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("message", resultado);
+
         if (resultado.contains("fue registrado exitosamente")) {
 
-            return new ResponseEntity<>(resultado, HttpStatus.CREATED);
+            return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
 
         } else {
 
-            return new ResponseEntity<>(resultado, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
 
         }
 
