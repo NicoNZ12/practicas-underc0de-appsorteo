@@ -1,13 +1,13 @@
 package org.underc0de.backend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.underc0de.backend.dto.ParticipanteDTO;
 import org.underc0de.backend.dto.ParticipanteEventoDTO;
+import org.underc0de.backend.entity.Participante;
 import org.underc0de.backend.service.ParticipanteService;
 
 import java.util.List;
@@ -23,9 +23,32 @@ public class ParticipanteController {
         this.participanteService = participanteService;
     }
 
-    @PostMapping("/guardar")
-    public ResponseEntity<List<ParticipanteDTO>> guardarParticipanteConEvento(@RequestBody @Valid List<ParticipanteEventoDTO> participanteEventoDTO) {
-        List<ParticipanteDTO> participantes = participanteService.cargarParticipantes(participanteEventoDTO);
-        return ResponseEntity.ok(participantes);
+    @PostMapping("/carga-varios") // lista de participantes
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Registrar varios participante en un evento")
+    public ResponseEntity<List<Participante>> guardarParticipanteConEvento(@RequestBody @Valid List<ParticipanteDTO> participantesDTO) {
+
+        List<Participante> participantesGuardados = participanteService.cargarParticipantes(participantesDTO);
+        return new ResponseEntity<>(participantesGuardados, HttpStatus.CREATED);
+
     }
+
+    @PostMapping("/agregar-participante")
+    @Operation(summary = "Registrar un participante en un evento")
+    public ResponseEntity<String> agregarParticipante(@Valid @RequestBody ParticipanteDTO participanteDTO) {
+
+        String resultado = participanteService.agregarParticipante(participanteDTO);
+
+        if (resultado.contains("fue registrado exitosamente")) {
+
+            return new ResponseEntity<>(resultado, HttpStatus.CREATED);
+
+        } else {
+
+            return new ResponseEntity<>(resultado, HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
 }

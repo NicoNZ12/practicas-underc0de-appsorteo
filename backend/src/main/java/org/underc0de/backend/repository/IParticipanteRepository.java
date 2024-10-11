@@ -10,4 +10,10 @@ public interface IParticipanteRepository extends JpaRepository<Participante, Lon
 
     Optional<Participante> findAllByDni(String dni);
 
+    boolean existsByDniAndEventoId(String dni, Long eventoId);
+
+    Participante findByDniAndEventoId(String dni, Long eventoId);
+
+    // Buscar participante por DNI (sin importar el evento)
+    Participante findByDni(String dni);
 }

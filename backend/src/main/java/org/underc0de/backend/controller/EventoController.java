@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.underc0de.backend.dto.EventoDTO;
 import org.underc0de.backend.dto.EventoDetalleDTO;
+import org.underc0de.backend.dto.PremioDTO;
 import org.underc0de.backend.entity.Evento;
 import org.underc0de.backend.service.EventoService;
 
@@ -39,17 +40,17 @@ public class EventoController {
             @ApiResponse(responseCode = "400", description = "Error al realizar el sorteo (evento no encontrado o sin participantes)")
     })
     @PostMapping("/sorteo")
-    public ResponseEntity realizarSorteo() {
+    public ResponseEntity<List<String>> realizarSorteo() {
 
         try {
 
-            eventoService.realizarSorteo();
+            List<String> resultados = eventoService.realizarSorteo();
 
-            return ResponseEntity.ok("Sorteo realizado exitosamente");
+            return ResponseEntity.ok(resultados);
 
         } catch (IllegalStateException e) {
 
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(List.of(e.getMessage()));
 
         }
 

@@ -10,10 +10,7 @@ import org.underc0de.backend.entity.Participante;
 import org.underc0de.backend.repository.IEventoRepository;
 import org.underc0de.backend.repository.IParticipanteRepository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,52 +28,92 @@ public class ParticipanteService {
     }
 
 
-    public List<ParticipanteDTO> cargarParticipantes(List<ParticipanteEventoDTO> participanteEventoDTO){
-//
+    public List<Participante> cargarParticipantes(List<ParticipanteDTO> participantesDTO){
 
-//        Evento evento = eventoService.buscarEvento(participanteEventoDTO.idEvento());
+        Evento evento = eventoService.obtenerUltimoEvento(); // Obtener el último evento
+        List<Participante> participantesGuardados = new ArrayList<>();
+
+        for (ParticipanteDTO participanteDTO : participantesDTO) {
+
+            try {
+                Participante participanteExistente = participanteRepository.findByDniAndEventoId(participanteDTO.dni(), evento.getId());
+
+                // Verificar si el participante ya existe en el evento
+                if (participanteExistente != null) {
+
+                    // Si el participante ya está registrado, saltamos al siguiente
+                    System.out.println("El participante con DNI " + participanteDTO.dni() + " ya está registrado.");
+                    continue; // Continuar con el siguiente participante
+
+                }
+
+                Participante participantePreexistente = participanteRepository.findByDni(participanteDTO.dni());
+
+                if (participantePreexistente != null) {
+                    // Si el participante ya existe en la base de datos (pero en otro evento), se lo agrega al evento actual
+                    participantePreexistente.setEvento(evento);
+                    Participante participanteGuardado = participanteRepository.save(participantePreexistente);
+                    participantesGuardados.add(participanteGuardado);
+                } else {
+
+                    // Crear el nuevo participante
+                    Participante participante = new Participante();
+                    participante.setNombre(participanteDTO.nombre());
+                    participante.setDni(participanteDTO.dni());
+                    participante.setEvento(evento);
+
+                    // Guardar el participante
+                    Participante participanteGuardado = participanteRepository.save(participante);
+                    participantesGuardados.add(participanteGuardado);
+
+                }
+
+            } catch (Exception e) {
+                // Manejar cualquier otra excepción que ocurra durante el proceso
+                System.out.println("Error al agregar el participante: " + participanteDTO.dni() + ", error: " + e.getMessage());
+            }
+
+        }
+
+        return participantesGuardados; // Retornar los participantes guardados
+
+    }
+
+
+    // Carga un participante
+    public String agregarParticipante(ParticipanteDTO participanteDTO) {
 
         Evento evento = eventoService.obtenerUltimoEvento();
 
-        Set<String> dnisProcesados = new HashSet<>();
-
-        return participanteEventoDTO.stream().map(participantEventoDTO -> {
-
-            String dni = participantEventoDTO.participante().dni();
-
-            // Verificamos si el DNI ya fue procesado en esta carga
-            if (dnisProcesados.contains(dni)) {
-                throw new DniExistenteException("El participante con DNI " + dni + " ya fue cargado en esta lista.");
-            }
-            dnisProcesados.add(dni);
-
-            Optional<Participante> participante = participanteRepository.findParticipanteByDni(dni);
-            Participante participanteExistente;
-
-            if (participante.isPresent()) {
-                //Si el participante ya se encuentra asociado al evento
-                participanteExistente = participante.get();
-
-                if (participanteExistente.getEvento() != null && participanteExistente.getEvento().getId().equals(evento.getId())) {
-                    throw new DniExistenteException("El participante con DNI " + participantEventoDTO.participante().dni() + " ya está registrado en este sorteo.");
-                }  else {
-//                    //Actualiza el evento si es un sorteo nuevo
-                    participanteExistente.setEvento(evento);
-                    participanteRepository.save(participanteExistente);
-                    return new ParticipanteDTO(participanteExistente.getNombre(), participanteExistente.getDni());
-                }
+        try {
+            // Verificar si el participante ya existe en el evento
+            Participante participanteExistente = participanteRepository.findByDniAndEventoId(participanteDTO.dni(), evento.getId());
+            if (participanteExistente != null) {
+                return "El participante con DNI " + participanteDTO.dni() + " ya está registrado en este evento.";
             }
 
-            // Si el participante no existe, creamos uno nuevo
-            Participante nuevoParticipante = new Participante();
-            nuevoParticipante.setNombre(participantEventoDTO.participante().nombre());
-            nuevoParticipante.setDni(participantEventoDTO.participante().dni());
-            nuevoParticipante.setSorteos_ganados(0);
-            nuevoParticipante.setEvento(evento);
+            Participante participantePreexistente = participanteRepository.findByDni(participanteDTO.dni());
 
-            participanteRepository.save(nuevoParticipante);
 
-            return new ParticipanteDTO(nuevoParticipante.getNombre(), nuevoParticipante.getDni());
-        }).collect(Collectors.toList());
+            if (participantePreexistente != null) {
+                // Si el participante ya existe (en otro evento), se lo agrega al evento actual
+                participantePreexistente.setEvento(evento);
+                participanteRepository.save(participantePreexistente);
+                return "El participante con DNI " + participanteDTO.dni() + " fue registrado exitosamente en este evento.";
+            } else {
+                Participante participante = new Participante();
+                participante.setNombre(participanteDTO.nombre());
+                participante.setDni(participanteDTO.dni());
+                participante.setEvento(evento);
+
+                participanteRepository.save(participante);
+
+                return "El participante con DNI " + participanteDTO.dni() + " fue registrado exitosamente.";
+            }
+        } catch (Exception e) {
+            // Capturar cualquier otra excepción y retornar un mensaje de error
+            return "Ocurrió un error al registrar el participante: " + e.getMessage();
+        }
     }
+
 }

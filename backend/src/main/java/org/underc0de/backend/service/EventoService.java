@@ -49,15 +49,19 @@ public class  EventoService {
     // Método para obtener el último evento
     public Evento obtenerUltimoEvento() {
         return eventoRepository.findEventoEnCurso()
+                .filter(Evento::isActivo)
                 .orElseThrow(() -> new IllegalStateException("No hay eventos disponibles en este momento."));
     }
 
-    public void realizarSorteo() {
-        Evento evento = obtenerUltimoEvento();
+    public List<String> realizarSorteo() {
 
-        evento.hacerSorteo();
+        Evento evento = obtenerUltimoEvento();
+        List<String> resultados = evento.hacerSorteo();
 
         eventoRepository.save(evento);
+
+        return resultados;
+
     }
 
     public List<EventoDetalleDTO> obtenerHistorialEventos() {

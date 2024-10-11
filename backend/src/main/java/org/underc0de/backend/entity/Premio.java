@@ -1,5 +1,6 @@
 package org.underc0de.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Premio {
 
     @ManyToOne
     @JoinColumn(name = "id_evento", nullable = false)
+    @JsonIgnore
     private Evento evento;
 
     @ManyToOne
