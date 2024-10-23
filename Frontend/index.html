@@ -20,7 +20,6 @@
         <h1>" App Sorteos de Eventos "</h1>
         <img  class="logo" src="./Imagen/logo1.png" >
     </header>
-
     <!--Sección menú -->
     <div class="btn-menu">
         <button id="fomr-evento">Nombre Evento</button>
@@ -29,9 +28,10 @@
         <button id="form-pemios-sponsor">Pemios y Sponsor</button>
         <button id="reinicar-pagina-completa">Reiniciar Sorteo</button>
     </div>
+    
 
     <!--Sección de nombre del evento-->
-    <div class="titulo" id="seccion-nombre" style="display: none;">
+    <div class="titulo" id="seccion-nombre">
         <h1>Nombre del Evento</h1>
 
         <form class="nombre-evento">
@@ -74,20 +74,20 @@
 
     
 
-<!-- Sección premios y patrocinadores -->
-<div class="premios" id="premios">
-    <button id="guardar-datos-premios-sponsor">Guardar Datos</button>
-    <br>
-    <br>
-    <!-- Contenedor dinámico para los premios y patrocinadores -->
-    <div class="premios-container" id="premios-container">
-        <!-- Los campos se generarán dinámicamente aquí -->
+    <!-- Sección premios y patrocinadores -->
+    <div class="premios" id="premios" style="display: none;">
+        <button id="guardar-datos-premios-sponsor">Guardar Datos</button>
+        <br>
+        <br>
+        <!-- Contenedor dinámico para los premios y patrocinadores -->
+        <div class="premios-container" id="premios-container">
+            <!-- Los campos se generarán dinámicamente aquí -->
+        </div>
+        <br>
+        <br>
+        <br>
+        <button id="agregar-premio">Agregar Premio</button> <!-- Botón para agregar premios -->
     </div>
-    <br>
-    <br>
-    <br>
-    <button id="agregar-premio">Agregar Premio</button> <!-- Botón para agregar premios -->
-</div>
 
 
 
@@ -95,20 +95,17 @@
 
     <br>
     <!--Sección realizar sorteo-->
-    <div class="realizar-sorteo" id="btn-sorteo">
+    <div class="realizar-sorteo" id="btn-sorteo" style="display: none";>
         <button class="btn-sort">Realizar Sorteo</button>
         <img src="./Imagen/manito-1.gif" width="70px" height="auto" style="position: relative; top: -37px;">
     </div>
-
+    
     
     
     <footer>
         <p>&copy; 2024 SorteApp. Todos los derechos reservados.</p>
     </footer>
     
-
-
-
     <script src="fuction.js"></script>
 </body>
 </html>

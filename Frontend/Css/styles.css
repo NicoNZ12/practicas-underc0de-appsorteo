@@ -31,7 +31,7 @@ body {
         top: 0px;
     }
 
-    .titulo, .paricipantes {
+    .titulo .paricipantes {
         margin: 20px;
         padding: 20px;
         border-radius: 8px;
@@ -134,15 +134,6 @@ body {
         
     }
 
-
-
-
-
-
-
-
-
-
     .participantes {
         display: flex;
         flex-direction: column;
@@ -203,14 +194,6 @@ body {
             
     }
 
-
-
-
-
-
-
-
-
     div.lista {
         display:flex;
         flex-direction: column; /* Alinea los elementos en columna */
@@ -264,15 +247,6 @@ body {
         width: 60px;
     }
 
-
-
-
-
-
-
-
-
-
     .premios {
         display: grid;
         grid-template-columns: 1fr; /* Un solo columna para el contenedor principal */
@@ -314,12 +288,6 @@ body {
         width: 100%; 
     }
 
-    
-
-    
-
-
-
     #guardar-datos-premios-sponsor,
     #agregar-premio {
         padding: 10px 20px;
@@ -329,12 +297,6 @@ body {
         color: #fff;
         cursor: pointer;
     }
-
-    
-
-
-
-
 
 
     .btn-sort {
@@ -363,12 +325,6 @@ body {
     }
 
 
-
-
-
-
-
-
     .btn-menu {
         padding: 10px;
     }
@@ -393,381 +349,324 @@ body {
         left: 10%;
         background-color: #ff0000;
         border: 3px solid #000;
+    }    
+
+}
+
+/* CELULAR */
+@media (max-width: 1000px) {
+    
+    header{
+        color: #333;
+        padding: 10px 0;
+        text-align: center;
+        background-color: #ffffff56;
+        display: inherit;
+        font-size: .6rem;
+        height: auto;
+        margin-top: 0;
+    }
+
+    header p {
+        font-size: 15px;
+    }
+
+    header img{
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+        height: auto;
+        width: 60px;
+        border-radius: 50%;
+        
+    }
+
+    .titulo, .paricipantes {
+        margin: 20px;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: .5rem;
+        background-color: #ffffff56;
+    }
+
+    input {
+        width: 70%;
+        padding: 10px;
+        margin: 10px 0;
+        margin-top: -10px;
+        border: none;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .nombre-envento {
+        margin: 10px;
+        padding: 20px;
+        border-radius: 8px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    #btn-ingresar{
+        padding: 5px 20px;
+        font-family:"Noto Serif", serif;
+        background-color: #2e07bbb2;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-top: 0px;
+    }
+    #btn-ingresar:hover{
+        background-color: #4d9ceb;
+    }
+
+
+    .qr-div {
+        background-color: #ffffff56;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        padding: 10px;
+        margin: 0 auto;
+    }
+
+    .qr-div button {
+        position: relative;
+        top: 35%;
+    }
+
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .qr-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        height: auto;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .qr-content h3 {
+        margin: 0 0 10px;
+        font-weight: 300;
+        width: 50%;
+        margin: 0 auto;
+        
+    }
+
+    .qr-content button {
+        margin-top: 15px;
+        background-color: #4d9ceb;
+        border: none;
+        padding: 5px 10px;
+        color: #fff;
+        font-size: 1rem;
+        border-radius: 10px;
+        
+    }
+
+    .participantes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 15px auto;
+        padding: 10px;
+        width: 85%;
+        border-radius: 8px;
+        background-color: #ffffff56;
+
+    }
+
+    .participantes h3 {
+        margin: 10px;
+        text-align: center;
+    }
+    .participantes input {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 20px;
+        margin-top: 5px;
+        border-radius: 10px;
+        font-size: 16px;
+        border: none;
+        
+    }
+
+    button.btn-part{
+        padding: 5px 20px;
+        font-family:"Noto Serif", serif;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-top: 0px;
+    }
+    button.btn-part:hover{
+        background-color: #4d9ceb;
+    }
+    button.qr{
+        padding: 5px 10px;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        font-family:"Noto Serif", serif;
+    }
+
+    button.qr:hover{
+        background-color: #4d9ceb;
+            
+    }
+
+    div.lista {
+        display:flex;
+        flex-direction: column; /* Alinea los elementos en columna */
+        justify-content: center; /* Centra verticalmente */
+        align-items: center; /* Centra horizontalmente */
+        margin: 20px auto;
+        background-color: #ffffff56;
+        border-radius: 8px;
+        width: 90%;
+    }
+
+    .lista ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none; 
+        padding: 0; 
+        margin: 0;
+    }
+
+    .lista ul li {
+        margin: 5px; 
+        padding: 10px; 
+        background-color: #f0f0f0; 
+        border: 1px solid #ccc; 
+        border-radius: 5px; 
+
+        width: calc(50% - 10px); /* Cada elemento ocupa el 50% del ancho menos el margen */
+        box-sizing: border-box; 
+    }
+
+    .lista ul li button {
+        margin-left: 10px; 
+        color: white; 
+        border: none;
+        border-radius: 3px; 
+        position: relative;
+    }
+
+
+
+    .lista h4{
+        margin-bottom: 15px;
+        
+    }
+    input.lista{
+        width: 280px;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        margin-top: 10px;
+        font-size: 13px;
+        text-align: center;
     }
 
 
 
 
-    
-
-}
-
-
+    input.cant-ganad{
+        width: 60px;
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* CELULAR */
-@media (max-width: 1000px) {
-
-
-
-    
-header{
-    color: #333;
-    padding: 10px 0;
-    text-align: center;
-    background-color: #ffffff56;
-    display: inherit;
-    font-size: .6rem;
-    height: auto;
-    margin-top: 0;
-}
-
-header p {
-    font-size: 15px;
-}
-
-header img{
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    height: auto;
-    width: 60px;
-    border-radius: 50%;
-    
-}
-
-.titulo, .paricipantes {
-    margin: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: .5rem;
-    background-color: #ffffff56;
-}
-
-input {
-    width: 70%;
-    padding: 10px;
-    margin: 10px 0;
-    margin-top: -10px;
-    border: none;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.nombre-envento {
-    margin: 10px;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-#btn-ingresar{
-    padding: 5px 20px;
-    font-family:"Noto Serif", serif;
-    background-color: #2e07bbb2;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-top: 0px;
-}
-#btn-ingresar:hover{
-    background-color: #4d9ceb;
-}
-
-
-.qr-div {
-    background-color: #ffffff56;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    padding: 10px;
-    margin: 0 auto;
-}
-
-.qr-div button {
-    position: relative;
-    top: 35%;
-}
-
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.qr-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 90%;
-    height: auto;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.qr-content h3 {
-    margin: 0 0 10px;
-    font-weight: 300;
-    width: 50%;
-    margin: 0 auto;
-    
-}
-
-.qr-content button {
-    margin-top: 15px;
-    background-color: #4d9ceb;
-    border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 10px;
-    
-}
-
-
-
-
-
-
-
-.participantes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 15px auto;
-    padding: 10px;
-    width: 85%;
-    border-radius: 8px;
-    background-color: #ffffff56;
-
-}
-
-.participantes h3 {
-    margin: 10px;
-    text-align: center;
-}
-.participantes input {
-    width: 80%;
-    padding: 10px;
-    margin-bottom: 20px;
-    margin-top: 5px;
-    border-radius: 10px;
-    font-size: 16px;
-    border: none;
-    
-}
-
-button.btn-part{
-    padding: 5px 20px;
-    font-family:"Noto Serif", serif;
-    background-color: #2e07bbb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-top: 0px;
-}
-button.btn-part:hover{
-    background-color: #4d9ceb;
-}
-button.qr{
-    padding: 5px 10px;
-    background-color: #2e07bbb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    font-family:"Noto Serif", serif;
-}
-
-button.qr:hover{
-    background-color: #4d9ceb;
+    .premios {
+        display: grid;
+        grid-template-columns:1fr 1fr;
+        gap: 20px;
+        background-color: #ffffff56;
+        padding: 0px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 0px auto;
+        width: 90%;
         
-}
-
-div.lista {
-    display:flex;
-    flex-direction: column; /* Alinea los elementos en columna */
-    justify-content: center; /* Centra verticalmente */
-    align-items: center; /* Centra horizontalmente */
-    margin: 20px auto;
-    background-color: #ffffff56;
-    border-radius: 8px;
-    width: 90%;
-}
-
-.lista ul {
+    }
+    
+    .premios .columna-premios,
+    .premios .columna-patrocinadores {
     display: flex;
-    flex-wrap: wrap;
-    list-style-type: none; 
-    padding: 0; 
-    margin: 0;
-}
+    flex-direction: column; /* Cada columna tendrá los elementos alineados verticalmente */
+    }
 
-.lista ul li {
-    margin: 5px; 
-    padding: 10px; 
-    background-color: #f0f0f0; 
-    border: 1px solid #ccc; 
-    border-radius: 5px; 
+    .premios h3 {
+    margin-bottom: 10px;
+    }
 
-    width: calc(50% - 10px); /* Cada elemento ocupa el 50% del ancho menos el margen */
-    box-sizing: border-box; 
-}
-
-.lista ul li button {
-    margin-left: 10px; 
-    color: white; 
-    border: none;
-    border-radius: 3px; 
-    position: relative;
-}
-
-
-
-.lista h4{
-    margin-bottom: 15px;
+    .premios label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-weight: 300;
+    }
     
-}
-input.lista{
-    width: 280px;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    margin-top: 10px;
-    font-size: 13px;
-    text-align: center;
-}
+    .premios input{
+        width: 130px;
+        margin: 0 auto;
+        
+    }
 
+    .btn-sort {
+        padding: 5px 10px;
+        background-color: #3700ffb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 26px;
+        font-family: "Noto Serif", serif;
+        transition: background-color 0.3s ease;
+        margin: 20px auto;
+        display: block;
+        text-align: center;
+        width: fit-content;
+    }
 
+    .btn-sort:hover {
+        background-color: #4d9ceb;
+    }
 
-
-input.cant-ganad{
-    width: 60px;
-}
-
-
-.premios {
-    display: grid;
-    grid-template-columns:1fr 1fr;
-    gap: 20px;
-    background-color: #ffffff56;
-    padding: 0px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin: 0px auto;
-    width: 90%;
-    
-}
-  
-.premios .columna-premios,
-.premios .columna-patrocinadores {
-  display: flex;
-  flex-direction: column; /* Cada columna tendrá los elementos alineados verticalmente */
-}
-
-.premios h3 {
-  margin-bottom: 10px;
-}
-
-.premios label {
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-weight: 300;
-}
-  
-.premios input{
-    width: 130px;
-    margin: 0 auto;
-    
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-.btn-sort {
-    padding: 5px 10px;
-    background-color: #3700ffb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 26px;
-    font-family: "Noto Serif", serif;
-    transition: background-color 0.3s ease;
-    margin: 20px auto;
-    display: block;
-    text-align: center;
-    width: fit-content;
-}
-
-.btn-sort:hover {
-    background-color: #4d9ceb;
-}
-
-
-  
-
-.cant-ganad{
-    height: 20px;
-    margin-top: 40px;
-    position: relative;
-    top: 12px;
-}
-
-
-
-
+    .cant-ganad{
+        height: 20px;
+        margin-top: 40px;
+        position: relative;
+        top: 12px;
+    }
 }
 
 

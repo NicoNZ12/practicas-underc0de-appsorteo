@@ -27,13 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-
-
-
-
-
-
     // Agregar evento al botón "Guardar Datos"
     document.getElementById('guardar-datos-premios-sponsor').addEventListener('click', guardarDatos);
 
@@ -80,30 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-
-
-
-
-
-
-
-
-
-
     // Cambiar la función de agregar premio
     document.getElementById('agregar-premio').addEventListener('click', () => {
         premioCount++; // Incrementa el contador
         generarCamposPremios(premioCount); // Genera un nuevo premio
     });
-
-
-
-
-
-
-
-
-
 
     // GUARDAR DATOS AL HACER CLIC EN EL BOTÓN
     function guardarDatos() {
@@ -128,11 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         localStorage.setItem('premiosYSponsors', JSON.stringify(premios));
     }
-
-
-
-
-
 
     // Función para generar campos de premios y patrocinadores
     function generarCamposPremios(cantidad) {
@@ -187,18 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
     // Event listeners para mostrar/ocultar secciones
     btnEvento.addEventListener('click', () => {
         toggleSection(seccionNombre);
@@ -219,16 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('activeSection', 'premios'); // Guardar sección activa
     });
     
-
-
-
-
-
-
-
-
-
-
 
     // AGREGAR PARTICIPANTE MANUAL
     const documentosAgregados = [];
@@ -275,20 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-agregar').addEventListener('click', agregarParticipanteManual);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // ELIMINAR PARTICIPANTES
     function eliminarParticipante(participante, dni) {
         const lista = document.getElementById('lista-participantes');
@@ -302,15 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
         guardarDatos(); // Guardar datos al eliminar participante
     }
 
-
-
-
-
-
-
-
-
-
     // REINICIAR SORTEO
     btnReiniciar.addEventListener('click', () => {
         localStorage.removeItem('nombreEvento');
@@ -320,9 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-
-
-    
     // Cargar datos al inicio
     cargarDatos();
 
