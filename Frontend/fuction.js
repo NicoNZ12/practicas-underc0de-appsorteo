@@ -55,7 +55,7 @@ function cargarDatos() {
             toggleSection(seccionNombre);
     }
 
-    const nombreEvento = localStorage.getItem('nombreEvento') || 'Evento Sin Nombre'; // Establecer un nombre por defecto
+    const nombreEvento = localStorage.getItem('nombreEvento'); // Obtener el nombre del evento
     if (nombreEvento) {
         document.getElementById('evento-display').textContent = `EVENTO: "${nombreEvento}"`;
         document.getElementById('nombre-evento').value = nombreEvento;
