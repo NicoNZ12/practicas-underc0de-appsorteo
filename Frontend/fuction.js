@@ -24,6 +24,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //función para cargar los premios en la bd
+    document.getElementById("btn-agregar-premio").addEventListener('click', () => {
+        const cantidad = cantidadGanadoresInput.value;
+        const premiosData = [];
+    
+        for (let i = 0; i < cantidad; i++) {
+            const premioDescripcion = premiosContainer.querySelectorAll('input')[i].value;
+            const patrocinador = patrocinadoresContainer.querySelectorAll('input')[i].value;
+    
+            premiosData.push({
+                descripcion: premioDescripcion,
+                sponsor: patrocinador
+            });
+        }
+    
+
+        premiosData.forEach(premio => {
+            fetch('http://localhost:8080/premio', { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(premio)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Error al enviar los datos');
+                }
+            })
+            .then(result => {
+                console.log('Premio enviado con éxito:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        alert("Premios enviados")
+    });
+    
+    
+
     // AGREGAR NOMBRE DEL EVENTO
     const btnIngresar = document.getElementById('btn-ingresar');
     const nombreEventoInput = document.getElementById('nombre-evento');
@@ -85,12 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cerrarQrBtn.addEventListener('click', () => {
         overlayQr.style.display = 'none'; // Ocultar el overlay
     });
-
-
-
-
-
-
 
 
 
