@@ -20,20 +20,34 @@ public class  EventoService {
     }
 
     public Evento crearEvento(String nombreEvento) {
-        // Buscar el evento por su nombre
-        Optional<Evento> eventoOptional = eventoRepository.findEventoByNombre(nombreEvento);
 
-        // Si el evento existe, lo retornamos
-        if (eventoOptional.isPresent()) {
-            return eventoOptional.get();
+        Evento eventoActivo;
+
+        try {
+            // Buscar si hay evento activo
+            eventoActivo = obtenerUltimoEvento();
+
+        } catch (IllegalStateException e){
+
+            // Si no existe, creamos uno nuevo
+            Evento nuevoEvento = new Evento();
+            nuevoEvento.setNombre(nombreEvento);
+            nuevoEvento.setFecha(LocalDateTime.now());
+
+            return eventoRepository.save(nuevoEvento);
+
+        }
+        // Si hay evento activo
+        // Verificar si el nombre ingresado es diferente al del evento activo
+        if (!eventoActivo.getNombre().equalsIgnoreCase(nombreEvento)) {
+
+            eventoActivo.setNombre(nombreEvento);
+            return eventoRepository.save(eventoActivo);
         }
 
-        // Si no existe, creamos uno nuevo
-        Evento nuevoEvento = new Evento();
-        nuevoEvento.setNombre(nombreEvento);
-        nuevoEvento.setFecha(LocalDateTime.now());
+        // Retornar el evento existente si el nombre es el mismo
+        return eventoActivo;
 
-        return eventoRepository.save(nuevoEvento);
     }
 
     public Evento buscarEvento(Long id){
