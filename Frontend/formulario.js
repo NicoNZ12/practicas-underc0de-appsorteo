@@ -27,6 +27,8 @@ async function agregarParticipante(){
         if (response.ok) {
             const data = await response.json();
             alert('Participante agregado exitosamente');
+            document.querySelector("#participante-nombre").value = "";
+            document.querySelector("#documento-participante").value = "";
 
         }else{
             console.error("Error al agregar el participante:" + response.statusText);
