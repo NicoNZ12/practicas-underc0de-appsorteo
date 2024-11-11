@@ -220,9 +220,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    async function generarSoreto(){
+        try{
+            const response = await fetch("http://localhost:8080/evento/sorteo", {
+                method: 'POST',
+            });
+            const datos = await response.json();
+            console.log(datos); //ganadores
+        }catch(error){
+            console.error("Error al generar el sorteo");
+        }
+    }
 
 
-
+    const sorteoBtn = document.querySelector(".btn-sort");
+    sorteoBtn.addEventListener("click", generarSoreto);
 
 
 });
