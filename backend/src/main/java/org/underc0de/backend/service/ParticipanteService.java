@@ -116,4 +116,14 @@ public class ParticipanteService {
         }
     }
 
+    //Obtiene todos los participantes del evento activo
+    public List<ParticipanteDTO> obtenerParticipantes(){
+        Evento evento = eventoService.obtenerUltimoEvento();
+        List<Participante> participantes = participanteRepository.findByEventoId(evento.getId());
+
+        return participantes.stream()
+                .map(p -> new ParticipanteDTO(p.getNombre(), p.getDni()))
+                .toList();
+
+    }
 }

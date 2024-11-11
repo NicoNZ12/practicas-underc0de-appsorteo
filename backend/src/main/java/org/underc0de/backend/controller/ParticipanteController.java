@@ -58,4 +58,10 @@ public class ParticipanteController {
 
     }
 
+
+    @GetMapping("/mostrar-participantes")
+    public ResponseEntity<List<ParticipanteDTO>> obtenerParticipantes(){
+        List<ParticipanteDTO> participantes= participanteService.obtenerParticipantes();
+        return ResponseEntity.ok(participantes);
+    }
 }
