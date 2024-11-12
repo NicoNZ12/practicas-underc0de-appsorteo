@@ -13,12 +13,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
 </head>
+
 <body>
     <header class="encabezado">
         <p>Bienvenidos a la Sección de Sorteos de UnderCode</p>
         <h1>" App Sorteos de Eventos "</h1>
-        <img  class="logo" src="Imagen/logo1.png" >
+        <img  class="logo" src="./Imagen/logo1.png" >
     </header>
+    <!--Sección menú -->
+    <div class="btn-menu">
+        <button id="fomr-evento">Nombre Evento</button>
+        <button id="form-registro-participantes">Registro de Participantes</button>
+        <button id="form-lista-participantes">Lista de Participantes</button>
+        <button id="form-pemios-sponsor">Pemios y Sponsor</button>
+        <button id="reinicar-pagina-completa">Reiniciar Sorteo</button>
+    </div>
+    
+
     <!--Sección de nombre del evento-->
     <div class="titulo" id="seccion-nombre">
         <h1>Nombre del Evento</h1>
@@ -31,78 +42,80 @@
         <button class="btn-ingresar" id="btn-ingresar">Ingresar</button>
     </div>
 
-    <div class="qr-div" id="qr">
-        <button class="qr">Abrir QR</button>
-        <div class="overlay" style="display: none;">
-            <div class="qr-content">
-                <h3>Escanea el QR para participar del evento de hoy</h3>
-                <br>
-                <div class="qr-code-container"></div> <!-- Contenedor para el QR -->
-                <button class="cerrar-qr">Cerrar</button>
-            </div>
-        </div>
-    </div>
-    
-    
-    
-    
-    
-    
-    
-
-    <!--Sección lista o mostrar los participantes-->
-    <div class="lista" id="lista">
-        <p>EVENTO</p>
-        <h4>Lista de Participantes</h4>
-        <ul id="lista-participantes"></ul> <!-- Lista de participantes -->
-    </div>
-
-    
-
-    <!--Sección premios y patrocinadores-->
-    <div class="premios" id="premios">
-        
-        <h5>Cantidad Ganadores</h5>  
-        <input type="number" class="cant-ganad" placeholder="N°" >   
-        <div class="columna-premios">
-            <h3>Premios</h3>
-            <label>1° Premio</label>
-            <input>           
-        </div>
-
-        <div class="columna-patrocinadores">
-            <h3>Patrocinadores</h3>
-            <label>Patrocinador 1° </label>
-            <input type="text">      
-        </div>
-        <button class="btn-part" id="btn-agregar-premio">Añadir premios</button>
-    </div>
-
-
     <!--Sección participante-->
-    <div class="participantes" id="seccion-participantes">    
+    <div class="participantes" id="seccion-participantes" style="display: none;">    
         <h3>Registro de Participantes Manual</h3>
         <input type="text" id="nombre-participante" placeholder="Nombre y Apellido">
         <input type="text" id="dni" placeholder="DNI">
         <button class="btn-part" id="btn-agregar">Agregar Participante</button>
     </div>
 
-    <br>
-    <!--Sección realizar sorteo-->
-    <div class="realizar-sorteo" id="btn-sorteo">
-        <button class="btn-sort">Realizar Sorteo</button>
-        <img src="Imagen/manito-1.gif" width="70px" height="auto" style="position: relative; top: -37px;">
+    
+
+<!-- Sección QR -->
+<div class="qr-div" id="qr">
+    <button class="qr">Abrir QR</button>
+    <div class="overlay" style="display: none;">
+        <div class="qr-content">
+            <h3>Escanea el QR para participar del evento de hoy</h3>
+            <br>
+            <div class="qr-code-container"></div> <!-- Contenedor para el QR -->
+            <button class="cerrar-qr">Cerrar</button>
+        </div>
+    </div>
+</div>
+
+
+    
+
+    <!--Sección lista o mostrar los participantes-->
+    <div class="lista" id="lista" style="display: none;">
+        <p id="evento-display">EVENTO</p> <!-- Aquí se mostrará el nombre del evento -->
+        <h4>Lista de Participantes</h4>
+        <ul id="lista-participantes"></ul> <!-- Lista de participantes -->
     </div>
 
+    
+
+    <!-- Sección premios y patrocinadores -->
+    <div class="premios" id="premios" style="display: none;">
+        <button id="agregar-premio">Agregar Premio</button> <!-- Botón para agregar premios -->
+        <br>
+        <br>
+        <!-- Contenedor dinámico para los premios y patrocinadores -->
+        <div class="premios-container" id="premios-container">
+            <!-- Los campos se generarán dinámicamente aquí -->
+        </div>
+        <br>
+        <br>
+        <br>
+        <button id="guardar-datos-premios-sponsor">Guardar Datos</button>
+        <div id="mensaje-contenedor"></div>
+
+        <br>
+        <!--Sección realizar sorteo-->
+        <div class="realizar-sorteo" id="realizar-sorteo" style="display: none";>
+            <button id="btn-sorteo"  class="btn-sort">Realizar Sorteo</button>
+            <img src="./Imagen/manito-1.gif" width="70px" height="auto" style="position: relative; top: -37px;">
+        </div>
+        
+    </div>
+
+
+
+
+
+    
+    
     
     
     <footer>
         <p>&copy; 2024 SorteApp. Todos los derechos reservados.</p>
     </footer>
     
-
-
-
     <script src="fuction.js"></script>
+    <!-- Incluir el CDN de QRCode.js -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
 </body>
 </html>
