@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const documentosAgregados = [];
 
-    function agregarParticipanteManual() {
+    async function agregarParticipanteManual() {
         const nombre = document.getElementById('nombre-participante').value.trim();
         const dni = document.getElementById('dni').value.trim();
 
@@ -336,14 +336,41 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        agregarAParticipantes(nombre, dni);
-        documentosAgregados.push(dni); // Asegúrate de que se agregue solo si se añade un participante
+        if(dni.length != 8){
+            alert("El DNI debe tener 8 digitos");
+            return;
+        }
 
-        // Limpiar los campos de entrada
-        document.getElementById('nombre-participante').value = '';
-        document.getElementById('dni').value = '';
-        guardarDatos(); // Guardar datos al agregar participante
+        try {
+            const response = await fetch("http://localhost:8080/participante/agregar-participante", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nombre, dni })
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                agregarAParticipantes(nombre, dni);
+                documentosAgregados.push(dni);
+                alert(data.message || `Participante agregado: ${data.nombre} (${data.dni})`);
+                
+                // Limpiar campos
+                document.getElementById('nombre-participante').value = '';
+                document.getElementById('dni').value = '';
+                guardarDatos();
+            } else {
+                const errorMessage = await response.json();
+                alert(errorMessage.message);
+                console.error("Error al agregar el participante:", errorMessage);
+            }
+        } catch (error) {
+            console.error("Error de conexión con la API:", error);
+            alert('Hubo un problema al conectar con el servidor.');
+        }
     }
+
 
     function agregarAParticipantes(nombre, dni) {
         const lista = document.getElementById('lista-participantes');

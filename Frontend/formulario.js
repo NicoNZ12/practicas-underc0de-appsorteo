@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Capturamos el evento de clic en el botón de agregar participante
     const btnAgregarParticipante = document.getElementById('agregar-participante');
     
-    btnAgregarParticipante.addEventListener('click', () => {
+    btnAgregarParticipante.addEventListener('click', async () => {
         const nombre = document.getElementById('participante-nombre').value.trim();
         const dni = document.getElementById('documento-participante').value.trim();
 
@@ -22,23 +22,45 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Si el DNI no está repetido, agregar el participante
+        if(dni.length != 8){
+            alert("El DNI debe tener 8 digitos");
+            return;
+        }
+
         const participante = { nombre, dni };
-        participantes.push(participante);
+        
+        try {
+            const response = await fetch("http://localhost:8080/participante/agregar-participante", { 
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(participante)
+            });
 
-        // Guardar los participantes en localStorage
-        localStorage.setItem('participantes', JSON.stringify(participantes));
+            if (response.ok) {
+                const data = await response.json();
+                alert('Participante agregado exitosamente');
+                console.log('Participante agregado:', data);
 
-        // Limpiar los campos del formulario
-        document.getElementById('participante-nombre').value = '';
-        document.getElementById('documento-participante').value = '';
+                // Solo actualizar localStorage si la respuesta fue exitosa
+                participantes.push(participante);
+                localStorage.setItem('participantes', JSON.stringify(participantes));
 
-        // Notificamos a index.html que debe actualizar la lista
-        window.dispatchEvent(new Event('storage'));
+                document.getElementById('participante-nombre').value = '';
+                document.getElementById('documento-participante').value = '';
 
-        // Actualizar la lista en index.html (esto es opcional y depende de la lógica que implementes en el otro archivo)
-        // Almacenamos en localStorage que un participante fue agregado y luego en index.js los cargamos
-        const eventoNombre = localStorage.getItem('nombreEvento');  // Opcional si quieres asociarlo a un evento
-        localStorage.setItem('nuevoParticipante', JSON.stringify({ nombre, dni, evento: eventoNombre }));
+                window.dispatchEvent(new Event('storage'));
+
+                const eventoNombre = localStorage.getItem('nombreEvento');
+                localStorage.setItem('nuevoParticipante', JSON.stringify({ nombre, dni, evento: eventoNombre }));
+            } else {
+                console.log("Error al agregar participante:", response.statusText);
+                alert('Error al agregar el participante');
+            }
+        } catch (error) {
+            console.error("Error de conexión con la API:", error);
+            alert('Hubo un problema al conectar con el servidor.');
+        }
     });
 });

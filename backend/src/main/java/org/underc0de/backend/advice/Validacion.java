@@ -26,5 +26,12 @@ public class Validacion {
     public ResponseEntity<String> handleCredencialYaExistente(DniExistenteException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> handleNoEventosDisponibles(IllegalStateException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+
 }
 
