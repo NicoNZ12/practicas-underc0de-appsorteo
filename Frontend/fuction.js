@@ -8,13 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnParticipantes = document.getElementById('form-registro-participantes');
     const btnLista = document.getElementById('form-lista-participantes');
     const btnPremios = document.getElementById('form-pemios-sponsor');
+    const btnGuardar = document.getElementById('guardar-datos-premios-sponsor');
     const btnReiniciar = document.getElementById('reinicar-pagina-completa');
+    const btnSorteo = document.getElementById("btn-sorteo");
 
     const seccionNombre = document.getElementById('seccion-nombre');
     const seccionParticipantes = document.getElementById('seccion-participantes');
     const listaParticipantes = document.getElementById('lista');
     const seccionPremios = document.getElementById('premios');
     const qrDiv = document.getElementById('qr');
+    const mensajeContenedor = document.getElementById('mensaje-contenedor');
+    const seccionSorteo = document.getElementById("realizar-sorteo");
 
     let premioCount = 0; // Contador para los premios
 
@@ -29,70 +33,80 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-
-
-
-
     //GUARDAR LOS DATOS AL ACTUALIZAR
 
     // Agregar evento al botón "Guardar Datos"
-    document.getElementById('guardar-datos-premios-sponsor').addEventListener('click', guardarDatos);
+    btnGuardar.addEventListener('click',() => {
+        guardarDatos(); //LLamo a la función de guardar los datos
 
-   // CARGAR DATOS AL ACTUALIZAR
-function cargarDatos() {
-    const activeSection = localStorage.getItem('activeSection') || 'nombre'; // Cargar sección activa o 'nombre' por defecto
-    switch (activeSection) {
-        case 'participantes':
-            toggleSection(seccionParticipantes);
-            break;
-        case 'lista':
-            toggleSection(listaParticipantes);
-            break;
-        case 'premios':
-            toggleSection(seccionPremios);
-            break;
-        default:
-            toggleSection(seccionNombre);
-    }
+        //Mostrar el mensaje
+        const mensaje = document.createElement('p');
+        mensaje.textContent = `Datos guardados del sorteo "${localStorage.getItem('nombreEvento')}"`;
 
-    const nombreEvento = localStorage.getItem('nombreEvento'); // Obtener el nombre del evento
-    if (nombreEvento) {
-        document.getElementById('evento-display').textContent = `EVENTO: "${nombreEvento}"`;
-        document.getElementById('nombre-evento').value = nombreEvento;
-    }
-
-    const participantes = JSON.parse(localStorage.getItem('participantes')) || [];
-    const lista = document.getElementById('lista-participantes');
-    lista.innerHTML = ''; // Limpiar la lista antes de agregar
-    participantes.forEach(({ nombre, dni }) => {
-        const nombreEvento = localStorage.getItem('nombreEvento'); // Obtener el nombre del evento
-        agregarAParticipantes(nombre, dni, nombreEvento); // Pasar el nombre del evento
-    });
-    const premios = JSON.parse(localStorage.getItem('premiosYSponsors')) || [];
-    premioCount = premios.length; 
-    generarCamposPremios(premioCount); 
-
-    // Rellenar los campos con datos guardados
-    premios.forEach((premio, index) => {
-        const premiosRows = document.querySelectorAll('.premios-row');
-        const premioInput = premiosRows[index].querySelector('.columna-premios input');
-        const sponsorInput = premiosRows[index].querySelector('.columna-patrocinadores input');
-        if (premioInput && sponsorInput) {
-            premioInput.value = premio.premio;
-            sponsorInput.value = premio.sponsor;
+        //Evitar duplicados si el mensaje está en pantalla
+        if(!document.body.contains(document.getElementById('mensaje-guardado'))){
+            mensaje.id = 'mensaje-guardado';
+            mensajeContenedor.appendChild(mensaje);
+        }
+        // Mostrar la sección de "Realizar Sorteo" solo si está oculta
+        if (seccionSorteo.style.display === 'none') {
+            seccionSorteo.style.display = 'block';
         }
     });
-}
+
+    //Boton realizar Sorteo
+    btnSorteo.addEventListener('click', ()=>{
+        //Lógica del sorteo
+        alert("Realizando el sorteo...");
+
+    });
+
+   // CARGAR DATOS AL ACTUALIZAR
+    function cargarDatos() {
+        const activeSection = localStorage.getItem('activeSection') || 'nombre'; // Cargar sección activa o 'nombre' por defecto
+        switch (activeSection) {
+            case 'participantes':
+                toggleSection(seccionParticipantes);
+                break;
+            case 'lista':
+                toggleSection(listaParticipantes);
+                break;
+            case 'premios':
+                toggleSection(seccionPremios);
+                break;
+            default:
+                toggleSection(seccionNombre);
+        }
+
+        const nombreEvento = localStorage.getItem('nombreEvento'); // Obtener el nombre del evento
+        if (nombreEvento) {
+            document.getElementById('evento-display').textContent = `EVENTO: "${nombreEvento}"`;
+            document.getElementById('nombre-evento').value = nombreEvento;
+        }
+
+        const participantes = JSON.parse(localStorage.getItem('participantes')) || [];
+        const lista = document.getElementById('lista-participantes');
+        lista.innerHTML = ''; // Limpiar la lista antes de agregar
+        participantes.forEach(({ nombre, dni }) => {
+            const nombreEvento = localStorage.getItem('nombreEvento'); // Obtener el nombre del evento
+            agregarAParticipantes(nombre, dni, nombreEvento); // Pasar el nombre del evento
+        });
+        const premios = JSON.parse(localStorage.getItem('premiosYSponsors')) || [];
+        premioCount = premios.length; 
+        generarCamposPremios(premioCount); 
+
+        // Rellenar los campos con datos guardados
+        premios.forEach((premio, index) => {
+            const premiosRows = document.querySelectorAll('.premios-row');
+            const premioInput = premiosRows[index].querySelector('.columna-premios input');
+            const sponsorInput = premiosRows[index].querySelector('.columna-patrocinadores input');
+            if (premioInput && sponsorInput) {
+                premioInput.value = premio.premio;
+                sponsorInput.value = premio.sponsor;
+            }
+        });
+    }
     
-
-
-
-
-
-
-
-
-
 
     // Cambiar la función de agregar premio
     document.getElementById('agregar-premio').addEventListener('click', () => {
@@ -106,15 +120,6 @@ function cargarDatos() {
         generarCamposPremios(premioCount); // Genera un nuevo premio
     });
     
-
-
-
-
-
-
-
-
-
 
     // GUARDAR DATOS AL HACER CLIC EN EL BOTÓN
     function guardarDatos() {
@@ -140,11 +145,6 @@ function cargarDatos() {
         localStorage.setItem('premiosYSponsors', JSON.stringify(premios));
     }
     
-
-
-
-
-
 
     // PREMIOS Y SPONSOR
 
@@ -202,15 +202,6 @@ function cargarDatos() {
     }
 }
 
-
-
-
-
-
-
-
-
-
     // MOSTRAR LA SECCION AL HACER CLICK EN EL MENU DE BOTONES
 
 
@@ -233,132 +224,95 @@ function cargarDatos() {
         toggleSection(seccionPremios);
         localStorage.setItem('activeSection', 'premios'); // Guardar sección activa
     });
-    
-
-
-
-
-
-
-
-
-
 
 
     // AGREGAR PARTICIPANTE DE FORMA MANUAL
 
-const documentosAgregados = [];
+    const documentosAgregados = [];
 
-function agregarParticipanteManual() {
-    const nombre = document.getElementById('nombre-participante').value.trim();
-    const dni = document.getElementById('dni').value.trim();
+    function agregarParticipanteManual() {
+        const nombre = document.getElementById('nombre-participante').value.trim();
+        const dni = document.getElementById('dni').value.trim();
 
 
     
-    if (!nombre || !dni) {
-        alert('Por favor, complete ambos campos (Nombre y Documento).');
-        return;
+        if (!nombre || !dni) {
+            alert('Por favor, complete ambos campos (Nombre y Documento).');
+            return;
+        }
+
+        if (documentosAgregados.includes(dni)) {
+            alert('El documento ya ha sido registrado. Por favor, utiliza un documento diferente.');
+            return;
+        }
+
+        agregarAParticipantes(nombre, dni);
+        documentosAgregados.push(dni); // Asegúrate de que se agregue solo si se añade un participante
+
+        // Limpiar los campos de entrada
+        document.getElementById('nombre-participante').value = '';
+        document.getElementById('dni').value = '';
+        guardarDatos(); // Guardar datos al agregar participante
     }
 
-    if (documentosAgregados.includes(dni)) {
-        alert('El documento ya ha sido registrado. Por favor, utiliza un documento diferente.');
-        return;
-    }
+    function agregarAParticipantes(nombre, dni) {
+        const lista = document.getElementById('lista-participantes');
+        const nombreEvento = localStorage.getItem('nombreEvento'); // Obtener el nombre del evento
 
-    agregarAParticipantes(nombre, dni);
-    documentosAgregados.push(dni); // Asegúrate de que se agregue solo si se añade un participante
+        // Crear un nuevo elemento de lista
+        const li = document.createElement('li');
+        li.textContent = `${nombre} - ${dni}`; // Añadir solo el nombre y DNI
 
-    // Limpiar los campos de entrada
-    document.getElementById('nombre-participante').value = '';
-    document.getElementById('dni').value = '';
-    guardarDatos(); // Guardar datos al agregar participante
-}
-
-function agregarAParticipantes(nombre, dni) {
-    const lista = document.getElementById('lista-participantes');
-    const nombreEvento = localStorage.getItem('nombreEvento'); // Obtener el nombre del evento
-
-    // Crear un nuevo elemento de lista
-    const li = document.createElement('li');
-    li.textContent = `${nombre} - ${dni}`; // Añadir solo el nombre y DNI
-
-    const btnEliminar = document.createElement('button');
-    btnEliminar.textContent = '❌';
-    btnEliminar.onclick = function() {
+        const btnEliminar = document.createElement('button');
+        btnEliminar.textContent = '❌';
+        btnEliminar.onclick = function() {
         eliminarParticipante(li, dni);
-    };
+        };
 
-    li.appendChild(btnEliminar); // Agregar el botón de eliminación
-    lista.appendChild(li);
-}
-
-document.getElementById('btn-agregar').addEventListener('click', agregarParticipanteManual);
-
-
-
-
-
-
-//GUARDAR EL NOMBRE DEL EVENTO 
-document.getElementById('btn-ingresar').addEventListener('click', () => {
-    const nombreEvento = document.getElementById('nombre-evento').value.trim();
-    if (!nombreEvento) {
-        alert('Por favor, ingrese el nombre del evento.');
-        return;
+        li.appendChild(btnEliminar); // Agregar el botón de eliminación
+        lista.appendChild(li);
     }
 
-    localStorage.setItem('nombreEvento', nombreEvento);
-    cargarDatos(); // Cargar datos para mostrar el nombre del evento
-    toggleSection(seccionParticipantes); // Cambiar a la sección de participantes
-});
+    document.getElementById('btn-agregar').addEventListener('click', agregarParticipanteManual);
 
+    //GUARDAR EL NOMBRE DEL EVENTO 
+    document.getElementById('btn-ingresar').addEventListener('click', () => {
+        const nombreEvento = document.getElementById('nombre-evento').value.trim();
+        if (!nombreEvento) {
+            alert('Por favor, ingrese el nombre del evento.');
+            return;
+        }
 
-
-
-
-
-
-
-
-
-
-
+        localStorage.setItem('nombreEvento', nombreEvento);
+        cargarDatos(); // Cargar datos para mostrar el nombre del evento
+        toggleSection(seccionParticipantes); // Cambiar a la sección de participantes
+    });
 
     // ELIMINAR PARTICIPANTES
-function eliminarParticipante(participante, dni) {
-    const lista = document.getElementById('lista-participantes');
-    lista.removeChild(participante);
+    function eliminarParticipante(participante, dni) {
+        const lista = document.getElementById('lista-participantes');
+        lista.removeChild(participante);
 
-    // Eliminar el documento del array
-    const index = documentosAgregados.indexOf(dni);
-    if (index !== -1) {
-        documentosAgregados.splice(index, 1);
+        // Eliminar el documento del array
+        const index = documentosAgregados.indexOf(dni);
+        if (index !== -1) {
+            documentosAgregados.splice(index, 1);
+        }
+        guardarDatos(); // Guardar datos al eliminar participante
     }
-    guardarDatos(); // Guardar datos al eliminar participante
-}
-
-
-
-
-
-
-
-
-
-
 
     // REINICIAR SORTEO Y PÁGINA ENTERA
     btnReiniciar.addEventListener('click', () => {
         localStorage.removeItem('nombreEvento');
         localStorage.removeItem('participantes');
         localStorage.removeItem('premiosYSponsors');
+
+        // Guardar en localStorage que debe desplazarse a la sección de "Nombre del Evento"
+        localStorage.setItem('redirigirNombreEvento', 'true');
+
         location.reload(); // Recargar la página para reiniciar
     });
 
-
-
-
-    
     // Cargar datos al inicio
     cargarDatos();
 
