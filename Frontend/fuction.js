@@ -85,12 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
     //GUARDAR LOS DATOS AL ACTUALIZAR
 
     // Agregar evento al botón "Guardar Datos"
@@ -384,12 +378,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     //GUARDAR EL NOMBRE DEL EVENTO 
-    document.getElementById('btn-ingresar').addEventListener('click', () => {
+    document.getElementById('btn-ingresar').addEventListener('click', async () => {
         const nombreEvento = document.getElementById('nombre-evento').value.trim();
         if (!nombreEvento) {
             alert('Por favor, ingrese el nombre del evento.');
             return;
         }
+        try {
+            const response = await fetch("http://localhost:8080/evento", { 
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({nombre: nombreEvento}) 
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert('Evento creado exitosamente');
+            } else {
+                console.log("error: " + response.statusText)
+                alert('Error al crear el evento');
+            }
+
+        } catch (error) {
+            console.error("Error de conexión con la api:", error);
+        } 
 
         localStorage.setItem('nombreEvento', nombreEvento);
         cargarDatos(); // Cargar datos para mostrar el nombre del evento
