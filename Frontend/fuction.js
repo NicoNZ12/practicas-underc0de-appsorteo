@@ -91,6 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btnGuardar.addEventListener('click',() => {
         guardarDatos(); //LLamo a la función de guardar los datos
 
+        guardarPremiosYSponsors()
+
         //Mostrar el mensaje
         const mensaje = document.createElement('p');
         mensaje.textContent = `Datos guardados del sorteo "${localStorage.getItem('nombreEvento')}"`;
@@ -107,10 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     //Boton realizar Sorteo
-    btnSorteo.addEventListener('click', ()=>{
-        //Lógica del sorteo
-        alert("Realizando el sorteo...");
-
+    btnSorteo.addEventListener('click', async ()=>{
+        try{
+            const response = await fetch("http://localhost:8080/evento/sorteo", {
+                method: 'POST',
+            });
+            const datos = await response.json();
+            console.log(datos); //ganadores
+        }catch(error){
+            console.error("Error al generar el sorteo");
+        }
     });
 
 
@@ -212,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sponsor = row.querySelector('.columna-patrocinadores input').value.trim();
             premios.push({ premio, sponsor });
         });
+
         localStorage.setItem('premiosYSponsors', JSON.stringify(premios));
     }
     
@@ -230,58 +239,115 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para generar campos de premios y patrocinadores
     function generarCamposPremios(cantidad) {
-    const premiosContainer = document.getElementById('premios-container');
+        const premiosContainer = document.getElementById('premios-container');
 
-    // Solo agrega un nuevo campo si ya hay campos existentes
-    const currentRows = premiosContainer.querySelectorAll('.premios-row').length;
+        // Solo agrega un nuevo campo si ya hay campos existentes
+        const currentRows = premiosContainer.querySelectorAll('.premios-row').length;
 
-    for (let i = currentRows; i < cantidad; i++) {
-        const premiosRow = document.createElement('div');
-        premiosRow.classList.add('premios-row');
+        for (let i = currentRows; i < cantidad; i++) {
+            const premiosRow = document.createElement('div');
+            premiosRow.classList.add('premios-row');
 
-        // Columna de premios
-        const columnaPremios = document.createElement('div');
-        columnaPremios.classList.add('columna-premios');
-        const labelPremio = document.createElement('label');
-        labelPremio.textContent = `${i + 1}° Premio`;
-        const inputPremio = document.createElement('input');
-        inputPremio.type = 'text';
-        inputPremio.placeholder = `Descripción del ${i + 1}° premio`;
+            // Columna de premios
+            const columnaPremios = document.createElement('div');
+            columnaPremios.classList.add('columna-premios');
+            const labelPremio = document.createElement('label');
+            labelPremio.textContent = `${i + 1}° Premio`;
+            const inputPremio = document.createElement('input');
+            inputPremio.type = 'text';
+            inputPremio.placeholder = `Descripción del ${i + 1}° premio`;
 
-        columnaPremios.appendChild(labelPremio);
-        columnaPremios.appendChild(inputPremio);
+            columnaPremios.appendChild(labelPremio);
+            columnaPremios.appendChild(inputPremio);
 
-        // Columna de patrocinadores (sponsors)
-        const columnaPatrocinadores = document.createElement('div');
-        columnaPatrocinadores.classList.add('columna-patrocinadores');
-        const labelSponsor = document.createElement('label');
-        labelSponsor.textContent = `Sponsor ${i + 1}°`;
-        const inputSponsor = document.createElement('input');
-        inputSponsor.type = 'text';
-        inputSponsor.placeholder = `Nombre del sponsor ${i + 1}`;
+            // Columna de patrocinadores (sponsors)
+            const columnaPatrocinadores = document.createElement('div');
+            columnaPatrocinadores.classList.add('columna-patrocinadores');
+            const labelSponsor = document.createElement('label');
+            labelSponsor.textContent = `Sponsor ${i + 1}°`;
+            const inputSponsor = document.createElement('input');
+            inputSponsor.type = 'text';
+            inputSponsor.placeholder = `Nombre del sponsor ${i + 1}`;
 
-        columnaPatrocinadores.appendChild(labelSponsor);
-        columnaPatrocinadores.appendChild(inputSponsor);
+            columnaPatrocinadores.appendChild(labelSponsor);
+            columnaPatrocinadores.appendChild(inputSponsor);
 
-        // Botón de eliminar
-        const btnEliminar = document.createElement('button');
-        btnEliminar.textContent = '❌';
-        btnEliminar.onclick = () => {
-            premiosContainer.removeChild(premiosRow);
-            premioCount--; // Disminuye el contador
-        };
+            // Botón de eliminar
+            const btnEliminar = document.createElement('button');
+            btnEliminar.textContent = '❌';
+            btnEliminar.style.border = "none";
+            btnEliminar.style.cursor = "pointer";
+            btnEliminar.style.background = "none";
+            btnEliminar.onclick = () => {
+                premiosContainer.removeChild(premiosRow);
+                premioCount--; // Disminuye el contador
+            };
 
-        // Agregar las columnas y el botón de eliminación a la fila
-        premiosRow.appendChild(columnaPremios);
-        premiosRow.appendChild(columnaPatrocinadores);
-        premiosRow.appendChild(btnEliminar);
+            // Agregar las columnas y el botón de eliminación a la fila
+            premiosRow.appendChild(columnaPremios);
+            premiosRow.appendChild(columnaPatrocinadores);
+            premiosRow.appendChild(btnEliminar);
 
-        // Agregar la fila al contenedor de premios
-        premiosContainer.appendChild(premiosRow);
+            // Agregar la fila al contenedor de premios
+            premiosContainer.appendChild(premiosRow);
+        }
+
     }
-}
 
+    async function guardarPremiosYSponsors() {
+        const premiosContainer = document.getElementById('premios-container');
+        const premios = [];
+        
 
+        premiosContainer.querySelectorAll('.premios-row').forEach(row => {
+            const descripcion = row.querySelector('.columna-premios input').value.trim();
+            const sponsor = row.querySelector('.columna-patrocinadores input').value.trim();
+        
+
+            if (descripcion && sponsor) {
+                premios.push({ descripcion, sponsor });
+            }
+        });
+        
+        // Verifica si hay premios para enviar
+        if (premios.length === 0) {
+            alert('Por favor, complete al menos un premio y patrocinador.');
+            return;
+        }
+        
+        let todosGuardadosCorrectamente = true; 
+        
+        // Enviar cada premio de manera individual
+        for (const premio of premios) {
+            try {
+                const response = await fetch("http://localhost:8080/premio", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(premio)
+                });
+        
+                if (!response.ok) {
+                    todosGuardadosCorrectamente = false; 
+                    const errorData = await response.text(); 
+                    alert(errorData.message || "Error al guardar un premio.");
+                    console.error("Error al guardar premio:", errorData.message);
+                }
+            } catch (error) {
+                todosGuardadosCorrectamente = false;
+                console.error("Error de conexión con la API:", error);
+                alert('Hubo un problema al conectar con el servidor.');
+            }
+        }
+    
+        // Si todos los premios se guardaron correctamente, muestra la alerta una sola vez
+        if (todosGuardadosCorrectamente) {
+            alert("Premios y sponsors guardados exitosamente.");
+        }
+    }
+    
+    
 
 
 
@@ -479,6 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('nombreEvento');
         localStorage.removeItem('participantes');
         localStorage.removeItem('premiosYSponsors');
+        localStorage.removeItem("nuevoParticipante")
 
         // Guardar en localStorage que debe desplazarse a la sección de "Nombre del Evento"
         localStorage.setItem('redirigirNombreEvento', 'true');
