@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnGuardar = document.getElementById('guardar-datos-premios-sponsor');
     const btnReiniciar = document.getElementById('reinicar-pagina-completa');
     const btnSorteo = document.getElementById("btn-sorteo");
+    const btnGuardarParticipantes = document.getElementById("btn-guardar-parts");
 
     const seccionNombre = document.getElementById('seccion-nombre');
     const seccionParticipantes = document.getElementById('seccion-participantes');
@@ -383,8 +384,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    //GUARDAR LA LISTA DE PARTICIPANTES EN LA BBDD.
+    async function guardarParticipantes(){
+        const participantes = localStorage.getItem("participantes")
 
+        let participantesDatos = [];
 
+        if (participantes) {
+            const listaParticipantes = JSON.parse(participantes);
+    
+            participantesDatos = listaParticipantes.map(p => ({
+                nombre: p.nombre,
+                dni: p.dni
+            }));
+    
+        } else {
+            console.log("No hay participantes en el sorteo");
+            return;
+        }
+
+        try{
+            const respuesta = await fetch("http://localhost:8080/participante/agregar-participantes",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(participantesDatos)
+                
+            })
+            if (respuesta.ok) {
+                const data = await respuesta.json();
+                alert(data.message);
+            } else {
+                console.error("Error al cargar los participantes:", respuesta.status);
+            }
+        } catch (error) {
+            console.error("Hubo un error al realizar la solicitud:", error);
+        }
+                            
+    }
+
+    btnGuardarParticipantes.addEventListener("click", () => {
+        const confirmar = confirm("¿Está seguro de que desea guardar los datos? Una vez que se guarden no se podrán agregar nuevos participantes");
+        if (confirmar) {
+            guardarParticipantes();
+            btnGuardarParticipantes.style.display = "none";
+        }
+    });
 
 
 
