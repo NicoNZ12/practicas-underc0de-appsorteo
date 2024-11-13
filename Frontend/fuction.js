@@ -294,63 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    async function guardarPremiosYSponsors() {
-        const premiosContainer = document.getElementById('premios-container');
-        const premios = [];
-        
-
-        premiosContainer.querySelectorAll('.premios-row').forEach(row => {
-            const descripcion = row.querySelector('.columna-premios input').value.trim();
-            const sponsor = row.querySelector('.columna-patrocinadores input').value.trim();
-        
-
-            if (descripcion && sponsor) {
-                premios.push({ descripcion, sponsor });
-            }
-        });
-        
-        // Verifica si hay premios para enviar
-        if (premios.length === 0) {
-            alert('Por favor, complete al menos un premio y patrocinador.');
-            return;
-        }
-        
-        let todosGuardadosCorrectamente = true; 
-        
-        // Enviar cada premio de manera individual
-        for (const premio of premios) {
-            try {
-                const response = await fetch("http://localhost:8080/premio", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(premio)
-                });
-        
-                if (!response.ok) {
-                    todosGuardadosCorrectamente = false; 
-                    const errorData = await response.text(); 
-                    alert(errorData.message || "Error al guardar un premio.");
-                    console.error("Error al guardar premio:", errorData.message);
-                }
-            } catch (error) {
-                todosGuardadosCorrectamente = false;
-                console.error("Error de conexión con la API:", error);
-                alert('Hubo un problema al conectar con el servidor.');
-            }
-        }
     
-        // Si todos los premios se guardaron correctamente, muestra la alerta una sola vez
-        if (todosGuardadosCorrectamente) {
-            alert("Premios y sponsors guardados exitosamente.");
-        }
-    }
-    
-    
-
-
-
 
 
 
@@ -386,7 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const documentosAgregados = [];
 
-    async function agregarParticipanteManual() {
+
+    function agregarParticipanteManual() {
         const nombre = document.getElementById('nombre-participante').value.trim();
         const dni = document.getElementById('dni').value.trim();
 
@@ -403,39 +348,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if(dni.length != 8){
-            alert("El DNI debe tener 8 digitos");
+            alert('El DNI debe tener 8 dígitos.');
             return;
         }
 
-        try {
-            const response = await fetch("http://localhost:8080/participante/agregar-participante", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ nombre, dni })
-            });
-    
-            if (response.ok) {
-                const data = await response.json();
-                agregarAParticipantes(nombre, dni);
-                documentosAgregados.push(dni);
-                alert(data.message || `Participante agregado: ${data.nombre} (${data.dni})`);
-                
-                // Limpiar campos
-                document.getElementById('nombre-participante').value = '';
-                document.getElementById('dni').value = '';
-                guardarDatos();
-            } else {
-                const errorMessage = await response.json();
-                alert(errorMessage.message);
-                console.error("Error al agregar el participante:", errorMessage);
-            }
-        } catch (error) {
-            console.error("Error de conexión con la API:", error);
-            alert('Hubo un problema al conectar con el servidor.');
-        }
+        agregarAParticipantes(nombre, dni);
+        documentosAgregados.push(dni);
+
+        // Limpiar los campos de entrada
+        document.getElementById('nombre-participante').value = '';
+        document.getElementById('dni').value = '';
+        guardarDatos(); // Guardar datos al agregar participante
     }
+    
 
 
     function agregarAParticipantes(nombre, dni) {
