@@ -58,6 +58,25 @@ public class ParticipanteController {
 
     }
 
+    @PostMapping("/agregar-participantes")
+    @Operation(summary = "Registrar varios participantes en un evento")
+    public ResponseEntity<Map<String, Object>> agregarParticipantes(@Valid @RequestBody List<ParticipanteDTO> participantesDTO) {
+
+        List<Participante> participantesGuardados = participanteService.cargarParticipantes(participantesDTO);
+
+        Map<String, Object> respuesta = new HashMap<>();
+
+        if (!participantesGuardados.isEmpty()) {
+            respuesta.put("message", "Participantes registrados exitosamente.");
+            respuesta.put("participantesGuardados", participantesGuardados);
+            return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
+        } else {
+            respuesta.put("message", "No se registraron nuevos participantes.");
+            return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 
     @GetMapping("/mostrar-participantes")
     public ResponseEntity<List<ParticipanteDTO>> obtenerParticipantes(){

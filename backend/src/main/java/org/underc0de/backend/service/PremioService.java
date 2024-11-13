@@ -7,6 +7,8 @@ import org.underc0de.backend.entity.Premio;
 import org.underc0de.backend.repository.IEventoRepository;
 import org.underc0de.backend.repository.IPremioRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,6 +47,32 @@ public class PremioService {
         }catch (Exception e){
             return "Ocurrió un error al añadir el premio: " + e.getMessage();
         }
+    }
 
+    //Cargar premios y sponsors
+    public List<PremioDTO> agregarPremios(List<PremioDTO> premiosDTO) {
+        Evento evento = eventoService.obtenerUltimoEvento();
+        List<PremioDTO> resultados = new ArrayList<>();
+
+
+        for (PremioDTO premioDTO : premiosDTO) {
+            try {
+                Premio premio = new Premio();
+                premio.setDescripcion(premioDTO.descripcion());
+                premio.setSponsor(premioDTO.sponsor());
+                premio.setEvento(evento);
+                premio.setGanador(null); // Se actualizará cuando se haga el sorteo
+
+                premioRepository.save(premio);
+
+                PremioDTO premioGuardado = new PremioDTO(premio.getDescripcion(), premio.getSponsor());
+                resultados.add(premioGuardado);
+
+            } catch (Exception e) {
+                System.out.println("Error al agregar el premio '" + premioDTO.descripcion() + "': " + e.getMessage());
+            }
+        }
+
+        return resultados;
     }
 }

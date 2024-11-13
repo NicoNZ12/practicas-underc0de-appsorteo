@@ -13,6 +13,10 @@ import org.underc0de.backend.dto.PremioDTO;
 import org.underc0de.backend.entity.Premio;
 import org.underc0de.backend.service.PremioService;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/premio")
 @Tag(name = "Premio Controller", description = "Carga de premios y sponsors")
@@ -38,4 +42,23 @@ public class PremioController {
         }
 
     }
+
+    @PostMapping("/agregar-premios")
+    @Operation(summary = "Registrar varios premios en un evento")
+    public ResponseEntity<Map<String, Object>> agregarPremios(@Valid @RequestBody List<PremioDTO> premiosDTO) {
+
+        List<PremioDTO> resultado = premioService.agregarPremios(premiosDTO);
+
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("message", resultado);
+
+        if (!resultado.isEmpty()) {
+            respuesta.put("message", "Todos los premios fueron agregados correctamente.");
+            respuesta.put("Premios", resultado);
+            return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
