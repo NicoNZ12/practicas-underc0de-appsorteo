@@ -91,8 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btnGuardar.addEventListener('click',() => {
         guardarDatos(); //LLamo a la función de guardar los datos
 
-        guardarPremiosYSponsors()
-
         //Mostrar el mensaje
         const mensaje = document.createElement('p');
         mensaje.textContent = `Datos guardados del sorteo "${localStorage.getItem('nombreEvento')}"`;
@@ -359,6 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('nombre-participante').value = '';
         document.getElementById('dni').value = '';
         guardarDatos(); // Guardar datos al agregar participante
+        alert("Participante agregado correctamente")
     }
     
 
@@ -414,7 +413,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const data = await response.json();
-                alert('Evento creado exitosamente');
+                console.log(data);
+                alert(`Evento ${data.nombre} creado exitosamente`);
             } else {
                 console.log("error: " + response.statusText)
                 alert('Error al crear el evento');
