@@ -280,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnEliminar.onclick = () => {
                 premiosContainer.removeChild(premiosRow);
                 premioCount--; // Disminuye el contador
+                guardarDatos();
             };
 
             // Agregar las columnas y el botón de eliminación a la fila
@@ -293,8 +294,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    // Función para actualizar los premios en Local Storage
+    function actualizarPremiosEnLocalStorage() {
+        const premios = [];
+        const premiosRows = document.querySelectorAll('.premios-row');
+        premiosRows.forEach(row => {
+            const premio = row.querySelector('.columna-premios input').value.trim();
+            const sponsor = row.querySelector('.columna-patrocinadores input').value.trim();
+            premios.push({ premio, sponsor });
+        });
+        localStorage.setItem('premiosYSponsors', JSON.stringify(premios));
+    }
+
+    // Evento para guardar cambios al modificar un premio o patrocinador
+    document.getElementById('premios-container').addEventListener('change', (event) => {
+        if (event.target.matches('.columna-premios input, .columna-patrocinadores input')) {
+            actualizarPremiosEnLocalStorage();
+        }
+    });
+
     
 
+    //FUNCION PARA GUARDAR LOS PREMIOS EN LA BBDD
+    async function guardarPremios(){
+        const premios = localStorage.getItem("premiosYSponsors");
+
+        let premiosDatos = [];
+
+        if (premios) {
+            const listaPremios = JSON.parse(premios);
+    
+            premiosDatos = listaPremios.map(p => ({
+                descripcion: p.premio,
+                sponsor: p.sponsor
+            }));
+
+    
+        } else {
+            console.log("No hay premios en el sorteo");
+            return;
+        }
+
+        try{
+            const respuesta = await fetch("http://localhost:8080/premio/agregar-premios",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(premiosDatos)
+                
+            })
+            if (respuesta.ok) {
+                const data = await respuesta.json();
+                alert(data.message);
+            } else {
+                console.error("Error al cargar los premios:", respuesta.status);
+            }
+        } catch (error) {
+            console.error("Hubo un error al realizar la solicitud:", error);
+        }
+    }
+
+    btnGuardar.addEventListener("click", () => {
+        const confirmar = confirm("¿Está seguro de que desea guardar los datos? Una vez que se guarden no se podrán agregar nuevos premios ni modificar los anteriores");
+        if (confirmar) {
+            guardarPremios()
+            btnGuardar.style.display = "none";
+        }
+    })
 
 
 
