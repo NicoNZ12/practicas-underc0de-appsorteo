@@ -86,38 +86,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    //GUARDAR LOS DATOS AL ACTUALIZAR
-
-    // Agregar evento al botón "Guardar Datos"
-    btnGuardar.addEventListener('click',() => {
-        guardarDatos(); //LLamo a la función de guardar los datos
-
-        //Mostrar el mensaje
-        const mensaje = document.createElement('p');
-        mensaje.textContent = `Datos guardados del sorteo "${localStorage.getItem('nombreEvento')}"`;
-
-        //Evitar duplicados si el mensaje está en pantalla
-        if(!document.body.contains(document.getElementById('mensaje-guardado'))){
-            mensaje.id = 'mensaje-guardado';
-            mensajeContenedor.appendChild(mensaje);
-        }
-        // Mostrar la sección de "Realizar Sorteo" solo si está oculta
-        if (seccionSorteo.style.display === 'none') {
-            seccionSorteo.style.display = 'block';
-        }
-    });
-
     //Boton realizar Sorteo
-    btnSorteo.addEventListener('click', async ()=>{
-        try{
+    btnSorteo.addEventListener('click', async () => {
+        try {
             const response = await fetch("http://localhost:8080/evento/sorteo", {
                 method: 'POST',
             });
-            const datos = await response.json();
-            console.log(datos); //ganadores
-        }catch(error){
+            const datos = await response.json(); // Ganadores
+            console.log(datos)
+
+            // Mostrar los ganadores en el modal
+            const ganadoresList = document.getElementById('ganadores-list');
+            ganadoresList.innerHTML = ''; // Limpiar la lista de ganadores
+            datos.forEach(ganador => {
+                const li = document.createElement('li');
+                li.textContent = ganador;
+                ganadoresList.appendChild(li);
+            });
+
+            // Mostrar el modal
+            const overlay = document.getElementById('overlay-ganadores');
+            overlay.style.display = 'flex'; // Hacer visible el modal
+            
+        } catch (error) {
             console.error("Error al generar el sorteo");
         }
+    });
+
+    // Cerrar el modal cuando se hace clic en el reiniciar sorteo
+    // REINICIAR SORTEO Y PÁGINA ENTERA
+    btnReiniciar.addEventListener('click', () => {
+        localStorage.removeItem('nombreEvento');
+        localStorage.removeItem('participantes');
+        localStorage.removeItem('premiosYSponsors');
+        localStorage.removeItem("nuevoParticipante")
+
+        // Guardar en localStorage que debe desplazarse a la sección de "Nombre del Evento"
+        localStorage.setItem('redirigirNombreEvento', 'true');
+
+        const overlay = document.getElementById('overlay-ganadores');
+        overlay.style.display = 'none';
+
+        location.reload(); // Recargar la página para reiniciar
     });
 
 
@@ -372,6 +382,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirmar) {
             guardarPremios()
             btnGuardar.style.display = "none";
+
+            guardarDatos(); //LLamo a la función de guardar los datos
+
+            //Mostrar el mensaje
+            const mensaje = document.createElement('p');
+            mensaje.textContent = `Datos guardados del sorteo "${localStorage.getItem('nombreEvento')}"`;
+
+            //Evitar duplicados si el mensaje está en pantalla
+            if(!document.body.contains(document.getElementById('mensaje-guardado'))){
+                mensaje.id = 'mensaje-guardado';
+                mensajeContenedor.appendChild(mensaje);
+            }
+
+            // Mostrar la sección de "Realizar Sorteo" solo si está oculta
+            if (seccionSorteo.style.display === 'none') {
+                seccionSorteo.style.display = 'block';
+            }
         }
     })
 
@@ -589,19 +616,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-    // REINICIAR SORTEO Y PÁGINA ENTERA
-    btnReiniciar.addEventListener('click', () => {
-        localStorage.removeItem('nombreEvento');
-        localStorage.removeItem('participantes');
-        localStorage.removeItem('premiosYSponsors');
-        localStorage.removeItem("nuevoParticipante")
-
-        // Guardar en localStorage que debe desplazarse a la sección de "Nombre del Evento"
-        localStorage.setItem('redirigirNombreEvento', 'true');
-
-        location.reload(); // Recargar la página para reiniciar
-    });
 
     // Cargar datos al inicio
     cargarDatos();
