@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App sorteo UnderCode</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="Css/styles.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,7 +20,7 @@
     <header class="encabezado">
         <p>Bienvenidos a la Sección de Sorteos de UnderCode</p>
         <h1>" App Sorteos de Eventos "</h1>
-        <img  class="logo" src="./Imagen/logo1.png" >
+        <img class="logo" src="./Imagen/logo1.png">
     </header>
     <!--Sección menú -->
     <div class="btn-menu">
@@ -26,8 +28,10 @@
         <button id="form-registro-participantes">Registro de Participantes</button>
         <button id="form-lista-participantes">Lista de Participantes</button>
         <button id="form-pemios-sponsor">Pemios y Sponsor</button>
+        <button id="form-historial">Historial de Eventos</button>
+
     </div>
-    
+
 
     <!--Sección de nombre del evento-->
     <div class="titulo" id="seccion-nombre">
@@ -42,20 +46,20 @@
     </div>
 
     <!--Sección participante-->
-    <div class="participantes" id="seccion-participantes" style="display: none;">    
+    <div class="participantes" id="seccion-participantes" style="display: none;">
         <h3>Registro de Participantes Manual</h3>
         <input type="text" id="nombre-participante" placeholder="Nombre y Apellido">
         <input type="text" id="dni" placeholder="DNI">
         <button class="btn-part" id="btn-agregar">Agregar Participante</button>
-    
+
     </div>
 
     <!--Mensaje DNI ya se encuentra registrado-->
     <div id="overlay-mensaje" style="display: none;">
-        <div  class="overlay-content">
+        <div class="overlay-content">
             <p id="overlay-mensaje-texto">DNI ya se encuentra registrado</p>
             <button id="btn-cerrar-overlay">Cerrar</button>
-        </div>    
+        </div>
     </div>
 
     <!-- Sección QR -->
@@ -79,7 +83,7 @@
         <button id="btn-guardar-parts" class="guardar-participantes">Guardar Participantes</button>
     </div>
 
-    
+
 
     <!-- Sección premios y patrocinadores -->
     <div class="premios" id="premios" style="display: none;">
@@ -98,11 +102,11 @@
 
         <br>
         <!--Sección realizar sorteo-->
-        <div class="realizar-sorteo" id="realizar-sorteo" style="display: none";>
-            <button id="btn-sorteo"  class="btn-sort">Realizar Sorteo</button>
+        <div class="realizar-sorteo" id="realizar-sorteo" style="display: none" ;>
+            <button id="btn-sorteo" class="btn-sort">Realizar Sorteo</button>
             <img src="./Imagen/manito-1.gif" width="70px" height="auto" style="position: relative; top: -37px;">
         </div>
-        
+
     </div>
 
     <div id="overlay-ganadores" class="overlay-ganadores">
@@ -115,13 +119,22 @@
         </div>
     </div>
 
+
+    <!-- Sección para el historial de eventos -->
+    <div class="historial" id="historial" style="display: none;">
+        <h3 style="text-align: center;">Historial de Eventos</h3>
+        <ul id="eventos-lista" style="list-style-type: none;
+    padding: 0;"></ul>
+    </div>
+
     <footer>
         <p>&copy; 2024 SorteApp. Todos los derechos reservados.</p>
     </footer>
-    
+
     <script src="fuction.js"></script>
     <!-- Incluir el CDN de QRCode.js -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 </body>
+
 </html>

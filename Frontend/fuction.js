@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnReiniciar = document.getElementById('reinicar-pagina-completa');
     const btnSorteo = document.getElementById("btn-sorteo");
     const btnGuardarParticipantes = document.getElementById("btn-guardar-parts");
+    const btnSeccionHistorial = document.getElementById("form-historial");
 
     const seccionNombre = document.getElementById('seccion-nombre');
     const seccionParticipantes = document.getElementById('seccion-participantes');
@@ -19,19 +20,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const seccionPremios = document.getElementById('premios');
     const mensajeContenedor = document.getElementById('mensaje-contenedor');
     const seccionSorteo = document.getElementById("realizar-sorteo");
+    const seccionHistorial = document.getElementById("historial");
 
     let premioCount = 1; // Contador para los premios
 
     // Define la función toggleSection aquí
     function toggleSection(section) {
-        const allSections = [seccionNombre, seccionParticipantes, listaParticipantes, seccionPremios, seccionSorteo];
+        const allSections = [seccionNombre, seccionParticipantes, listaParticipantes, seccionPremios, seccionSorteo, seccionHistorial];
         allSections.forEach(s => s.style.display = 'none'); // Ocultar todas las secciones
         section.style.display = 'block'; // Mostrar la sección seleccionada
     }
 
 
 
-    
+
     // QR
 
     // ABRIR QR
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     abrirQrBtn.addEventListener('click', () => {
         // Limpiar cualquier contenido previo en el contenedor del QR
-        qrCodeContainer.innerHTML = ''; 
+        qrCodeContainer.innerHTML = '';
 
         // Crear un enlace para envolver la imagen del QR
         const linkElement = document.createElement('a');
@@ -107,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Mostrar el modal
             const overlay = document.getElementById('overlay-ganadores');
             overlay.style.display = 'flex'; // Hacer visible el modal
-            
+
         } catch (error) {
             console.error("Error al generar el sorteo");
         }
@@ -136,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-   // CARGAR DATOS AL ACTUALIZAR
+    // CARGAR DATOS AL ACTUALIZAR
     function cargarDatos() {
         const activeSection = localStorage.getItem('activeSection') || 'nombre'; // Cargar sección activa o 'nombre' por defecto
         switch (activeSection) {
@@ -167,8 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
             agregarAParticipantes(nombre, dni, nombreEvento); // Pasar el nombre del evento
         });
         const premios = JSON.parse(localStorage.getItem('premiosYSponsors')) || [];
-        premioCount = premios.length; 
-        generarCamposPremios(premioCount); 
+        premioCount = premios.length;
+        generarCamposPremios(premioCount);
 
         // Rellenar los campos con datos guardados
         premios.forEach((premio, index) => {
@@ -181,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
 
 
 
@@ -193,11 +195,11 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Por favor, primero ingresa el nombre del evento.');
             return;
         }
-        
+
         premioCount++; // Incrementa el contador
         generarCamposPremios(premioCount); // Genera un nuevo premio
     });
-    
+
 
 
 
@@ -212,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function guardarDatos() {
         const nombreEvento = document.getElementById('nombre-evento').value.trim();
         localStorage.setItem('nombreEvento', nombreEvento);
-    
+
         const participantes = [];
         const lista = document.getElementById('lista-participantes').children;
         for (let li of lista) {
@@ -221,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
             participantes.push({ nombre, dni: dni.trim(), evento: nombreEvento }); // Agregar el evento
         }
         localStorage.setItem('participantes', JSON.stringify(participantes));
-    
+
         const premios = [];
         const premiosRows = document.querySelectorAll('.premios-row');
         premiosRows.forEach(row => {
@@ -232,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem('premiosYSponsors', JSON.stringify(premios));
     }
-    
+
 
 
 
@@ -335,36 +337,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    
+
 
     //FUNCION PARA GUARDAR LOS PREMIOS EN LA BBDD
-    async function guardarPremios(){
+    async function guardarPremios() {
         const premios = localStorage.getItem("premiosYSponsors");
 
         let premiosDatos = [];
 
         if (premios) {
             const listaPremios = JSON.parse(premios);
-    
+
             premiosDatos = listaPremios.map(p => ({
                 descripcion: p.premio,
                 sponsor: p.sponsor
             }));
 
-    
+
         } else {
             console.log("No hay premios en el sorteo");
             return;
         }
 
-        try{
-            const respuesta = await fetch("http://localhost:8080/premio/agregar-premios",{
+        try {
+            const respuesta = await fetch("http://localhost:8080/premio/agregar-premios", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(premiosDatos)
-                
+
             })
             if (respuesta.ok) {
                 const data = await respuesta.json();
@@ -390,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mensaje.textContent = `Datos guardados del sorteo "${localStorage.getItem('nombreEvento')}"`;
 
             //Evitar duplicados si el mensaje está en pantalla
-            if(!document.body.contains(document.getElementById('mensaje-guardado'))){
+            if (!document.body.contains(document.getElementById('mensaje-guardado'))) {
                 mensaje.id = 'mensaje-guardado';
                 mensajeContenedor.appendChild(mensaje);
             }
@@ -429,7 +431,10 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleSection(seccionPremios);
         localStorage.setItem('activeSection', 'premios'); // Guardar sección activa
     });
-
+    btnSeccionHistorial.addEventListener('click', () => {
+        toggleSection(seccionHistorial);
+        localStorage.setItem('activeSection', 'historial'); // Guardar sección activa
+    });
 
     // AGREGAR PARTICIPANTE DE FORMA MANUAL
 
@@ -441,7 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dni = document.getElementById('dni').value.trim();
 
 
-    
+
         if (!nombre || !dni) {
             alert('Por favor, complete ambos campos (Nombre y Documento).');
             return;
@@ -452,7 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if(dni.length != 8){
+        if (dni.length != 8) {
             alert('El DNI debe tener 8 dígitos.');
             return;
         }
@@ -466,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
         guardarDatos(); // Guardar datos al agregar participante
         alert("Participante agregado correctamente")
     }
-    
+
 
 
     function agregarAParticipantes(nombre, dni) {
@@ -478,8 +483,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const btnEliminar = document.createElement('button');
         btnEliminar.textContent = '❌';
-        btnEliminar.onclick = function() {
-        eliminarParticipante(li, dni);
+        btnEliminar.onclick = function () {
+            eliminarParticipante(li, dni);
         };
 
         li.appendChild(btnEliminar); // Agregar el botón de eliminación
@@ -491,32 +496,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     //GUARDAR LA LISTA DE PARTICIPANTES EN LA BBDD.
-    async function guardarParticipantes(){
+    async function guardarParticipantes() {
         const participantes = localStorage.getItem("participantes")
 
         let participantesDatos = [];
 
         if (participantes) {
             const listaParticipantes = JSON.parse(participantes);
-    
+
             participantesDatos = listaParticipantes.map(p => ({
                 nombre: p.nombre,
                 dni: p.dni
             }));
-    
+
         } else {
             console.log("No hay participantes en el sorteo");
             return;
         }
 
-        try{
-            const respuesta = await fetch("http://localhost:8080/participante/agregar-participantes",{
+        try {
+            const respuesta = await fetch("http://localhost:8080/participante/agregar-participantes", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(participantesDatos)
-                
+
             })
             if (respuesta.ok) {
                 const data = await respuesta.json();
@@ -527,7 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Hubo un error al realizar la solicitud:", error);
         }
-                            
+
     }
 
     btnGuardarParticipantes.addEventListener("click", () => {
@@ -554,13 +559,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         try {
-            const response = await fetch("http://localhost:8080/evento", { 
+            const response = await fetch("http://localhost:8080/evento", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
 
-                body: JSON.stringify({nombre: nombreEvento}) 
+                body: JSON.stringify({ nombre: nombreEvento })
             });
 
             if (response.ok) {
@@ -574,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error("Error de conexión con la api:", error);
-        } 
+        }
 
         localStorage.setItem('nombreEvento', nombreEvento);
         cargarDatos(); // Cargar datos para mostrar el nombre del evento
@@ -626,8 +631,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Escuchar el evento 'storage' para actualizar la lista de participantes
-window.addEventListener('storage', cargarDatos);
+    window.addEventListener('storage', cargarDatos);
 
+
+
+
+    //----------------------- Funcionalidad Historial-----
+
+    // Integración del código de cargar eventos desde la API
+    const eventosLista = document.getElementById("eventos-lista");
+
+    // Función para cargar eventos desde la API
+    async function cargarEventos() {
+        try {
+            const response = await fetch("http://localhost:8080/evento/historial");
+            if (!response.ok) throw new Error("Error al obtener los eventos");
+            const eventos = await response.json();
+            renderizarEventos(eventos);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+    // Función para renderizar la lista de eventos
+    function renderizarEventos(eventos) {
+        eventos.forEach(evento => {
+            const eventoItem = document.createElement("li");
+            eventoItem.classList.add("evento");
+            eventoItem.innerHTML = `
+                <strong>${evento.nombre}</strong> - ${new Date(evento.fecha).toLocaleDateString()}
+                <div class="premios-h">
+                    ${evento.premios.map(premio => `
+                        <div class="premio-h">
+                            <p><strong>Premio:</strong> ${premio.descripcion}</p>
+                            <p><strong>Patrocinador:</strong> ${premio.sponsor}</p>
+                            <p><strong>Ganador:</strong> ${premio.nombreGanador}</p>
+                            <p><strong>DNI:</strong> ${premio.dniGanador}</p>
+                        </div>
+                    `).join("")}
+                </div>`;
+            // Evento para mostrar/ocultar los premios al hacer clic
+            eventoItem.addEventListener("click", () => {
+                const premiosDiv = eventoItem.querySelector(".premios-h");
+                premiosDiv.classList.toggle("mostrar");
+            });
+            eventosLista.appendChild(eventoItem);
+        });
+    }
+
+    // Llamar a cargarEventos al iniciar la página
+    cargarEventos();
 
 
 });

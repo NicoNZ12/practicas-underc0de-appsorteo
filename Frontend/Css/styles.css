@@ -3,7 +3,9 @@ body {
     text-align: center;
     padding: 0;
     margin: 0;
-    background: linear-gradient(to bottom, #2f00ff3c, #cac1ff); /* Degradado de blanco a gris oscuro */
+    background: linear-gradient(to bottom, #2f00ff3c, #cac1ff);
+
+    /* Degradado de blanco a gris oscuro */
     ::-webkit-scrollbar {
         display: none;
     }
@@ -12,7 +14,7 @@ body {
 
 /* PANTALLA GRANDE */
 @media (min-width: 750px) {
-    header{
+    header {
         color: #333;
         padding: 10px 0;
         text-align: center;
@@ -23,7 +25,7 @@ body {
         margin-top: 0;
     }
 
-    header img{
+    header img {
         display: block;
         text-align: center;
         margin: auto;
@@ -34,7 +36,8 @@ body {
         top: 0px;
     }
 
-    .titulo, .paricipantes {
+    .titulo,
+    .paricipantes {
         margin: 20px;
         padding: 20px;
         border-radius: 8px;
@@ -63,9 +66,10 @@ body {
         display: flex;
         justify-content: center;
     }
-    #btn-ingresar{
+
+    #btn-ingresar {
         padding: 5px 20px;
-        font-family:"Noto Serif", serif;
+        font-family: "Noto Serif", serif;
         background-color: #2e07bbb2;
         color: #fff;
         border: none;
@@ -76,13 +80,13 @@ body {
         margin-top: 0px;
     }
 
-    #btn-ingresar:hover{
+    #btn-ingresar:hover {
         background-color: #4d9ceb;
     }
 
-    #btn-guardar-parts{
+    #btn-guardar-parts {
         padding: 5px 20px;
-        font-family:"Noto Serif", serif;
+        font-family: "Noto Serif", serif;
         background-color: #2e07bbb2;
         color: #fff;
         border: none;
@@ -93,11 +97,11 @@ body {
         margin: 10px;
     }
 
-    #btn-guardar-parts:hover{
+    #btn-guardar-parts:hover {
         background-color: #4d9ceb;
     }
 
-    #overlay-mensaje{
+    #overlay-mensaje {
         position: fixed;
         top: 0;
         left: 0;
@@ -110,12 +114,13 @@ body {
         z-index: 1000;
     }
 
-    .overlay-content{
+    .overlay-content {
         background: #fff;
         padding: 20px;
         border-radius: 8px;
         text-align: center;
     }
+
     #btn-cerrar-overlay {
         margin-top: 10px;
         padding: 8px 16px;
@@ -129,78 +134,79 @@ body {
 
 
 
- /* Estilo para el div QR */
-.qr-div {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    padding: 10px;
-    position: absolute;
-    top: 1%;
-    right: 5%;
-}
+    /* Estilo para el div QR */
+    .qr-div {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        padding: 10px;
+        position: absolute;
+        top: 1%;
+        right: 5%;
+    }
 
-.qr-div button {
-    position: relative;
-    top: 35%;
-}
+    .qr-div button {
+        position: relative;
+        top: 35%;
+    }
 
-/* Estilo para la ventana emergente que aparece al abrir el QR */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* Fondo oscuro semitransparente */
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
+    /* Estilo para la ventana emergente que aparece al abrir el QR */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        /* Fondo oscuro semitransparente */
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
 
-.qr-content {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    width: 300px;
-    position: relative;
-}
+    .qr-content {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        width: 300px;
+        position: relative;
+    }
 
-.qr-content h3 {
-    margin: 0 0 10px;
-    font-weight: 300;
-    width: 80%;
-    margin: 0 auto;
-}
+    .qr-content h3 {
+        margin: 0 0 10px;
+        font-weight: 300;
+        width: 80%;
+        margin: 0 auto;
+    }
 
-.qr-content button {
-    margin-top: 15px;
-    background-color: #4d9ceb;
-    border: none;
-    padding: 5px 10px;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 10px;
-}
+    .qr-content button {
+        margin-top: 15px;
+        background-color: #4d9ceb;
+        border: none;
+        padding: 5px 10px;
+        color: #fff;
+        font-size: 1rem;
+        border-radius: 10px;
+    }
 
-/* Estilo para el botón de abrir el QR */
-button.qr {
-    padding: 5px 10px;
-    background-color: #2e07bbb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    font-family: "Noto Serif", serif;
-}
+    /* Estilo para el botón de abrir el QR */
+    button.qr {
+        padding: 5px 10px;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        font-family: "Noto Serif", serif;
+    }
 
-button.qr:hover {
-    background-color: #4d9ceb;
-}
+    button.qr:hover {
+        background-color: #4d9ceb;
+    }
 
 
 
@@ -224,7 +230,7 @@ button.qr:hover {
         z-index: 1000;
     }
 
-    
+
 
 
 
@@ -251,6 +257,7 @@ button.qr:hover {
         margin: 10px;
         text-align: center;
     }
+
     .participantes input {
         width: 80%;
         padding: 10px;
@@ -259,12 +266,12 @@ button.qr:hover {
         border-radius: 10px;
         font-size: 16px;
         border: none;
-        
+
     }
 
-    button.btn-part{
+    button.btn-part {
         padding: 5px 20px;
-        font-family:"Noto Serif", serif;
+        font-family: "Noto Serif", serif;
         background-color: #2e07bbb2;
         color: white;
         border: none;
@@ -274,10 +281,11 @@ button.qr:hover {
         transition: background-color 0.3s ease;
         margin-top: 0px;
     }
-    button.btn-part:hover{
+
+    button.btn-part:hover {
         background-color: #4d9ceb;
     }
-    
+
 
 
 
@@ -287,10 +295,13 @@ button.qr:hover {
 
 
     div.lista {
-        display:flex;
-        flex-direction: column; /* Alinea los elementos en columna */
-        justify-content: center; /* Centra verticalmente */
-        align-items: center; /* Centra horizontalmente */
+        display: flex;
+        flex-direction: column;
+        /* Alinea los elementos en columna */
+        justify-content: center;
+        /* Centra verticalmente */
+        align-items: center;
+        /* Centra horizontalmente */
         margin: 20px auto;
         background-color: #ffffff56;
         border-radius: 8px;
@@ -300,35 +311,36 @@ button.qr:hover {
     .lista ul {
         display: flex;
         flex-wrap: wrap;
-        list-style-type: none; 
-        padding: 0; 
+        list-style-type: none;
+        padding: 0;
         justify-content: center;
         max-height: 450px;
         overflow-y: scroll;
     }
 
     .lista ul li {
-        margin: 5px; 
-        padding: 10px; 
-        background-color: #f0f0f0; 
-        border: 1px solid #ccc; 
-        border-radius: 5px; 
+        margin: 5px;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
     }
 
     .lista ul li button {
-        margin-left: 10px; 
-        color: white; 
+        margin-left: 10px;
+        color: white;
         border: none;
-        border-radius: 3px; 
+        border-radius: 3px;
         cursor: pointer;
     }
 
 
-    .lista h4{
+    .lista h4 {
         margin-bottom: 15px;
-        
+
     }
-    input.lista{
+
+    input.lista {
         width: 280px;
         padding: 10px;
         border-radius: 10px;
@@ -337,7 +349,8 @@ button.qr:hover {
         font-size: 13px;
         text-align: center;
     }
-    input.cant-ganad{
+
+    input.cant-ganad {
         width: 60px;
     }
 
@@ -352,7 +365,8 @@ button.qr:hover {
 
     .premios {
         display: grid;
-        grid-template-columns: 1fr; /* Un solo columna para el contenedor principal */
+        grid-template-columns: 1fr;
+        /* Un solo columna para el contenedor principal */
         gap: 20px;
         background-color: #ffffff56;
         padding: 20px;
@@ -361,37 +375,39 @@ button.qr:hover {
         margin: 20px auto;
         width: 520px;
     }
-    
+
     .premios-container {
         display: flex;
-        flex-direction: column; /* Para apilar las filas de premios y patrocinadores */
+        flex-direction: column;
+        /* Para apilar las filas de premios y patrocinadores */
         max-height: 400px;
         overflow-y: scroll;
         scrollbar-width: 0px;
     }
-    
+
     .premios-row {
-        display: flex; 
-        justify-content: space-between; 
+        display: flex;
+        justify-content: space-between;
     }
-    
+
     .columna-premios,
     .columna-patrocinadores {
         display: flex;
-        flex-direction: column; /* Cada columna tendrá los elementos alineados verticalmente */
+        flex-direction: column;
+        /* Cada columna tendrá los elementos alineados verticalmente */
     }
-    
+
     .premios h3 {
         margin-bottom: 10px;
     }
-    
+
     .premios label {
         margin-bottom: 10px;
         font-weight: bold;
     }
-    
+
     .premios input {
-        width: 100%; 
+        width: 100%;
     }
 
 
@@ -405,7 +421,7 @@ button.qr:hover {
         cursor: pointer;
     }
 
-    
+
 
 
 
@@ -432,7 +448,7 @@ button.qr:hover {
         background-color: #4d9ceb;
     }
 
-    .cant-ganad{
+    .cant-ganad {
         height: 20px;
         margin-top: 10px;
     }
@@ -451,7 +467,7 @@ button.qr:hover {
         align-items: center;
         z-index: 100;
     }
-    
+
     .modal {
         background-color: #fff;
         padding: 20px;
@@ -461,14 +477,14 @@ button.qr:hover {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         justify-content: center;
         align-items: center;
-       
+
     }
-    
+
     #ganadores-list {
         list-style-type: none;
         margin-top: 10px;
     }
-    
+
     #ganadores-list li {
         margin-bottom: 8px;
     }
@@ -508,13 +524,13 @@ button.qr:hover {
         cursor: pointer;
     }
 
-    #reinicar-pagina-completa:hover{
+    #reinicar-pagina-completa:hover {
         background-color: hsl(7, 88%, 40%);
     }
 
 
 
-    
+
 
 }
 
@@ -546,380 +562,401 @@ button.qr:hover {
 @media (max-width: 750px) {
 
 
-/* General Styles */
-body {
-    font-family: 'Noto Serif', serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-}
+    /* General Styles */
+    body {
+        font-family: 'Noto Serif', serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
 
-footer {
-    text-align: center;
-    padding: 10px 0;
-    background-color: #333;
-    color: white;
-}
+    footer {
+        text-align: center;
+        padding: 10px 0;
+        background-color: #333;
+        color: white;
+    }
 
-footer p {
-    margin: 0;
-    font-size: 14px;
-}
+    footer p {
+        margin: 0;
+        font-size: 14px;
+    }
 
-/* Header Styles */
-header {
-    background-color: #ffffffc2;
-    color: #333;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.1rem;
-    border-bottom: 2px solid #ddd;
-}
-
-header img {
-    max-width: 70px;
-    border-radius: 50%;
-    margin-top: 10px;
-}
-
-/* Button Menu */
-.btn-menu {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.btn-menu button {
-    padding: 10px 20px;
-    background-color: #2e07bbb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.btn-menu button:hover {
-    background-color: #4d9ceb;
-}
-
-/* Sección Nombre Evento */
-#seccion-nombre {
-    text-align: center;
-}
-
-#nombre-evento {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-}
-
-#btn-ingresar {
-    padding: 10px 20px;
-    background-color: #2e07bbb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-}
-
-#btn-ingresar:hover {
-    background-color: #4d9ceb;
-}
-
-/* Sección Participantes */
-.participantes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 15px auto;
-    padding: 10px;
-    width: 85%;
-    border-radius: 8px;
-    background-color: #ffffff56;
-}
-
-.participantes h3 {
-    margin: 10px;
-    text-align: center;
-}
-
-.participantes input {
-    width: 80%;
-    padding: 10px;
-    margin-bottom: 20px;
-    margin-top: 5px;
-    border-radius: 10px;
-    font-size: 16px;
-    border: none;
-}
-
-button.btn-part {
-    padding: 10px 20px;
-    background-color: #2e07bbb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-button.btn-part:hover {
-    background-color: #4d9ceb;
-}
-
-/* Sección QR */
-.qr-div {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin: 20px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.qr-div button {
-    padding: 10px;
-    background-color: #2e07bbb2;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.qr-div button:hover {
-    background-color: #4d9ceb;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.qr-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.qr-content h3 {
-    margin: 0 0 20px;
-    font-weight: 300;
-}
-
-.qr-content button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #4d9ceb;
-    border: none;
-    color: white;
-    font-size: 1.1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.qr-content button:hover {
-    background-color: #2e07bbb2;
-}
-
-/* Sección Lista Participantes */
-.lista {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-    background-color: #ffffff56;
-    border-radius: 8px;
-    padding: 20px;
-    width: 90%;
-}
-
-.lista ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.lista ul li {
-    background-color: #f0f0f0;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.lista ul li button {
-    background-color: #f44336;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.lista ul li button:hover {
-    background-color: #d32f2f;
-}
-
-.lista h4 {
-    margin-bottom: 15px;
-}
-
-/* Sección Premios y Patrocinadores */
-.premios {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    background-color: #ffffff56;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.premios .columna-premios,
-.premios .columna-patrocinadores {
-    display: flex;
-    flex-direction: column;
-}
-
-.premios input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    margin-bottom: 15px;
-}
-
-#guardar-datos-premios-sponsor {
-    padding: 10px 20px;
-    background-color: #2e07bbb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-}
-
-#guardar-datos-premios-sponsor:hover {
-    background-color: #4d9ceb;
-}
-
-/* Sección Realizar Sorteo */
-.realizar-sorteo {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.btn-sort {
-    padding: 10px 20px;
-    background-color: #3700ffb2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    font-family: "Noto Serif", serif;
-    transition: background-color 0.3s ease;
-}
-
-.btn-sort:hover {
-    background-color: #4d9ceb;
-}
-
-img {
-    margin-top: 10px;
-}
-
-/* Mobile Styles */
-@media (max-width: 750px) {
+    /* Header Styles */
     header {
-        font-size: 0.9rem;
-        padding: 10px;
+        background-color: #ffffffc2;
+        color: #333;
+        padding: 15px;
+        text-align: center;
+        font-size: 1.1rem;
+        border-bottom: 2px solid #ddd;
     }
 
     header img {
-        width: 60px;
+        max-width: 70px;
+        border-radius: 50%;
+        margin-top: 10px;
     }
 
+    /* Button Menu */
     .btn-menu {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .btn-menu button {
+        padding: 10px 20px;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-menu button:hover {
+        background-color: #4d9ceb;
+    }
+
+    /* Sección Nombre Evento */
+    #seccion-nombre {
+        text-align: center;
+    }
+
+    #nombre-evento {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+    }
+
+    #btn-ingresar {
+        padding: 10px 20px;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    #btn-ingresar:hover {
+        background-color: #4d9ceb;
+    }
+
+    /* Sección Participantes */
+    .participantes {
+        display: flex;
         flex-direction: column;
-        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        margin: 15px auto;
+        padding: 10px;
+        width: 85%;
+        border-radius: 8px;
+        background-color: #ffffff56;
     }
 
-    .titulo, .participantes, .lista, .premios, .realizar-sorteo {
-        padding: 15px;
-        font-size: 0.9rem;
+    .participantes h3 {
+        margin: 10px;
+        text-align: center;
     }
 
-    input {
+    .participantes input {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 20px;
+        margin-top: 5px;
+        border-radius: 10px;
+        font-size: 16px;
+        border: none;
+    }
+
+    button.btn-part {
+        padding: 10px 20px;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    button.btn-part:hover {
+        background-color: #4d9ceb;
+    }
+
+    /* Sección QR */
+    .qr-div {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .qr-div button {
+        padding: 10px;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .qr-div button:hover {
+        background-color: #4d9ceb;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .qr-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .qr-content h3 {
+        margin: 0 0 20px;
+        font-weight: 300;
+    }
+
+    .qr-content button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #4d9ceb;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .qr-content button:hover {
+        background-color: #2e07bbb2;
+    }
+
+    /* Sección Lista Participantes */
+    .lista {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto;
+        background-color: #ffffff56;
+        border-radius: 8px;
+        padding: 20px;
         width: 90%;
     }
 
+    .lista ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
     .lista ul li {
-        width: 100%;
-        box-sizing: border-box;
+        background-color: #f0f0f0;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
+    .lista ul li button {
+        background-color: #f44336;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .lista ul li button:hover {
+        background-color: #d32f2f;
+    }
+
+    .lista h4 {
+        margin-bottom: 15px;
+    }
+
+    /* Sección Premios y Patrocinadores */
     .premios {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        background-color: #ffffff56;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .qr-div {
-        width: 80px;
-        height: 80px;
+    .premios .columna-premios,
+    .premios .columna-patrocinadores {
+        display: flex;
+        flex-direction: column;
     }
+
+    .premios input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    #guardar-datos-premios-sponsor {
+        padding: 10px 20px;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+
+    #guardar-datos-premios-sponsor:hover {
+        background-color: #4d9ceb;
+    }
+
+    /* Sección Realizar Sorteo */
+    .realizar-sorteo {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .btn-sort {
+        padding: 10px 20px;
+        background-color: #3700ffb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.5rem;
+        font-family: "Noto Serif", serif;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-sort:hover {
+        background-color: #4d9ceb;
+    }
+
+    img {
+        margin-top: 10px;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 750px) {
+        header {
+            font-size: 0.9rem;
+            padding: 10px;
+        }
+
+        header img {
+            width: 60px;
+        }
+
+        .btn-menu {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .titulo,
+        .participantes,
+        .lista,
+        .premios,
+        .realizar-sorteo {
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 90%;
+        }
+
+        .lista ul li {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .premios {
+            grid-template-columns: 1fr;
+        }
+
+        .qr-div {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+
+
 }
 
 
 
+.evento {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+.evento:hover {
+    background-color: #f9f9f9;
+}
 
+.premios-h {
+    margin-top: 10px;
+    display: none;
 
+}
 
+.premios-h.mostrar {
+    display: block;
 
+}
 
-
-
-
-
-
-
-
-
+.premio-h {
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    font-size: 0.9em;
+}
 
 
 
@@ -934,8 +971,4 @@ img {
 
 
 /* TABLET */
-@media (min-width: 750px) and (max-width: 1000px) {
-
-
-
-}
+@media (min-width: 750px) and (max-width: 1000px) {}
