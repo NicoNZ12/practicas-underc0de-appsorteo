@@ -4,6 +4,9 @@ body {
     padding: 0;
     margin: 0;
     background: linear-gradient(to bottom, #2f00ff3c, #cac1ff); /* Degradado de blanco a gris oscuro */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 
 }
 
@@ -360,6 +363,9 @@ button.qr:hover {
     .premios-container {
         display: flex;
         flex-direction: column; /* Para apilar las filas de premios y patrocinadores */
+        max-height: 400px;
+        overflow-y: scroll;
+        scrollbar-width: 0px;
     }
     
     .premios-row {

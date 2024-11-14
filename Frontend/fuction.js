@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mensajeContenedor = document.getElementById('mensaje-contenedor');
     const seccionSorteo = document.getElementById("realizar-sorteo");
 
-    let premioCount = 0; // Contador para los premios
+    let premioCount = 1; // Contador para los premios
 
     // Define la función toggleSection aquí
     function toggleSection(section) {
@@ -251,10 +251,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const columnaPremios = document.createElement('div');
             columnaPremios.classList.add('columna-premios');
             const labelPremio = document.createElement('label');
-            labelPremio.textContent = `${i + 1}° Premio`;
+            labelPremio.textContent = `${premioCount}° Premio`;
             const inputPremio = document.createElement('input');
             inputPremio.type = 'text';
-            inputPremio.placeholder = `Descripción del ${i + 1}° premio`;
+            inputPremio.placeholder = `Descripción del ${premioCount}° premio`;
 
             columnaPremios.appendChild(labelPremio);
             columnaPremios.appendChild(inputPremio);
@@ -263,10 +263,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const columnaPatrocinadores = document.createElement('div');
             columnaPatrocinadores.classList.add('columna-patrocinadores');
             const labelSponsor = document.createElement('label');
-            labelSponsor.textContent = `Sponsor ${i + 1}°`;
+            labelSponsor.textContent = `Sponsor ${premioCount}°`;
             const inputSponsor = document.createElement('input');
             inputSponsor.type = 'text';
-            inputSponsor.placeholder = `Nombre del sponsor ${i + 1}`;
+            inputSponsor.placeholder = `Nombre del sponsor ${premioCount}`;
 
             columnaPatrocinadores.appendChild(labelSponsor);
             columnaPatrocinadores.appendChild(inputSponsor);
@@ -279,8 +279,9 @@ document.addEventListener('DOMContentLoaded', () => {
             btnEliminar.style.background = "none";
             btnEliminar.onclick = () => {
                 premiosContainer.removeChild(premiosRow);
-                premioCount--; // Disminuye el contador
+                --premioCount; // Disminuye el contador
                 guardarDatos();
+                actualizarNumsDePremios()
             };
 
             // Agregar las columnas y el botón de eliminación a la fila
@@ -312,6 +313,17 @@ document.addEventListener('DOMContentLoaded', () => {
             actualizarPremiosEnLocalStorage();
         }
     });
+
+    // Función para actualizar los números de los premios
+    function actualizarNumsDePremios() {
+        const premiosRows = document.querySelectorAll('.premios-row');
+        premiosRows.forEach((row, index) => {
+            row.querySelector('.columna-premios label').textContent = `${index + 1}° Premio`;
+            row.querySelector('.columna-patrocinadores label').textContent = `Sponsor ${index + 1}°`;
+            row.querySelector('.columna-premios input').placeholder = `Descripción del ${index + 1}° premio`;
+            row.querySelector('.columna-patrocinadores input').placeholder = `Nombre del sponsor ${index + 1}`;
+        });
+    }
 
     
 
