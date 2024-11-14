@@ -51,16 +51,9 @@
         <input type="text" id="nombre-participante" placeholder="Nombre y Apellido">
         <input type="text" id="dni" placeholder="DNI">
         <button class="btn-part" id="btn-agregar">Agregar Participante</button>
-
     </div>
 
-    <!--Mensaje DNI ya se encuentra registrado-->
-    <div id="overlay-mensaje" style="display: none;">
-        <div class="overlay-content">
-            <p id="overlay-mensaje-texto">DNI ya se encuentra registrado</p>
-            <button id="btn-cerrar-overlay">Cerrar</button>
-        </div>
-    </div>
+
 
     <!-- Sección QR -->
     <div class="qr-div" id="qr">
@@ -130,6 +123,19 @@
     <footer>
         <p>&copy; 2024 SorteApp. Todos los derechos reservados.</p>
     </footer>
+
+
+    <!-- Overlay Global Mensajes de exito-->
+    <div id="overlay-global" style="display: none;">
+        <div class="overlay-content">
+            <p id="mensaje-overlay">Mensaje de éxito o error</p>
+            <button id="btn-cerrar-overlay-global">Cerrar</button>
+        </div>
+    </div>
+
+
+    <!-- Contenedor de mensajes de validación -->
+    <div id="contenedor-mensajes"></div>
 
     <script src="fuction.js"></script>
     <!-- Incluir el CDN de QRCode.js -->

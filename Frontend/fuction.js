@@ -31,9 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         section.style.display = 'block'; // Mostrar la sección seleccionada
     }
 
-
-
-
     // QR
 
     // ABRIR QR
@@ -85,9 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
     //Boton realizar Sorteo
     btnSorteo.addEventListener('click', async () => {
         try {
@@ -116,6 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Cerrar el modal cuando se hace clic en el reiniciar sorteo
+
+
     // REINICIAR SORTEO Y PÁGINA ENTERA
     btnReiniciar.addEventListener('click', () => {
         localStorage.removeItem('nombreEvento');
@@ -131,10 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         location.reload(); // Recargar la página para reiniciar
     });
-
-
-
-
 
 
 
@@ -186,8 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
     // Cambiar la función de agregar premio
     document.getElementById('agregar-premio').addEventListener('click', () => {
         const nombreEvento = localStorage.getItem('nombreEvento');
@@ -199,14 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
         premioCount++; // Incrementa el contador
         generarCamposPremios(premioCount); // Genera un nuevo premio
     });
-
-
-
-
-
-
-
-
 
 
 
@@ -237,17 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
-
-
     // PREMIOS Y SPONSOR
-
-
     // Función para generar campos de premios y patrocinadores
     function generarCamposPremios(cantidad) {
         const premiosContainer = document.getElementById('premios-container');
@@ -338,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-
     //FUNCION PARA GUARDAR LOS PREMIOS EN LA BBDD
     async function guardarPremios() {
         const premios = localStorage.getItem("premiosYSponsors");
@@ -379,6 +350,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
+    //Boton guardar datos
     btnGuardar.addEventListener("click", () => {
         const confirmar = confirm("¿Está seguro de que desea guardar los datos? Una vez que se guarden no se podrán agregar nuevos premios ni modificar los anteriores");
         if (confirmar) {
@@ -403,11 +376,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     })
-
-
-
-
-
 
     // MOSTRAR LA SECCION AL HACER CLICK EN EL MENU DE BOTONES
 
@@ -436,29 +404,27 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('activeSection', 'historial'); // Guardar sección activa
     });
 
+
+
     // AGREGAR PARTICIPANTE DE FORMA MANUAL
 
     const documentosAgregados = [];
-
-
     function agregarParticipanteManual() {
         const nombre = document.getElementById('nombre-participante').value.trim();
         const dni = document.getElementById('dni').value.trim();
 
-
-
         if (!nombre || !dni) {
-            alert('Por favor, complete ambos campos (Nombre y Documento).');
+            mostrarMensajeValidacion('Por favor, complete ambos campos (Nombre y Documento).', contenedorMensaje);
             return;
         }
 
         if (documentosAgregados.includes(dni)) {
-            alert('El documento ya ha sido registrado. Por favor, utiliza un documento diferente.');
+            mostrarMensajeValidacion('El documento ya ha sido registrado. Por favor, utiliza un documento diferente.', contenedorMensaje);
             return;
         }
 
         if (dni.length != 8) {
-            alert('El DNI debe tener 8 dígitos.');
+            mostrarMensajeValidacion('El DNI debe tener 8 dígitos.', contenedorMensaje);
             return;
         }
 
@@ -469,9 +435,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('nombre-participante').value = '';
         document.getElementById('dni').value = '';
         guardarDatos(); // Guardar datos al agregar participante
-        alert("Participante agregado correctamente")
+        
+        mostrarOverlay("Participante agregado exitosamente");
+        
     }
-
 
 
     function agregarAParticipantes(nombre, dni) {
@@ -493,6 +460,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-agregar').addEventListener('click', agregarParticipanteManual);
 
+
+    // Función para mostrar el overlay
+    function mostrarOverlay(mensaje) {
+        const overlay = document.getElementById('overlay-global');
+        const mensajeElemento = document.getElementById('mensaje-overlay');
+
+        mensajeElemento.textContent = mensaje;  // Asignar el mensaje al overlay
+        overlay.style.display = 'flex';  // Mostrar el overlay
+    }
+
+    // Función para ocultar el overlay
+    function ocultarOverlay() {
+        const overlay = document.getElementById('overlay-global');
+        overlay.style.display = 'none';  // Ocultar el overlay
+    }
+
+    // Botón de cerrar el overlay
+    document.getElementById('btn-cerrar-overlay-global').addEventListener('click', ocultarOverlay);
+
+
+
+    //FUNCIONES DE VALIDACIÓN
+
+    const contenedorMensaje = document.getElementById("contenedor-mensajes");
+
+    function mostrarMensajeValidacion(mensaje, contenedor){
+        //Limpiar mensajes previos
+        contenedor.innerHTML='';
+
+        const mensajeValidacion = document.createElement('p');
+
+        mensajeValidacion.textContent = mensaje;
+        mensajeValidacion.style.color= 'red';
+
+        contenedor.appendChild(mensajeValidacion);
+
+        // Cerrar el mensaje automáticamente después de 3 segundos
+        setTimeout(() => {
+            contenedor.removeChild(mensajeValidacion);
+        }   , 3000); // 3000 milisegundos = 3 segundos
+
+    }
+
+
+
+    
 
 
     //GUARDAR LA LISTA DE PARTICIPANTES EN LA BBDD.
@@ -555,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-ingresar').addEventListener('click', async () => {
         const nombreEvento = document.getElementById('nombre-evento').value.trim();
         if (!nombreEvento) {
-            alert('Por favor, ingrese el nombre del evento.');
+            mostrarMensajeValidacion('Por favor, ingrese el nombre del evento.', contenedorMensaje);
             return;
         }
         try {
@@ -571,10 +584,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
-                alert(`Evento ${data.nombre} creado exitosamente`);
+                mostrarOverlay(`Evento ${data.nombre} creado exitosamente`);
             } else {
                 console.log("error: " + response.statusText)
-                alert('Error al crear el evento');
+                mostrarOverlay('Error al crear el evento');
             }
 
         } catch (error) {
