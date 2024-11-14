@@ -351,33 +351,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-    //Boton guardar datos
+    //Overlay para confirmacón de guardar premios
     btnGuardar.addEventListener("click", () => {
-        const confirmar = confirm("¿Está seguro de que desea guardar los datos? Una vez que se guarden no se podrán agregar nuevos premios ni modificar los anteriores");
-        if (confirmar) {
-            guardarPremios()
-            btnGuardar.style.display = "none";
+        const msj = document.getElementById("msj-confirmacion")
+        msj.innerHTML = "¿Estás seguro de querer guardar los datos? Una vez que se guarden no se podrán agregar nuevos premios ni modificar los anteriores.";
+        overlay.style.display = "flex";
+    });
 
-            guardarDatos(); //LLamo a la función de guardar los datos
 
-            //Mostrar el mensaje
-            const mensaje = document.createElement('p');
-            mensaje.textContent = `Datos guardados del sorteo "${localStorage.getItem('nombreEvento')}"`;
+    btnConfirmar.addEventListener("click", ()=>{
+        guardarPremios();//Llama a la función para guardar
+        overlay.style.display = "none"
+        btnGuardar.style.display = 'none';
 
-            //Evitar duplicados si el mensaje está en pantalla
-            if (!document.body.contains(document.getElementById('mensaje-guardado'))) {
-                mensaje.id = 'mensaje-guardado';
-                mensajeContenedor.appendChild(mensaje);
-            }
+        guardarDatos(); //LLamo a la función de guardar los datos
 
-            // Mostrar la sección de "Realizar Sorteo" solo si está oculta
-            if (seccionSorteo.style.display === 'none') {
-                seccionSorteo.style.display = 'block';
-            }
+        //Mostrar el mensaje
+        const mensaje = document.createElement('p');
+        mensaje.textContent = `Datos guardados del sorteo "${localStorage.getItem('nombreEvento')}"`;
+
+        //Evitar duplicados si el mensaje está en pantalla
+        if (!document.body.contains(document.getElementById('mensaje-guardado'))) {
+            mensaje.id = 'mensaje-guardado';
+            mensajeContenedor.appendChild(mensaje);
         }
-    })
 
+        // Mostrar la sección de "Realizar Sorteo" solo si está oculta
+        if (seccionSorteo.style.display === 'none') {
+            seccionSorteo.style.display = 'block';
+        }
+    });
+
+    btnCancelar.addEventListener('click', ()=>{
+        overlay.style.display = "none"
+    });
+
+
+
+    
     // MOSTRAR LA SECCION AL HACER CLICK EN EL MENU DE BOTONES
 
 
@@ -558,18 +569,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Overlay para confirmacón de guardar participantes
     btnGuardarParticipantes.addEventListener("click", () => {
-        overlay.classList.remove("hidden");
+        const msj = document.getElementById("msj-confirmacion")
+        msj.innerHTML = "¿Estás seguro de querer guardar los datos? Una vez que se guarden no se podrán agregar nuevos participantes.";
+        overlay.style.display = "flex";
     });
 
 
     btnConfirmar.addEventListener("click", ()=>{
         guardarParticipantes();//Llama a la función para guardar
         btnGuardarParticipantes.style.display = 'none';
-        overlay.classList.add('hidden');//oculta el overlay
+        overlay.style.display = "none"
     });
 
     btnCancelar.addEventListener('click', ()=>{
-        overlay.classList.add('hidden');
+        overlay.style.display = "none"
     });
     
     
