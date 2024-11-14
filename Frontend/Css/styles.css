@@ -302,7 +302,9 @@ button.qr:hover {
         flex-wrap: wrap;
         list-style-type: none; 
         padding: 0; 
-        margin: 0;
+        justify-content: center;
+        max-height: 450px;
+        overflow-y: scroll;
     }
 
     .lista ul li {
