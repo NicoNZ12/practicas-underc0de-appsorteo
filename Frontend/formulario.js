@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const mensajeContenedor = document.getElementById('contenedor-mensajes');
+
     const btnAgregarParticipante = document.getElementById('agregar-participante');
     
     btnAgregarParticipante.addEventListener('click', () => {
@@ -7,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const dni = document.getElementById('documento-participante').value.trim();
 
         if (!nombre || !dni) {
-            alert('Por favor, complete ambos campos (Nombre y Documento).');
+            mostrarMensajeValidacion('Por favor, complete ambos campos (Nombre y Documento).', mensajeContenedor);
             return;
         }
 
         if(dni.length != 8){
-            alert('El DNI debe tener 8 dígitos.');
+            mostrarMensajeValidacion('El DNI debe tener 8 dígitos.', mensajeContenedor);
             return;
         }
 
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const existeDni = participantes.some(participante => participante.dni === dni);
         if (existeDni) {
-            alert('El documento ya ha sido registrado. Por favor, utiliza un documento diferente.');
+            mostrarMensajeValidacion('El documento ya ha sido registrado. Por favor, utiliza un documento diferente.', mensajeContenedor);
             return;
         }
 
@@ -41,6 +43,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const eventoNombre = localStorage.getItem('nombreEvento');
         localStorage.setItem('nuevoParticipante', JSON.stringify({ nombre, dni, evento: eventoNombre }));
 
-        alert("Participante agregado correctamente")
+        mostrarOverlay("Participante agregado correctamente")
     });
+
+    function mostrarMensajeValidacion(mensaje, contenedor){
+        //Limpiar mensajes previos
+        contenedor.innerHTML='';
+
+        const mensajeValidacion = document.createElement('p');
+
+        mensajeValidacion.textContent = mensaje;
+        mensajeValidacion.style.color= 'red';
+
+        contenedor.appendChild(mensajeValidacion);
+
+        // Cerrar el mensaje automáticamente después de 3 segundos
+        setTimeout(() => {
+            contenedor.removeChild(mensajeValidacion);
+        }   , 3000); // 3000 milisegundos = 3 segundos
+
+    }
+
+    function mostrarOverlay(mensaje) {
+        const overlay = document.getElementById('overlay-global');
+        const mensajeElemento = document.getElementById('mensaje-overlay');
+
+        mensajeElemento.textContent = mensaje;  // Asignar el mensaje al overlay
+        overlay.style.display = 'flex';  // Mostrar el overlay
+    }
+
+    // Función para ocultar el overlay
+    function ocultarOverlay() {
+        const overlay = document.getElementById('overlay-global');
+        overlay.style.display = 'none';  // Ocultar el overlay
+    }
+
+    // Botón de cerrar el overlay
+    document.getElementById('btn-cerrar-overlay-global').addEventListener('click', ocultarOverlay);
 });

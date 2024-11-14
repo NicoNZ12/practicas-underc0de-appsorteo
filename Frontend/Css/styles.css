@@ -311,7 +311,7 @@ body {
         margin-bottom: 20px;
         font-size: 18px;
         font-weight: bold;
-        color: green; /* Puedes cambiar el color según el tipo de mensaje */
+        color: green; 
     }
 
     #btn-cerrar-overlay-global:hover {

@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-
-
     // VARIABLES PARA MANEJAR LAS SECCIONES
 
     const btnEvento = document.getElementById('fomr-evento');
@@ -182,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('agregar-premio').addEventListener('click', () => {
         const nombreEvento = localStorage.getItem('nombreEvento');
         if (!nombreEvento) {
-            alert('Por favor, primero ingresa el nombre del evento.');
+            mostrarMensajeValidacion('Por favor, primero ingresa el nombre del evento.', contenedorMensaje);
             return;
         }
 
@@ -341,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             if (respuesta.ok) {
                 const data = await respuesta.json();
-                alert(data.message);
+                // alert(data.message);
             } else {
                 console.error("Error al cargar los premios:", respuesta.status);
             }
@@ -412,6 +410,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function agregarParticipanteManual() {
         const nombre = document.getElementById('nombre-participante').value.trim();
         const dni = document.getElementById('dni').value.trim();
+        const nombreEvento = localStorage.getItem('nombreEvento');
+
+        if (!nombreEvento) {
+            mostrarMensajeValidacion('Por favor, primero ingresa el nombre del evento.', contenedorMensaje);
+            return;
+        }
 
         if (!nombre || !dni) {
             mostrarMensajeValidacion('Por favor, complete ambos campos (Nombre y Documento).', contenedorMensaje);
@@ -428,6 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        
         agregarAParticipantes(nombre, dni);
         documentosAgregados.push(dni);
 
@@ -538,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             if (respuesta.ok) {
                 const data = await respuesta.json();
-                alert(data.message);
+                // alert(data.message);
             } else {
                 console.error("Error al cargar los participantes:", respuesta.status);
             }
@@ -697,3 +702,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
