@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSorteo = document.getElementById("btn-sorteo");
     const btnGuardarParticipantes = document.getElementById("btn-guardar-parts");
     const btnSeccionHistorial = document.getElementById("form-historial");
+    const overlay = document.getElementById("overlay");
+    const btnConfirmar = document.getElementById("btn-confirmar");
+    const btnCancelar = document.getElementById("btn-cancelar");
 
     const seccionNombre = document.getElementById('seccion-nombre');
     const seccionParticipantes = document.getElementById('seccion-participantes');
@@ -553,13 +556,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    //Overlay para confirmacón de guardar participantes
     btnGuardarParticipantes.addEventListener("click", () => {
-        const confirmar = confirm("¿Está seguro de que desea guardar los datos? Una vez que se guarden no se podrán agregar nuevos participantes");
-        if (confirmar) {
-            guardarParticipantes();
-            btnGuardarParticipantes.style.display = "none";
-        }
+        overlay.classList.remove("hidden");
     });
+
+
+    btnConfirmar.addEventListener("click", ()=>{
+        guardarParticipantes();//Llama a la función para guardar
+        btnGuardarParticipantes.style.display = 'none';
+        overlay.classList.add('hidden');//oculta el overlay
+    });
+
+    btnCancelar.addEventListener('click', ()=>{
+        overlay.classList.add('hidden');
+    });
+    
+    
+
+    
 
 
 
