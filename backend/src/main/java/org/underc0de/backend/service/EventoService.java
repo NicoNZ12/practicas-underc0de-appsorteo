@@ -1,5 +1,8 @@
 package org.underc0de.backend.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.underc0de.backend.dto.EventoDetalleDTO;
 import org.underc0de.backend.dto.PremioDetalleDTO;
@@ -103,6 +106,38 @@ public class  EventoService {
                 .collect(Collectors.toList());
 
         return new EventoDetalleDTO(evento.getId(), evento.getNombre(), evento.getFecha(), premiosDTO);
+    }
+
+
+    // En EventoService:
+    public Page<Evento> probarFiltroRepositorio(int year, int month, Pageable pageable) {
+        return eventoRepository.findByYearAndMonth(year, month, pageable);
+    }
+
+    // EventoService:
+    public Page<Evento> obtenerEventosPaginados(int year, int month, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return eventoRepository.findByYearAndMonth(year, month, pageable);
+    }
+
+    // Obtener eventos por año y mes
+    public Page<Evento> obtenerEventosPorAnoYMes(int year, int month, Pageable pageable) {
+        return eventoRepository.findByYearAndMonth(year, month, pageable);
+    }
+
+    // Obtener eventos por solo año
+    public Page<Evento> obtenerEventosPorAno(int year, Pageable pageable) {
+        return eventoRepository.findByYear(year, pageable);
+    }
+
+    // Obtener eventos por solo mes
+    public Page<Evento> obtenerEventosPorMes(int month, Pageable pageable) {
+        return eventoRepository.findByMonth(month, pageable);
+    }
+
+    // Obtener todos los eventos
+    public Page<Evento> obtenerEventos(Pageable pageable) {
+        return eventoRepository.findAll(pageable);
     }
 
 }

@@ -5,6 +5,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -101,5 +104,33 @@ public class EventoController {
 
         }
     }
+
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<Page<Evento>> obtenerEventosPaginados(
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) Integer month,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        // Llamar al servicio para obtener los eventos con los filtros aplicados
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Evento> eventos;
+
+        // Si se proporcionan filtros, filtramos los eventos por año y mes
+        if (year != null && month != null) {
+            eventos = eventoService.obtenerEventosPorAnoYMes(year, month, pageable);
+        } else if (year != null) {
+            eventos = eventoService.obtenerEventosPorAno(year, pageable);
+        } else if (month != null) {
+            eventos = eventoService.obtenerEventosPorMes(month, pageable);
+        } else {
+            eventos = eventoService.obtenerEventos(pageable);
+        }
+
+        return ResponseEntity.ok(eventos);
+    }
+
 
 }
