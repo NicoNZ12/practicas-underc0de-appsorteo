@@ -420,6 +420,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mostrar la sección de "Realizar Sorteo"
         seccionSorteo.style.display = 'block';
 
+        //Deshabilitar las demás secciones
+        btnEvento.disabled = true;
+        btnParticipantes.disabled = true;
+        btnLista.disabled = true;
+        btnPremios.disabled = true;
+        btnSeccionHistorial.disabled = true;
+
+
     });
 
     btnCancelar.addEventListener('click', () => {
