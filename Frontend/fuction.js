@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnGuardar = document.getElementById('guardar-datos-premios-sponsor');
     const btnReiniciar = document.getElementById('reinicar-pagina-completa');
     const btnSorteo = document.getElementById("btn-sorteo");
-    const btnGuardarParticipantes = document.getElementById("btn-guardar-parts");
     const btnSeccionHistorial = document.getElementById("form-historial");
     const overlay = document.getElementById("overlay");
     const btnConfirmar = document.getElementById("btn-confirmar");
@@ -189,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         premioCount++; // Incrementa el contador
         generarCamposPremios(premioCount); // Genera un nuevo premio
+        btnGuardar.style.display = "inline-block"
     });
 
 
@@ -267,6 +267,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 --premioCount; // Disminuye el contador
                 guardarDatos();
                 actualizarNumsDePremios()
+
+                if (premiosContainer.querySelectorAll('.premios-row').length === 0) {
+                    btnGuardar.style.display = "none";
+                }
+                
             };
 
             // Agregar las columnas y el botón de eliminación a la fila
@@ -354,17 +359,20 @@ document.addEventListener('DOMContentLoaded', () => {
     //Overlay para confirmacón de guardar premios
     btnGuardar.addEventListener("click", () => {
         const msj = document.getElementById("msj-confirmacion")
-        msj.innerHTML = "¿Estás seguro de querer guardar los datos? Una vez que se guarden no se podrán agregar nuevos premios ni modificar los anteriores.";
+        msj.innerHTML = "¿Estás seguro de querer guardar los datos? Una vez que se guarden no se podrán modificar";
         overlay.style.display = "flex";
     });
 
 
     btnConfirmar.addEventListener("click", ()=>{
+        guardarParticipantes()
         guardarPremios();//Llama a la función para guardar
-        overlay.style.display = "none"
-        btnGuardar.style.display = 'none';
 
         guardarDatos(); //LLamo a la función de guardar los datos
+
+        btnGuardar.style.display = 'none';
+        overlay.style.display = "none"
+
 
         //Mostrar el mensaje
         const mensaje = document.createElement('p');
@@ -376,10 +384,9 @@ document.addEventListener('DOMContentLoaded', () => {
             mensajeContenedor.appendChild(mensaje);
         }
 
-        // Mostrar la sección de "Realizar Sorteo" solo si está oculta
-        if (seccionSorteo.style.display === 'none') {
-            seccionSorteo.style.display = 'block';
-        }
+        // Mostrar la sección de "Realizar Sorteo"
+        seccionSorteo.style.display = 'block';
+        
     });
 
     btnCancelar.addEventListener('click', ()=>{
@@ -388,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    
+
     // MOSTRAR LA SECCION AL HACER CLICK EN EL MENU DE BOTONES
 
 
@@ -567,25 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    //Overlay para confirmacón de guardar participantes
-    btnGuardarParticipantes.addEventListener("click", () => {
-        const msj = document.getElementById("msj-confirmacion")
-        msj.innerHTML = "¿Estás seguro de querer guardar los datos? Una vez que se guarden no se podrán agregar nuevos participantes.";
-        overlay.style.display = "flex";
-    });
-
-
-    btnConfirmar.addEventListener("click", ()=>{
-        guardarParticipantes();//Llama a la función para guardar
-        btnGuardarParticipantes.style.display = 'none';
-        overlay.style.display = "none"
-    });
-
-    btnCancelar.addEventListener('click', ()=>{
-        overlay.style.display = "none"
-    });
-    
-    
+      
 
     
 
