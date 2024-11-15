@@ -1070,7 +1070,25 @@ body {
     font-size: 14px;
 }
 
+#btn-aplicar-filtros, #btn-ver-historial{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
+#btn-aplicar-filtros{
+    background-color: #7b68e6;
+    color: white;
+}
+
+#btn-aplicar-filtros:hover{
+    background-color: hsl(249, 72%, 55%);
+}
+
+#btn-ver-historial:hover {
+    background-color: hsl(240, 10%, 82%);
+}
 
 
 
