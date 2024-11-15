@@ -232,7 +232,7 @@ body {
 
 
 
-    .confirmacion button{
+    .confirmacion button {
         padding: 10px;
         border: none;
         border-radius: 10px;
@@ -240,16 +240,16 @@ body {
         margin: 5px;
     }
 
-    #btn-confirmar{
+    #btn-confirmar {
         background-color: #7b68e6;
         color: white;
     }
 
-    #btn-confirmar:hover{
+    #btn-confirmar:hover {
         background-color: hsl(249, 72%, 55%);
     }
 
-    #btn-cancelar:hover{
+    #btn-cancelar:hover {
         background-color: hsl(240, 10%, 82%);
     }
 
@@ -302,9 +302,9 @@ body {
     button.btn-part:hover {
         background-color: #4d9ceb;
     }
-    
-     /* Estilos para el overlay */
-     #overlay-global {
+
+    /* Estilos para el overlay */
+    #overlay-global {
         position: fixed;
         top: 0;
         left: 0;
@@ -328,17 +328,17 @@ body {
         margin-bottom: 20px;
         font-size: 18px;
         font-weight: bold;
-        color: green; 
+        color: green;
     }
 
-    #btn-cerrar-overlay-global{
+    #btn-cerrar-overlay-global {
         background-color: #7b68e6;
         color: white;
         width: 100px;
         padding: 10px;
         border-radius: 10px;
         border: none;
-        
+
     }
 
     #btn-cerrar-overlay-global:hover {
@@ -862,7 +862,7 @@ body {
         align-items: center;
         z-index: 1000;
     }
-    
+
     .modal {
         background: white;
         padding: 20px;
@@ -871,11 +871,11 @@ body {
         width: 80%;
         max-width: 400px;
     }
-    
+
     .hidden {
         display: none;
     }
-    
+
     .modal button {
         margin: 10px;
         padding: 10px 20px;
@@ -885,10 +885,10 @@ body {
         width: 100px;
     }
 
-    .modal button:hover{
+    .modal button:hover {
         background-color: #4d9ceb;
     }
-    
+
 
     /* Sección Premios y Patrocinadores */
     .premios {
@@ -1007,6 +1007,8 @@ body {
 }
 
 
+/* --------- Estilo historial ---------- */
+
 
 .evento {
     border: 1px solid #ddd;
@@ -1037,6 +1039,36 @@ body {
     font-size: 0.9em;
 }
 
+.historial {
+    margin-top: 20px;
+}
+
+.filtro-h label {
+    margin-right: 10px;
+}
+
+.filtro-h button {
+    margin: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filtro-h button:hover {
+    background-color: #f0f0f0;
+}
+
+#pagina-actual {
+    font-weight: bold;
+}
+
+#year,
+#month {
+    width: 100px;
+    height: 20px;
+    margin-right: 10px;
+    font-size: 14px;
+}
 
 
 

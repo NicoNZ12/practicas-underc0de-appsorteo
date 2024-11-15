@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (premiosContainer.querySelectorAll('.premios-row').length === 0) {
                     btnGuardar.style.display = "none";
                 }
-                
+
             };
 
             // Agregar las columnas y el botón de eliminación a la fila
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    btnConfirmar.addEventListener("click", ()=>{
+    btnConfirmar.addEventListener("click", () => {
         guardarParticipantes()
         guardarPremios();//Llama a la función para guardar
 
@@ -386,10 +386,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mostrar la sección de "Realizar Sorteo"
         seccionSorteo.style.display = 'block';
-        
+
     });
 
-    btnCancelar.addEventListener('click', ()=>{
+    btnCancelar.addEventListener('click', () => {
         overlay.style.display = "none"
     });
 
@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        
+
         agregarAParticipantes(nombre, dni);
         documentosAgregados.push(dni);
 
@@ -461,9 +461,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('nombre-participante').value = '';
         document.getElementById('dni').value = '';
         guardarDatos(); // Guardar datos al agregar participante
-        
+
         mostrarOverlay("Participante agregado exitosamente");
-        
+
     }
 
 
@@ -511,27 +511,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const contenedorMensaje = document.getElementById("contenedor-mensajes");
 
-    function mostrarMensajeValidacion(mensaje, contenedor){
+    function mostrarMensajeValidacion(mensaje, contenedor) {
         //Limpiar mensajes previos
-        contenedor.innerHTML='';
+        contenedor.innerHTML = '';
 
         const mensajeValidacion = document.createElement('p');
 
         mensajeValidacion.textContent = mensaje;
-        mensajeValidacion.style.color= 'red';
+        mensajeValidacion.style.color = 'red';
 
         contenedor.appendChild(mensajeValidacion);
 
         // Cerrar el mensaje automáticamente después de 3 segundos
         setTimeout(() => {
             contenedor.removeChild(mensajeValidacion);
-        }   , 3000); // 3000 milisegundos = 3 segundos
+        }, 3000); // 3000 milisegundos = 3 segundos
 
     }
 
 
 
-    
+
 
 
     //GUARDAR LA LISTA DE PARTICIPANTES EN LA BBDD.
@@ -574,9 +574,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-      
 
-    
+
+
 
 
 
@@ -674,48 +674,149 @@ document.addEventListener('DOMContentLoaded', () => {
     //----------------------- Funcionalidad Historial-----
 
     // Integración del código de cargar eventos desde la API
+    // Elementos del DOM
     const eventosLista = document.getElementById("eventos-lista");
+    const paginaActualElemento = document.getElementById("pagina-actual");
+    const yearInput = document.getElementById("year");
+    const monthInput = document.getElementById("month");
+    const botonFiltrar = document.getElementById("btn-aplicar-filtros");
+    const botonHistorial = document.getElementById("btn-ver-historial");
+    /*  const botonSiguiente = document.getElementById("boton-siguiente");
+     const botonAnterior = document.getElementById("boton-anterior"); */
 
-    // Función para cargar eventos desde la API
-    async function cargarEventos() {
+    let paginaActual = 0;  // Página actual inicial
+    const tamanoPagina = 6;  // Número de eventos por página
+
+    // Función para cargar todos los eventos (sin filtros)
+    async function cargarEventosSinFiltro() {
+        const url = `http://localhost:8080/evento/historial`;
+
         try {
-            const response = await fetch("http://localhost:8080/evento/historial");
+            const response = await fetch(url);
             if (!response.ok) throw new Error("Error al obtener los eventos");
-            const eventos = await response.json();
-            renderizarEventos(eventos);
+
+            const data = await response.json();
+
+            // Verificar la estructura de los datos
+            if (Array.isArray(data)) {
+                renderizarEventos(data);
+            } else {
+                throw new Error("Formato de datos inesperado.");
+            }
         } catch (error) {
             console.error("Error:", error);
+            alert("Error al obtener el historial de eventos.");
         }
     }
 
-    // Función para renderizar la lista de eventos
+    // Función para cargar eventos con filtro de año y mes
+    async function cargarEventosConFiltro() {
+        const year = yearInput.value;
+        const month = monthInput.value;
+
+        const url = `http://localhost:8080/evento/filtrar?page=${paginaActual >= 0 ? paginaActual : 0}&size=${tamanoPagina}&year=${year}&month=${month}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Error en la respuesta de la API: ${response.statusText}`);
+
+            const data = await response.json();
+            if (data.content && Array.isArray(data.content)) {
+                renderizarEventos(data.content);
+                /* actualizarPaginacion(data); */
+            } else {
+                throw new Error("Formato de datos inesperado.");
+            }
+        } catch (error) {
+            console.error("Error al obtener los eventos filtrados:", error);
+            alert("Error al obtener los eventos filtrados.");
+        }
+    }
+
+    // Función para renderizar los eventos en el DOM
     function renderizarEventos(eventos) {
+        eventosLista.innerHTML = "";  // Limpiar la lista
+
+        if (eventos.length === 0) {
+            eventosLista.innerHTML = "<p>No se encontraron eventos.</p>";
+            return;
+        }
+
+        // Ordenar eventos por fecha (más recientes primero) si es necesario
+        eventos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));  // Orden descendente por fecha
+
+
         eventos.forEach(evento => {
             const eventoItem = document.createElement("li");
             eventoItem.classList.add("evento");
             eventoItem.innerHTML = `
-                <strong>${evento.nombre}</strong> - ${new Date(evento.fecha).toLocaleDateString()}
-                <div class="premios-h">
-                    ${evento.premios.map(premio => `
-                        <div class="premio-h">
-                            <p><strong>Premio:</strong> ${premio.descripcion}</p>
-                            <p><strong>Patrocinador:</strong> ${premio.sponsor}</p>
-                            <p><strong>Ganador:</strong> ${premio.nombreGanador}</p>
-                            <p><strong>DNI:</strong> ${premio.dniGanador}</p>
-                        </div>
-                    `).join("")}
-                </div>`;
-            // Evento para mostrar/ocultar los premios al hacer clic
+            <strong>${evento.nombre}</strong> - ${new Date(evento.fecha).toLocaleDateString()}
+            <div class="premios-h">
+                ${evento.premios ? evento.premios.map(premio => `
+                    <div class="premio-h">
+                        <p><strong>Premio:</strong> ${premio.descripcion}</p>
+                        <p><strong>Patrocinador:</strong> ${premio.sponsor}</p>
+                        <p><strong>Ganador:</strong> ${premio.nombreGanador}</p>
+                        <p><strong>DNI:</strong> ${premio.dniGanador}</p>
+                    </div>
+                `).join("") : "<p>No hay premios.</p>"}
+            </div>
+        `;
             eventoItem.addEventListener("click", () => {
                 const premiosDiv = eventoItem.querySelector(".premios-h");
                 premiosDiv.classList.toggle("mostrar");
             });
+
             eventosLista.appendChild(eventoItem);
         });
     }
 
-    // Llamar a cargarEventos al iniciar la página
-    cargarEventos();
+    // Función para manejar la paginación y habilitar/deshabilitar los botones
+    /* function actualizarPaginacion(eventos) {
+        const totalPages = eventos.totalPages;
+        const currentPage = eventos.number;
+
+        // Deshabilitar el botón "Anterior" si estamos en la primera página
+        botonAnterior.disabled = currentPage <= 0;
+
+        // Deshabilitar el botón "Siguiente" si estamos en la última página
+        botonSiguiente.disabled = currentPage >= totalPages - 1;
+
+        // Actualizar la página actual
+        paginaActualElemento.innerText = currentPage + 1;
+    } */
+
+    // Función para cambiar la página (anterior o siguiente)
+    function cambiarPagina(direccion) {
+        paginaActual += direccion;
+        if (yearInput.value || monthInput.value) {
+            cargarEventosConFiltro(); // Si hay filtros, cargar con filtro
+        } else {
+            cargarEventosSinFiltro(); // Si no hay filtros, cargar sin filtro
+        }
+    }
+
+    // Event listeners
+    if (botonFiltrar) {
+        botonFiltrar.addEventListener("click", cargarEventosConFiltro);
+    }
+
+    if (botonHistorial) {
+        botonHistorial.addEventListener("click", () => {
+            // Resetear los filtros y mostrar el historial sin filtros
+            yearInput.value = '';
+            monthInput.value = '';
+            cargarEventosSinFiltro(); // Cargar todos los eventos sin filtros
+        });
+    }
+
+    /* if (botonSiguiente && botonAnterior) {
+        botonSiguiente.addEventListener("click", () => cambiarPagina(1));
+        botonAnterior.addEventListener("click", () => cambiarPagina(-1));
+    } */
+
+    // Inicializar el historial de eventos sin filtros al cargar la página
+    window.addEventListener("load", cargarEventosSinFiltro);
 
 
 });

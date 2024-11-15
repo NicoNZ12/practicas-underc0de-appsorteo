@@ -124,11 +124,29 @@
     <!-- Sección para el historial de eventos -->
     <div class="historial" id="historial" style="display: none;">
         <h3 style="text-align: center;">Historial de Eventos</h3>
-        <ul id="eventos-lista" style="list-style-type: none;
-    padding: 0;"></ul>
+
+        <!-- Filtros de año y mes -->
+        <label for="year">Año:</label>
+        <input type="number" id="year" placeholder="Ej: 2023" />
+
+        <label for="month">Mes:</label>
+        <input type="number" id="month" min="1" max="12" placeholder="Ej: 5" />
+
+        <button id="btn-aplicar-filtros">Filtrar</button>
+        <button id="btn-ver-historial">Limpiar Filtro</button>
+
+        <!-- Lista de eventos -->
+        <ul id="eventos-lista" style="list-style-type: none; padding: 0;"></ul>
+
+        <!-- Controles de paginación -->
+        <!-- <div class="botons" style="text-align: center;">
+            <button id="boton-anterior">Anterior</button>
+            <span id="pagina-actual">1</span>
+            <button id="boton-siguiente">Siguiente</button>
+        </div> -->
     </div>
 
-    
+
 
     <!-- Overlay Global Mensajes de exito-->
     <div id="overlay-global" style="display: none;">
@@ -145,7 +163,7 @@
     <footer>
         <p>&copy; 2024 SorteApp. Todos los derechos reservados.</p>
     </footer>
-    
+
     <script src="fuction.js"></script>
     <!-- Incluir el CDN de QRCode.js -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>

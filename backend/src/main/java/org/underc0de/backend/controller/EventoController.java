@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -111,10 +112,15 @@ public class EventoController {
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) Integer month,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "6") int size) {
+
+        // Validar el valor de 'page' para asegurarnos de que no sea negativo
+        if (page < 0) {
+            page = 0;  // Si el valor es negativo, asignar la primera página
+        }
 
         // Llamar al servicio para obtener los eventos con los filtros aplicados
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("fecha")));
 
         Page<Evento> eventos;
 
