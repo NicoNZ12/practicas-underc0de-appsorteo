@@ -209,10 +209,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const premios = [];
         const premiosRows = document.querySelectorAll('.premios-row');
+
+        //Validar que los premios y sponsor no esten vacios
+        let premiosVacios = false;
+
         premiosRows.forEach(row => {
             const premio = row.querySelector('.columna-premios input').value.trim();
             const sponsor = row.querySelector('.columna-patrocinadores input').value.trim();
-            premios.push({ premio, sponsor });
+
+            if(!premio && !sponsor){
+
+                premios.push({ premio, sponsor });
+            }
+            
         });
 
         localStorage.setItem('premiosYSponsors', JSON.stringify(premios));
@@ -358,10 +367,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Overlay para confirmacón de guardar premios
     btnGuardar.addEventListener("click", () => {
-        const msj = document.getElementById("msj-confirmacion")
-        msj.innerHTML = "¿Estás seguro de querer guardar los datos? Una vez que se guarden no se podrán modificar";
+        const premiosRows = document.querySelectorAll('.premios-row');
+        let premiosInvalidos = false;
+
+        // Validar premios y patrocinadores antes de mostrar el overlay
+        premiosRows.forEach(row => {
+            const premio = row.querySelector('.columna-premios input').value.trim();
+            const sponsor = row.querySelector('.columna-patrocinadores input').value.trim();
+
+            if (!premio || !sponsor) {
+                premiosInvalidos = true;
+                row.classList.add('error'); // Resaltar fila con error
+            } else {
+                row.classList.remove('error'); // Quitar error si todo está bien
+            }
+        });
+
+        if (premiosInvalidos) {
+        mostrarMensajeValidacion("Por favor, completa todos los campos de premios y patrocinadores.",mensajeContenedor);
+        return; // Salir si hay errores
+        }
+
+        // Si la validación pasa, mostrar el overlay
+        const msj = document.getElementById("msj-confirmacion");
+        msj.innerHTML = "¿Estás seguro de querer guardar los datos? Una vez que se guarden no se podrán modificar.";
         overlay.style.display = "flex";
     });
+
+
 
 
     btnConfirmar.addEventListener("click", () => {
@@ -577,15 +610,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
-
-
-
     //GUARDAR EL NOMBRE DEL EVENTO 
     document.getElementById('btn-ingresar').addEventListener('click', async () => {
         const nombreEvento = document.getElementById('nombre-evento').value.trim();
@@ -623,17 +647,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     // ELIMINAR PARTICIPANTES
     function eliminarParticipante(participante, dni) {
         const lista = document.getElementById('lista-participantes');
@@ -646,14 +659,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         guardarDatos(); // Guardar datos al eliminar participante
     }
-
-
-
-
-
-
-
-
 
 
 
