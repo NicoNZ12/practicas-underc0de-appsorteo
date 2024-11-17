@@ -107,8 +107,8 @@ public class EventoController {
     }
 
 
-    @GetMapping("/filtrar")
-    public ResponseEntity<Page<Evento>> obtenerEventosPaginados(
+    @GetMapping("/filtrar-historial")
+    public ResponseEntity<Page<EventoDetalleDTO>> obtenerEventosPaginados(
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) Integer month,
             @RequestParam(defaultValue = "0") int page,
@@ -122,7 +122,7 @@ public class EventoController {
         // Llamar al servicio para obtener los eventos con los filtros aplicados
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("fecha")));
 
-        Page<Evento> eventos;
+        Page<EventoDetalleDTO> eventos;
 
         // Si se proporcionan filtros, filtramos los eventos por año y mes
         if (year != null && month != null) {
@@ -137,6 +137,20 @@ public class EventoController {
 
         return ResponseEntity.ok(eventos);
     }
+
+    @Operation(summary = "Obtener historial de eventos con paginación", description = "Obtiene eventos paginados con detalles y ganadores")
+    @ApiResponse(responseCode = "200", description = "Lista de eventos obtenida exitosamente")
+    @GetMapping("/historial-paginado")
+    public ResponseEntity<Page<EventoDetalleDTO>> obtenerHistorialEventos(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("fecha")));
+        Page<EventoDetalleDTO> eventos = eventoService.obtenerHistorialEventosPaginados(pageable);
+
+        return ResponseEntity.ok(eventos);
+    }
+
 
 
 }

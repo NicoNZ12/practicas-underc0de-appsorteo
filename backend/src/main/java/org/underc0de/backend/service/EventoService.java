@@ -109,35 +109,32 @@ public class  EventoService {
     }
 
 
-    // En EventoService:
-    public Page<Evento> probarFiltroRepositorio(int year, int month, Pageable pageable) {
-        return eventoRepository.findByYearAndMonth(year, month, pageable);
-    }
-
-    // EventoService:
-    public Page<Evento> obtenerEventosPaginados(int year, int month, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return eventoRepository.findByYearAndMonth(year, month, pageable);
-    }
 
     // Obtener eventos por año y mes
-    public Page<Evento> obtenerEventosPorAnoYMes(int year, int month, Pageable pageable) {
-        return eventoRepository.findByYearAndMonth(year, month, pageable);
+    public Page<EventoDetalleDTO> obtenerEventosPorAnoYMes(int year, int month, Pageable pageable) {
+        return eventoRepository.findByYearAndMonth(year, month, pageable).map(this::mapearEventoADetalleDTO);
     }
 
     // Obtener eventos por solo año
-    public Page<Evento> obtenerEventosPorAno(int year, Pageable pageable) {
-        return eventoRepository.findByYear(year, pageable);
+    public Page<EventoDetalleDTO> obtenerEventosPorAno(int year, Pageable pageable) {
+        return eventoRepository.findByYear(year, pageable).map(this::mapearEventoADetalleDTO);
     }
 
     // Obtener eventos por solo mes
-    public Page<Evento> obtenerEventosPorMes(int month, Pageable pageable) {
-        return eventoRepository.findByMonth(month, pageable);
+    public Page<EventoDetalleDTO> obtenerEventosPorMes(int month, Pageable pageable) {
+        return eventoRepository.findByMonth(month, pageable).map(this::mapearEventoADetalleDTO);
     }
 
     // Obtener todos los eventos
-    public Page<Evento> obtenerEventos(Pageable pageable) {
-        return eventoRepository.findAll(pageable);
+    public Page<EventoDetalleDTO> obtenerEventos(Pageable pageable) {
+        return eventoRepository.findAll(pageable).map(this::mapearEventoADetalleDTO);
     }
+
+    public Page<EventoDetalleDTO> obtenerHistorialEventosPaginados(Pageable pageable) {
+        Page<Evento> eventosPaginados = eventoRepository.findAll(pageable);
+
+        return eventosPaginados.map(this::mapearEventoADetalleDTO);
+    }
+
 
 }
