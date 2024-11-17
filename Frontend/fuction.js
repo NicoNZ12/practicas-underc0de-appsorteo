@@ -420,6 +420,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mostrar la sección de "Realizar Sorteo"
         seccionSorteo.style.display = 'block';
 
+         // Hacer scroll hasta el botón
+        btnRealizarSorteo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+
         //Deshabilitar las demás secciones
         btnEvento.disabled = true;
         btnParticipantes.disabled = true;
