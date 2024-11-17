@@ -116,24 +116,29 @@
             <ul id="ganadores-list">
                 <!-- Los ganadores se mostrarán aquí -->
             </ul>
-            <button id="reinicar-pagina-completa">Reiniciar Sorteo</button>
+            <button id="reinicar-pagina-completa">Nuevo Sorteo</button>
         </div>
     </div>
 
 
     <!-- Sección para el historial de eventos -->
     <div class="historial" id="historial" style="display: none;">
-        <h3 style="text-align: center;">Historial de Eventos</h3>
-
+        
         <!-- Filtros de año y mes -->
-        <label for="year">Año:</label>
-        <input type="number" id="year" placeholder="Ej: 2023" />
+         <div class="form-historial">
+            <h3 style="text-align: center;">Historial de Eventos</h3>
+            <label for="year">Año:</label>
+            <input type="number" id="year" placeholder="Ej: 2023" />
 
-        <label for="month">Mes:</label>
-        <input type="number" id="month" min="1" max="12" placeholder="Ej: 5" />
+            <label for="month">Mes:</label>
+            <input type="number" id="month" min="1" max="12" placeholder="Ej: 5" />
 
-        <button id="btn-aplicar-filtros">Filtrar</button>
-        <button id="btn-ver-historial">Limpiar Filtro</button>
+            <div class="form-btns">
+                <button id="btn-aplicar-filtros">Filtrar</button>
+                <button id="btn-ver-historial">Limpiar Filtro</button>
+            </div>
+         </div>
+        
 
         <!-- Lista de eventos -->
         <ul id="eventos-lista" style="list-style-type: none; padding: 0;"></ul>

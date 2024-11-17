@@ -473,12 +473,15 @@ body {
         padding: 10px 20px;
         border: none;
         border-radius: 10px;
-        background-color: #4d9ceb;
+        background-color: #2e07bbb2;
         color: #fff;
         cursor: pointer;
     }
 
-
+    #guardar-datos-premios-sponsor:hover,
+    #agregar-premio:hover {
+        background-color: #4d9ceb;
+    }
 
 
 
@@ -546,8 +549,13 @@ body {
         margin-bottom: 8px;
     }
 
+    .overlay-ganadores button{
+        background-color: #7b68e6 !important;
+    }
 
-
+    .overlay-ganadores button:hover{
+        background-color: #4d9ceb !important;
+    }
 
 
 
@@ -589,6 +597,136 @@ body {
     }
 
 
+
+
+
+
+
+
+    /* --------- Estilo historial ---------- */
+
+    .form-historial{
+        background-color: #ffffff56;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+
+    .form-historial input{
+        width: 80% !important; 
+        padding: 10px;
+        margin: 5px auto 10px;
+        border-radius: 10px;
+        font-size: 16px;
+        border: none;
+    }
+
+    .form-btns{
+        margin: 10px 0px 10px;
+    }
+
+    .form-btns button{
+        width: 200px;
+        margin: 5px;
+    }
+
+
+    .evento {
+        border: 1px solid #ddd;
+        margin: 10px;
+        padding: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .evento:hover {
+        background-color: #f9f9f9;
+    }
+
+    .premios-h {
+        margin-top: 10px;
+        display: none;
+
+    }
+
+    .premios-h.mostrar {
+        display: block;
+
+    }
+
+    .premio-h {
+        border-top: 1px solid #ccc;
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .historial {
+        margin-top: 20px;
+    }
+
+    .filtro-h label {
+        margin-right: 10px;
+    }
+
+    .filtro-h button {
+        margin: 5px;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .filtro-h button:hover {
+        background-color: #f0f0f0;
+    }
+
+    #pagina-actual {
+        font-weight: bold;
+    }
+
+    #year,
+    #month {
+        width: 100px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    #btn-aplicar-filtros, #btn-ver-historial{
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    #btn-aplicar-filtros{
+        background-color: #7b68e6;
+        color: white;
+    }
+
+    #btn-aplicar-filtros:hover{
+        background-color: hsl(249, 72%, 55%);
+    }
+
+    #btn-ver-historial:hover {
+        background-color: hsl(240, 10%, 82%);
+    }
+
+    .botons button{
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 15px;
+        background-color: #7b68e6;
+        color: white;
+    }
+
+    .botons button:hover{
+        background-color: #4d9ceb;
+    }
+
+
 }
 
 
@@ -596,7 +734,6 @@ body {
 
 /* CELULAR */
 @media (max-width: 750px) {
-
 
     /* General Styles */
     body {
@@ -611,6 +748,7 @@ body {
         padding: 10px 0;
         background-color: #333;
         color: white;
+        margin-top: 10px;
     }
 
     footer p {
@@ -628,6 +766,10 @@ body {
         border-bottom: 2px solid #ddd;
     }
 
+    header h1{
+        font-size: 1.5rem;
+    }
+
     header img {
         max-width: 70px;
         border-radius: 50%;
@@ -640,6 +782,7 @@ body {
         justify-content: center;
         gap: 15px;
         margin-top: 20px;
+        padding: 10px;
     }
 
     .btn-menu button {
@@ -657,15 +800,75 @@ body {
         background-color: #4d9ceb;
     }
 
+    #overlay-global {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .overlay-content {
+        background: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+        width: 85%;
+    }
+
+    #mensaje-overlay {
+        margin-bottom: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: green;
+        font-size: 18px;
+    }
+
+    #btn-cerrar-overlay-global {
+        background-color: #7b68e6;
+        color: white;
+        width: 100px;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+
+    }
+
+    #btn-cerrar-overlay-global:hover {
+        background-color: #9681f5;
+    }
+
     /* Sección Nombre Evento */
+
+    .titulo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 15px auto;
+        padding: 10px;
+        width: 85%;
+        border-radius: 8px;
+        background-color: #ffffff56;
+    }
+
+    .titulo h1{
+        text-align: center;
+        font-size: 20px;
+    }
+
     #seccion-nombre {
         text-align: center;
     }
 
     #nombre-evento {
-        width: 100%;
+        width: 80%;
         padding: 12px;
-        margin-top: 15px;
         border-radius: 8px;
         border: 1px solid #ddd;
         font-size: 1rem;
@@ -739,6 +942,9 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        position: absolute;
+        top: 90px;
+        right: 10px;
     }
 
     .qr-div button {
@@ -773,7 +979,7 @@ body {
         background: #fff;
         padding: 20px;
         border-radius: 8px;
-        width: 90%;
+        width: 80%;
         max-width: 500px;
         text-align: center;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -810,20 +1016,24 @@ body {
         background-color: #ffffff56;
         border-radius: 8px;
         padding: 20px;
-        width: 90%;
+        width: 85%;
+        max-height: 700px;
+        overflow-y: scroll;
     }
 
     .lista ul {
         list-style-type: none;
         padding: 0;
-        margin: 0;
+        margin: 0 auto;
+        width: 80%;
+
     }
 
     .lista ul li {
         background-color: #f0f0f0;
         margin-bottom: 10px;
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 10px;
         font-size: 1rem;
         display: flex;
         justify-content: space-between;
@@ -831,16 +1041,10 @@ body {
     }
 
     .lista ul li button {
-        background-color: #f44336;
-        color: white;
         padding: 5px 10px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-    }
-
-    .lista ul li button:hover {
-        background-color: #d32f2f;
     }
 
     .lista h4 {
@@ -850,7 +1054,6 @@ body {
 
     /*Overlay de confirmación de participantes*/
     .overlay {
-
         position: fixed;
         top: 0;
         left: 0;
@@ -899,6 +1102,10 @@ body {
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 85%;
+        margin: 0 auto;
+        max-height: 730px;
+        overflow-y: scroll;
     }
 
     .premios .columna-premios,
@@ -908,12 +1115,29 @@ body {
     }
 
     .premios input {
-        width: 100%;
+        width: 80%;
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 10px;
         border: 1px solid #ddd;
         font-size: 1rem;
         margin-bottom: 15px;
+        margin: 5px auto;
+    }
+
+    .premios label{
+        margin-top: 10px;
+    }  
+
+    #agregar-premio{
+        padding: 10px 20px;
+        background-color: #2e07bbb2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
     }
 
     #guardar-datos-premios-sponsor {
@@ -925,7 +1149,7 @@ body {
         cursor: pointer;
         font-size: 1rem;
         transition: background-color 0.3s ease;
-        margin-top: 20px;
+        margin-bottom: 5px;
     }
 
     #guardar-datos-premios-sponsor:hover {
@@ -957,6 +1181,223 @@ body {
     img {
         margin-top: 10px;
     }
+
+    /* OVERLAY DE GANADORES */
+    .overlay-ganadores {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+    }
+
+    .modal {
+        background-color: #fff;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+
+    }
+
+    .overlay-ganadores h2{
+        font-size: 20px;
+    }
+
+    #ganadores-list {
+        list-style-type: none;
+        margin-top: 10px;
+        padding: 0px;
+    }
+
+    #ganadores-list li {
+        margin-bottom: 8px;
+    }
+
+    .overlay-ganadores button{
+        border: none;
+        width: 200px;
+        border-radius: 10px;
+    }
+
+
+    /* Overlay confirmación de guardado de datos*/
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+
+    .confirmacion{
+        width: 80%;
+    }
+
+    .confirmacion button {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    #btn-confirmar {
+        background-color: #7b68e6;
+        color: white;
+    }
+
+    #btn-confirmar:hover {
+        background-color: hsl(249, 72%, 55%);
+    }
+
+    #btn-cancelar{
+        background-color: hsl(240, 10%, 92%);
+        color: black;
+    }
+
+    #btn-cancelar:hover {
+        background-color: hsl(240, 10%, 82%);
+    }
+
+    
+    /* --------- Estilo historial ---------- */
+
+    .form-historial{
+        background-color: #ffffff56;
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+
+    .form-historial input{
+        width: 80% !important;
+        padding: 10px;
+        margin: 5px auto 10px;
+        border-radius: 10px;
+        font-size: 16px;
+        border: none;
+    }
+
+    .form-btns{
+        margin: 10px 0px 10px;
+    }
+
+    .form-btns button{
+        width: 200px;
+        margin: 5px;
+    }
+
+    .evento {
+        border: 1px solid #ddd;
+        margin: 10px;
+        padding: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .evento:hover {
+        background-color: #f9f9f9;
+    }
+
+    .premios-h {
+        margin-top: 10px;
+        display: none;
+
+    }
+
+    .premios-h.mostrar {
+        display: block;
+
+    }
+
+    .premio-h {
+        border-top: 1px solid #ccc;
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .historial {
+        margin-top: 20px;
+    }
+
+    .filtro-h label {
+        margin-right: 10px;
+    }
+
+    .filtro-h button {
+        margin: 5px;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .filtro-h button:hover {
+        background-color: #f0f0f0;
+    }
+
+    #pagina-actual {
+        font-weight: bold;
+        margin: 0px 15px;
+    }
+
+    #year,
+    #month {
+        width: 100px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    #btn-aplicar-filtros, #btn-ver-historial{
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    #btn-aplicar-filtros{
+        background-color: #7b68e6;
+        color: white;
+    }
+
+    #btn-aplicar-filtros:hover{
+        background-color: hsl(249, 72%, 55%);
+    }
+
+    #btn-ver-historial:hover {
+        background-color: hsl(240, 10%, 82%);
+    }
+
+    .botons button{
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 5px;
+        background-color: #7b68e6;
+        color: white;
+    }
+
+    .botons button:hover{
+        background-color: #4d9ceb;
+    }
+
+
 
     /* Mobile Styles */
     @media (max-width: 750px) {
@@ -1004,90 +1445,6 @@ body {
 
 
 
-}
-
-
-/* --------- Estilo historial ---------- */
-
-
-.evento {
-    border: 1px solid #ddd;
-    margin: 10px;
-    padding: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.evento:hover {
-    background-color: #f9f9f9;
-}
-
-.premios-h {
-    margin-top: 10px;
-    display: none;
-
-}
-
-.premios-h.mostrar {
-    display: block;
-
-}
-
-.premio-h {
-    border-top: 1px solid #ccc;
-    padding: 10px;
-    font-size: 0.9em;
-}
-
-.historial {
-    margin-top: 20px;
-}
-
-.filtro-h label {
-    margin-right: 10px;
-}
-
-.filtro-h button {
-    margin: 5px;
-    padding: 8px 12px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.filtro-h button:hover {
-    background-color: #f0f0f0;
-}
-
-#pagina-actual {
-    font-weight: bold;
-}
-
-#year,
-#month {
-    width: 100px;
-    height: 20px;
-    margin-right: 10px;
-    font-size: 14px;
-}
-
-#btn-aplicar-filtros, #btn-ver-historial{
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-#btn-aplicar-filtros{
-    background-color: #7b68e6;
-    color: white;
-}
-
-#btn-aplicar-filtros:hover{
-    background-color: hsl(249, 72%, 55%);
-}
-
-#btn-ver-historial:hover {
-    background-color: hsl(240, 10%, 82%);
 }
 
 
