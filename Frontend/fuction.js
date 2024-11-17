@@ -217,11 +217,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const premio = row.querySelector('.columna-premios input').value.trim();
             const sponsor = row.querySelector('.columna-patrocinadores input').value.trim();
 
-            if(!premio && !sponsor){
+            if (!premio && !sponsor) {
 
                 premios.push({ premio, sponsor });
             }
-            
+
         });
 
         localStorage.setItem('premiosYSponsors', JSON.stringify(premios));
@@ -384,8 +384,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (premiosInvalidos) {
-        mostrarMensajeValidacion("Por favor, completa todos los campos de premios y patrocinadores.",mensajeContenedor);
-        return; // Salir si hay errores
+            mostrarMensajeValidacion("Por favor, completa todos los campos de premios y patrocinadores.", mensajeContenedor);
+            return; // Salir si hay errores
         }
 
         // Si la validación pasa, mostrar el overlay
@@ -687,6 +687,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //----------------------- Funcionalidad Historial-----
 
     // Integración del código de cargar eventos desde la API
+    // Obtener el año actual
+    const currentYear = new Date().getFullYear();
     // Elementos del DOM
     const eventosLista = document.getElementById("eventos-lista");
     const paginaActualElemento = document.getElementById("pagina-actual");
@@ -694,15 +696,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthInput = document.getElementById("month");
     const botonFiltrar = document.getElementById("btn-aplicar-filtros");
     const botonHistorial = document.getElementById("btn-ver-historial");
-    /*  const botonSiguiente = document.getElementById("boton-siguiente");
-     const botonAnterior = document.getElementById("boton-anterior"); */
+    const botonSiguiente = document.getElementById("boton-siguiente");
+    const botonAnterior = document.getElementById("boton-anterior");
 
     let paginaActual = 0;  // Página actual inicial
     const tamanoPagina = 6;  // Número de eventos por página
 
-    // Función para cargar todos los eventos (sin filtros)
-    async function cargarEventosSinFiltro() {
-        const url = `http://localhost:8080/evento/historial`;
+    // Establecer los atributos min y max en el input de año
+    yearInput.setAttribute("min", 2020);
+    yearInput.setAttribute("max", currentYear);
+
+    // Función general para cargar eventos (con o sin filtro)
+    async function cargarEventos() {
+        const year = yearInput.value;
+        const month = monthInput.value;
+
+        let url = `http://localhost:8080/evento/historial-paginado?page=${paginaActual}&size=${tamanoPagina}`;
+        if (year || month) {
+            url = `http://localhost:8080/evento/filtrar-historial?page=${paginaActual}&size=${tamanoPagina}&year=${year}&month=${month}`;
+        }
 
         try {
             const response = await fetch(url);
@@ -710,39 +722,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
 
-            // Verificar la estructura de los datos
-            if (Array.isArray(data)) {
-                renderizarEventos(data);
-            } else {
-                throw new Error("Formato de datos inesperado.");
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Error al obtener el historial de eventos.");
-        }
-    }
-
-    // Función para cargar eventos con filtro de año y mes
-    async function cargarEventosConFiltro() {
-        const year = yearInput.value;
-        const month = monthInput.value;
-
-        const url = `http://localhost:8080/evento/filtrar?page=${paginaActual >= 0 ? paginaActual : 0}&size=${tamanoPagina}&year=${year}&month=${month}`;
-
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Error en la respuesta de la API: ${response.statusText}`);
-
-            const data = await response.json();
+            // Si la API devuelve un objeto con paginación
             if (data.content && Array.isArray(data.content)) {
                 renderizarEventos(data.content);
-                /* actualizarPaginacion(data); */
+                actualizarPaginacion(data);  // Actualizar paginación con los datos de la respuesta
             } else {
                 throw new Error("Formato de datos inesperado.");
             }
         } catch (error) {
-            console.error("Error al obtener los eventos filtrados:", error);
-            alert("Error al obtener los eventos filtrados.");
+            console.error("Error al obtener los eventos:", error);
+            alert("Error al obtener los eventos.");
         }
     }
 
@@ -785,7 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Función para manejar la paginación y habilitar/deshabilitar los botones
-    /* function actualizarPaginacion(eventos) {
+    function actualizarPaginacion(eventos) {
         const totalPages = eventos.totalPages;
         const currentPage = eventos.number;
 
@@ -797,21 +786,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Actualizar la página actual
         paginaActualElemento.innerText = currentPage + 1;
-    } */
+    }
 
     // Función para cambiar la página (anterior o siguiente)
     function cambiarPagina(direccion) {
         paginaActual += direccion;
-        if (yearInput.value || monthInput.value) {
-            cargarEventosConFiltro(); // Si hay filtros, cargar con filtro
-        } else {
-            cargarEventosSinFiltro(); // Si no hay filtros, cargar sin filtro
-        }
+        cargarEventos(); // Recargar eventos con la nueva página
     }
 
     // Event listeners
     if (botonFiltrar) {
-        botonFiltrar.addEventListener("click", cargarEventosConFiltro);
+        botonFiltrar.addEventListener("click", () => {
+            paginaActual = 0;  // Resetear la página a la 0 cuando se apliquen filtros
+            cargarEventos();   // Cargar eventos con filtros
+        });
     }
 
     if (botonHistorial) {
@@ -819,17 +807,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // Resetear los filtros y mostrar el historial sin filtros
             yearInput.value = '';
             monthInput.value = '';
-            cargarEventosSinFiltro(); // Cargar todos los eventos sin filtros
+            paginaActual = 0;  // Volver a la página 0 al resetear los filtros
+            cargarEventos();   // Cargar todos los eventos sin filtros
         });
     }
 
-    /* if (botonSiguiente && botonAnterior) {
+    if (botonSiguiente && botonAnterior) {
         botonSiguiente.addEventListener("click", () => cambiarPagina(1));
         botonAnterior.addEventListener("click", () => cambiarPagina(-1));
-    } */
+    }
 
     // Inicializar el historial de eventos sin filtros al cargar la página
-    window.addEventListener("load", cargarEventosSinFiltro);
+    window.addEventListener("load", cargarEventos);
 
 
 });
