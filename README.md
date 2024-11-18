@@ -57,17 +57,15 @@ cd app-de-sorteo
 ####  1. Configura MySQL:
 
 Asegúrate de tener MySQL instalado y en funcionamiento.
-Crea una base de datos llamada sorteo
 
-####  2. :
+####  2. : Configura las variables de entorno (usuario y contraseña) en tu IDE. El backend creará por defecto la base de datos. En caso de que no se cree, deberás crear una base de datos llamada **sorteo_app**
 
-####  3. :
 
 ### 3. Configuración del Frontend
 #### 1. ve a la carpeta de frontend:
 
 ```bash
-cd cd frontend
+cd frontend
 ```
 
 #### 2. Abre el archivo index.html en tu navegador, o usa un servidor local como VSCode Live Server para una mejor experiencia de desarrollo.
@@ -83,8 +81,8 @@ cd cd frontend
 ### En el Backend:
 - La API RESTful está disponible en el puerto 8080. Aquí puedes interactuar con los endpoints para manejar los participantes:
 > - POST /api/participants - Añadir un nuevo participante al sorteo.
-- GET /api/participants - Obtener la lista de participantes.
-- GET /api/draw - Realizar el sorteo y obtener un ganador aleatorio.
+> - GET /api/participants - Obtener la lista de participantes.
+> - GET /api/draw - Realizar el sorteo y obtener un ganador aleatorio.
 
 ### Ejemplo de flujo de uso:
 1. Agrega participantes usando el formulario en el frontend.
