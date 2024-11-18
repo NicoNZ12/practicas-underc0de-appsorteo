@@ -58,7 +58,7 @@ cd practicas-underc0de-appsorteo
 
 Asegúrate de tener MySQL instalado y en funcionamiento.
 
-####  2. : Configura las variables de entorno (usuario y contraseña) en tu IDE. 
+####  2. : Configura las credenciales de mysql (usuario y contraseña) en tu IDE. 
 El backend creará por defecto la base de datos. En caso de que no se cree, deberás crear una base de datos llamada **sorteo_app**
 
 
