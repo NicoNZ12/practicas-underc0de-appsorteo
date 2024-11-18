@@ -5,7 +5,8 @@ body {
     margin: 0;
     background: linear-gradient(to bottom, #2f00ff3c, #cac1ff);
 
-    /* Degradado de blanco a gris oscuro */
+    
+
     ::-webkit-scrollbar {
         display: none;
     }
