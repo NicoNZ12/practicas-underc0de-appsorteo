@@ -4,7 +4,7 @@
 
 ¡Bienvenidos a la **App de Sorteo**! 🎲
 
-Esta aplicación fue desarrollada como parte de la **práctica profesional**, bajo la organización **UndeC0de**. El objetivo fue crear una herramienta sencilla y funcional para realizar sorteos de manera aleatoria, utilizando una combinación de tecnologías frontend y backend.
+Esta aplicación fue desarrollada como parte de la **práctica profesional**, bajo la organización **UnderC0de**. El objetivo fue crear una herramienta sencilla y funcional para realizar sorteos de manera aleatoria, utilizando una combinación de tecnologías frontend y backend.
 
 ### **¡El sorteo está a solo un clic de distancia!** ✨
 
@@ -114,7 +114,7 @@ cd frontend
 ---
 
 ## 💼 Hecho como Práctica Profesional
-Este proyecto fue realizado como parte de la práctica profesional para culminar la carrera, con el apoyo de UndeC0de, una comunidad enfocada en el desarrollo de proyectos y la capacitación profesional en tecnologías de software. ¡Gracias a todos por su apoyo!
+Este proyecto fue realizado como parte de la práctica profesional para culminar la carrera, con el apoyo de UnderC0de, una comunidad enfocada en el desarrollo de proyectos y la capacitación profesional en tecnologías de software. ¡Gracias a todos por su apoyo!
 
 ---
 
