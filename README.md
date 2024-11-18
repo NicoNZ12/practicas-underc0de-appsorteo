@@ -49,8 +49,8 @@ Esta aplicación consta de dos partes principales:
 ### 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/app-de-sorteo.git
-cd app-de-sorteo
+git clone https://github.com/tu-usuario/practicas-underc0de-appsorteo.git
+cd practicas-underc0de-appsorteo
 ```
 
 ### 2. Configuración del Backend
@@ -58,7 +58,8 @@ cd app-de-sorteo
 
 Asegúrate de tener MySQL instalado y en funcionamiento.
 
-####  2. : Configura las variables de entorno (usuario y contraseña) en tu IDE. El backend creará por defecto la base de datos. En caso de que no se cree, deberás crear una base de datos llamada **sorteo_app**
+####  2. : Configura las variables de entorno (usuario y contraseña) en tu IDE. 
+El backend creará por defecto la base de datos. En caso de que no se cree, deberás crear una base de datos llamada **sorteo_app**
 
 
 ### 3. Configuración del Frontend
