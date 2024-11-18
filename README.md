@@ -76,14 +76,22 @@ cd frontend
 ## 🛠️ Funcionalidad
 
 ### En el Frontend:
-#### 1. Ingresa los nombres de los participantes en el campo correspondiente.
-#### 2. Haz clic en el botón de "Sortear" para obtener un ganador aleatorio.
+#### 1. Ingresa el nombre del evento
+#### 2. Ingresa los nombres de los participantes en el campo correspondiente junto a los premios.
+#### 3. Haz clic en el botón de "Guardar Datos" para guardar todos los datos ingresados.
+#### 4. HAz clic en "Realizar Sorteo" para obtener a todos los ganadores aleatoriamente. 
 
 ### En el Backend:
-- La API RESTful está disponible en el puerto 8080. Aquí puedes interactuar con los endpoints para manejar los participantes:
-> - POST /api/participants - Añadir un nuevo participante al sorteo.
-> - GET /api/participants - Obtener la lista de participantes.
-> - GET /api/draw - Realizar el sorteo y obtener un ganador aleatorio.
+- La API RESTful está disponible en el puerto 8080. Aquí puedes interactuar con los endpoints para manejar el flujo de la aplicación:
+> - POST /evento - Crea un nuevo evento, verificando si hay uno activo.
+> - POST /participante/agregar-participantes - Guarda la lista de participantes.
+> - POST /premio/agregar-premio - Guarda la lista de premios y sponsors.
+> - POST /evento/sorteo - Realiza un sorteo para un evento específico.
+
+> - GET /participante/mostrar-participantes - Muestra la lista de participantes registradis. 
+> - GET /evento/historial - Obtiene todos los eventos realizados con sus detalles y ganadores.
+> - GET /evento/historial-paginado - Obtiene eventos paginados con detalles y ganadores.
+> - GET /evento/filtrar-historial - Obtiene los eventos con sus detalles y ganadores filtrados por parámetros. 
 
 ### Ejemplo de flujo de uso:
 1. Agrega participantes usando el formulario en el frontend.
