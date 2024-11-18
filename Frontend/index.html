@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App sorteo UnderCode</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="Css/styles.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+</head>
+
+<body>
+    <header class="encabezado">
+        <p>Bienvenidos a la Sección de Sorteos de Underc0de</p>
+        <h1>" App Sorteos de Eventos "</h1>
+        <img class="logo" src="./Imagen/logo1.png">
+    </header>
+    <!--Sección menú -->
+    <div class="btn-menu">
+        <button id="fomr-evento">Nombre Evento</button>
+        <button id="form-registro-participantes">Registro de Participantes</button>
+        <button id="form-lista-participantes">Lista de Participantes</button>
+        <button id="form-pemios-sponsor">Pemios y Sponsor</button>
+        <button id="form-historial">Historial de Eventos</button>
+
+    </div>
+
+
+    <!--Sección de nombre del evento-->
+    <div class="titulo" id="seccion-nombre">
+        <h1>Nombre del Evento</h1>
+
+        <form class="nombre-evento">
+            <br>
+            <input type="text" id="nombre-evento" placeholder="Escribe el nombre del evento">
+        </form>
+        <br>
+        <button class="btn-ingresar" id="btn-ingresar">Ingresar</button>
+    </div>
+
+    <!--Sección participante-->
+    <div class="participantes" id="seccion-participantes" style="display: none;">
+        <h3>Registro de Participantes Manual</h3>
+        <input type="text" id="nombre-participante" placeholder="Nombre y Apellido">
+        <input type="text" id="dni" placeholder="DNI">
+        <button class="btn-part" id="btn-agregar">Agregar Participante</button>
+    </div>
+
+
+
+    <!-- Sección QR -->
+    <div class="qr-div" id="qr">
+        <button class="qr">Abrir QR</button>
+        <div class="overlay" style="display: none;">
+            <div class="qr-content">
+                <h3>Escanea el QR para participar del evento de hoy</h3>
+                <br>
+                <div class="qr-code-container"></div> <!-- Contenedor para el QR -->
+                <button class="cerrar-qr">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Sección lista o mostrar los participantes-->
+    <div class="lista" id="lista" style="display: none;">
+        <p id="evento-display">EVENTO</p> <!-- Aquí se mostrará el nombre del evento -->
+        <h4>Lista de Participantes</h4>
+        <div class="contenedor-participantes">
+            <ul id="lista-participantes"></ul> <!-- Lista de participantes -->
+        </div>
+        
+    </div>
+
+    <!--Overlay de confirmación de guardado de participantes-->
+    <div id="overlay" class="overlay">
+        <div class="modal confirmacion">
+            <p id="msj-confirmacion"></p>
+            <button id="btn-confirmar">Confirmar</button>
+            <button id="btn-cancelar">Cancelar</button>
+        </div>
+    </div>
+
+
+
+    <!-- Sección premios y patrocinadores -->
+    <div class="premios" id="premios" style="display: none;">
+        <button id="agregar-premio">Agregar Premio</button> <!-- Botón para agregar premios -->
+        <br>
+        <br>
+        <!-- Contenedor dinámico para los premios y patrocinadores -->
+        <div class="premios-container" id="premios-container">
+            <!-- Los campos se generarán dinámicamente aquí -->
+        </div>
+        <br>
+        <br>
+        <br>
+        <button id="guardar-datos-premios-sponsor" style="display: none;">Guardar Datos</button>
+        <div id="mensaje-contenedor"></div>
+
+        <br>
+        <!--Sección realizar sorteo-->
+        <div class="realizar-sorteo" id="realizar-sorteo" style="display: none" ;>
+            <button id="btn-sorteo" class="btn-sort">Realizar Sorteo</button>
+            <img src="./Imagen/manito-1.gif" width="70px" height="auto" style="position: relative; top: -37px;">
+        </div>
+
+    </div>
+
+    <div id="overlay-ganadores" class="overlay-ganadores">
+        <div class="modal">
+            <h2 style="color: #7b68e6;">🎉 Ganadores del Sorteo 🎉</h2>
+            <ul id="ganadores-list">
+                <!-- Los ganadores se mostrarán aquí -->
+            </ul>
+            <button id="reinicar-pagina-completa">Nuevo Sorteo</button>
+        </div>
+    </div>
+
+
+    <!-- Sección para el historial de eventos -->
+    <div class="historial" id="historial" style="display: none;">
+        
+        <!-- Filtros de año y mes -->
+         <div class="form-historial">
+            <h3 style="text-align: center;">Historial de Eventos</h3>
+            <label for="year">Año:</label>
+            <input type="number" id="year" placeholder="Ej: 2023" />
+
+            <label for="month">Mes:</label>
+            <input type="number" id="month" min="1" max="12" placeholder="Ej: 5" />
+
+            <div class="form-btns">
+                <button id="btn-aplicar-filtros">Filtrar</button>
+                <button id="btn-ver-historial">Limpiar Filtro</button>
+            </div>
+         </div>
+        
+
+        <!-- Lista de eventos -->
+        <ul id="eventos-lista" style="list-style-type: none; padding: 0;"></ul>
+
+        <!-- Controles de paginación -->
+        <div class="botons" style="text-align: center;">
+            <button id="boton-anterior">Anterior</button>
+            <span id="pagina-actual">1</span>
+            <button id="boton-siguiente">Siguiente</button>
+        </div>
+    </div>
+
+
+
+    <!-- Overlay Global Mensajes de exito-->
+    <div id="overlay-global" style="display: none;">
+        <div class="overlay-content">
+            <p id="mensaje-overlay"></p>
+            <button id="btn-cerrar-overlay-global">Cerrar</button>
+        </div>
+    </div>
+
+
+    <!-- Contenedor de mensajes de validación -->
+    <div id="contenedor-mensajes"></div>
+
+    <footer>
+        <p>&copy; 2024 SorteApp. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="fuction.js"></script>
+    <!-- Incluir el CDN de QRCode.js -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+</body>
+
+</html>
